@@ -466,7 +466,7 @@
   .corner { position: absolute; top: var(--space-2); right: var(--space-2); display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-1); }
   .corner button { background: var(--panel); }
   .corner button[aria-checked="true"] { background: var(--accent); }
-  .card { position: absolute; width: 200px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: var(--space-3); box-shadow: 0 4px 16px rgb(0 0 0 / 0.12); display: flex; flex-direction: column; line-height: 1.5; font-size: 14px; }
+  .card { position: absolute; width: 200px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: var(--space-3); box-shadow: 0 4px 16px color-mix(in srgb, var(--ink) 12%, transparent); display: flex; flex-direction: column; line-height: 1.5; font-size: 14px; }
   .card strong { font-size: 16px; }
   .dept { color: var(--muted); }
   .card dl { display: grid; grid-template-columns: auto 1fr; gap: 2px var(--space-3); margin: var(--space-2) 0 0; }

@@ -1,10 +1,10 @@
 /* 設計 tokens：顏色、字體、間距只能從這裡取用（見 docs/design.md「視覺語言」） */
 :root {
   --bg: #F2F3EF; --panel: #FBFBF8; --ink: #1D2729; --muted: #5F6B6C; --line: #D9DDD5;
-  --accent: #1D6F66; --accent-soft: #DBEAE6; --signal: #C8553D; --signal-soft: #F6E2DB;
+  --accent: #1D6F66; --accent-soft: #DBEAE6; --signal: #C8553D; --signal-soft: #F6E2DB; --ill: #8E3B8C;
   --college-sci: #5B8DB8; --college-socsci: #C7884A; --college-lib: #9A7BB5;
   --college-eng: #5E9E7E; --college-med: #C46A6A; --college-mgmt: #8E8E5A;
-  /* 校園地圖（草稿配色，待作者定稿） */
+  /* 校園地圖 */
   --map-grass: #E4EADB; --map-road: #D3D6CC; --map-walk: #E9EBE3; --map-water: #C9DDE0; --map-building: #F4F4EE; --map-roof: #C9CEC2; --map-tree: #8FAF8A;
   --font-display: "Noto Serif TC", "Songti TC", serif;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
@@ -16,7 +16,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #151B1C; --panel: #1C2425; --ink: #E5EBE8; --muted: #9AA8A6; --line: #2F3B3C;
-    --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
+    --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721; --ill: #B95FB5;
     --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
     --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
     --map-grass: #1A2421; --map-road: #2A3433; --map-walk: #222C2B; --map-water: #1F3438; --map-building: #26302F; --map-roof: #3A4746; --map-tree: #3F5E48;
@@ -25,7 +25,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #151B1C; --panel: #1C2425; --ink: #E5EBE8; --muted: #9AA8A6; --line: #2F3B3C;
-  --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
+  --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721; --ill: #B95FB5;
   --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
   --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
   --map-grass: #1A2421; --map-road: #2A3433; --map-walk: #222C2B; --map-water: #1F3438; --map-building: #26302F; --map-roof: #3A4746; --map-tree: #3F5E48;

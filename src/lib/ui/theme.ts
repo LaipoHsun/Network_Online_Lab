@@ -2,7 +2,7 @@
 // 只在瀏覽器裡呼叫。
 
 export const TOKEN_NAMES = [
-  '--bg', '--panel', '--ink', '--muted', '--line', '--accent', '--accent-soft', '--signal', '--signal-soft',
+  '--bg', '--panel', '--ink', '--muted', '--line', '--accent', '--accent-soft', '--signal', '--signal-soft', '--ill',
   '--college-sci', '--college-socsci', '--college-lib', '--college-eng', '--college-med', '--college-mgmt',
   '--map-grass', '--map-road', '--map-walk', '--map-water', '--map-building', '--map-roof', '--map-tree',
 ] as const;

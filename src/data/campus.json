@@ -1,5 +1,5 @@
 {
- "note": "示意插畫用的草稿配置，不是精確地圖（見 docs/campus-map.md）。直向版由橫向版縮放而來，尚待手調。",
+ "note": "示意插畫用的配置（第一版），不是精確地圖（見 docs/campus-map.md）。直向版由橫向版縮放而來，之後可逐點手調。",
  "landscape": {
   "width": 1000,
   "height": 700,

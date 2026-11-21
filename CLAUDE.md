@@ -13,7 +13,7 @@
 - 階段 1（骨架）已完成：Astro + Svelte + MDX、設計 tokens、首頁課程地圖、九章佔位頁、角色產生器與 `/playground/characters`、GitHub Pages 部署流程。
 - 階段 2（圖演算法庫）已完成：`src/lib/network`，期望值由 `data/scripts/networkx_expected.py` 產生到 `tests/fixtures/networkx/`；改了演算法或資料就重跑這支腳本（`python3 data/scripts/networkx_expected.py`）。
 - 階段 3（共用元件）已完成初版：小人引擎與雙視圖（`src/components/engine/`，模擬邏輯在 `src/lib/sim/campus.ts`）、Predict、LogicChain、FormulaCard、RevealChart（`src/components/ui/`），展示頁 `/playground`。章節要用引擎時，在 `src/components/chapters/` 寫一個 Svelte 元件傳入劇本（Astro 不能傳函式給 island），寫法參考 `src/components/playground/EngineDemo.svelte`。
-- 待作者決定：校園地圖定稿（目前 `src/data/campus.json` 與 `CampusMap.svelte` 是草稿，直向版由橫向縮放）、`--ill` 顏色。
+- 已定案（作者授權由 Claude 決定）：校園地圖採用目前這一版（`src/data/campus.json`、`CampusMap.svelte`；直向版由橫向縮放，之後可逐點手調）；`--ill` = 梅紫 #8E3B8C／深色 #B95FB5。
 - 下一步：階段 4「第 6 章弱連結」。
 
 ## 內容

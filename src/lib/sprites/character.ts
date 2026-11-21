@@ -78,7 +78,7 @@ function face(state: State): string {
 }
 
 function badge(state: State): string {
-  if (state === 'sick') return `<g transform="translate(18 0)"><rect x="0" y="0" width="2" height="5" rx="1" fill="#FBFBF8" stroke="#C46A6A" stroke-width="0.5"/><circle cx="1" cy="5" r="1.4" fill="#C46A6A"/></g>`;
+  if (state === 'sick') return `<g transform="translate(18 0)"><rect x="0" y="0" width="2" height="5" rx="1" fill="#FBFBF8" stroke="var(--ill)" stroke-width="0.5"/><circle cx="1" cy="5" r="1.4" fill="var(--ill)"/></g>`;
   if (state === 'happy') return `<path d="M20 1 l0.8 1.6 1.7 0.2 -1.3 1.2 0.4 1.7 -1.6 -0.9 -1.6 0.9 0.4 -1.7 -1.3 -1.2 1.7 -0.2 Z" fill="#E2B33C"/>`;
   return '';
 }

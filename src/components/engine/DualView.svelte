@@ -160,7 +160,7 @@
   /** 一幀的全部工作（模擬推進 + 排版 + 繪圖），拆出來方便量測效能。 */
   function step(now: number) {
     if (!scene) return;
-    const dt = Math.min(0.1, (now - (last || now)) / 1000);
+    const dt = Math.max(0, Math.min(0.1, (now - (last || now)) / 1000)); // 時間倒退（例如量測時）不讓動畫倒轉
     last = now;
 
     if (playing) {

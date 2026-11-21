@@ -1,0 +1,152 @@
+---
+// 共用元件展示頁（docs/design.md 階段 3）：每個元件的所有狀態。
+// 示範文字取自 docs/chapters/01-degree.md 與 04-small-world.md 的規格；完整推導由作者撰寫，這裡是佔位。
+import Base from '../../layouts/Base.astro';
+import EngineDemo from '../../components/playground/EngineDemo.svelte';
+import Predict from '../../components/ui/Predict.svelte';
+import LogicChain from '../../components/ui/LogicChain.astro';
+import FormulaCard from '../../components/ui/FormulaCard.astro';
+import RevealChart from '../../components/ui/RevealChart.astro';
+import ThemeToggle from '../../components/ui/ThemeToggle.svelte';
+import karate from '../../../data/raw/karate.json';
+
+const base = import.meta.env.BASE_URL;
+const karateEdges = karate.edges as [number, number][];
+const karateLabels = karate.labels.map((l: string) => `成員 ${+l + 1}`);
+const PLACEHOLDER = '（展示用佔位：完整推導由作者在 MDX 撰寫。）';
+
+const degreeChain = [
+  { kind: 'assumption' as const, critical: true, summary: '每次相遇以機率 $p$ 成為朋友，而每個人的相遇次數和 $p$ 都一樣。', detail: PLACEHOLDER },
+  { kind: 'derivation' as const, summary: '度是許多獨立小機率事件的總和，近似 Poisson 分布，標準差約為 $\\sqrt{\\langle k \\rangle}$。', detail: `${PLACEHOLDER}\n\n$$\\sigma_k \\approx \\sqrt{\\langle k \\rangle}$$` },
+  { kind: 'result' as const, summary: '幾乎沒有人的朋友數是平均的十倍。' },
+  { kind: 'prediction' as const, summary: '可檢驗的預測：平均數 ≈ 中位數。' },
+];
+const smallWorldChain = [
+  { kind: 'assumption' as const, summary: '多數關係是局部的（同系、同宿舍），少數是隨機的遠距關係（抽卡、交換、搬家）。' },
+  { kind: 'derivation' as const, summary: '遠距關係讓「一步可以到達的人數」從線性增長變成指數增長。', detail: PLACEHOLDER },
+  { kind: 'result' as const, summary: '$\\langle d \\rangle$ 正比於 $\\ln N$，同時 $C$ 還很高。' },
+  { kind: 'prediction' as const, summary: '大型社會網路的平均距離很小，而且隨網路變大只緩慢增加。' },
+];
+const removal = { step: 0, effect: '拿掉「大家一樣愛交朋友」的假設後，預測就會失效。這正是第 ⑥ 段要揭曉的。' };
+---
+<Base title="元件展示 · 網路實驗室">
+  <div class="head">
+    <h1>共用元件展示</h1>
+    <ThemeToggle client:load />
+  </div>
+  <p class="lead">
+    九章共用的六個元件，每個都列出所有狀態。示範文字取自 <code>docs/chapters/</code> 的規格；
+    揭曉圖的數字全部來自 <code>data/build/playground/</code>（由 <code>data/scripts/playground_data.py</code> 從公開網路資料計算）。
+    角色另見 <a href={`${base}playground/characters/`}>角色頁</a>。
+  </p>
+  <nav class="toc" aria-label="本頁目錄">
+    <a href="#engine">1–2 小人引擎與雙視圖</a><a href="#formula">5 公式卡</a><a href="#predict">3 預測</a>
+    <a href="#chain">4 邏輯鏈</a><a href="#reveal">6 揭曉圖</a>
+  </nav>
+
+  <section id="engine">
+    <h2>1–2　小人引擎與雙視圖</h2>
+    <p class="desc">
+      小人依日程在地點之間走動，同一地點的人以章節規則的機率相認識（對話框＋連結長出來）。
+      右上角切換校園／網路視圖；點一個人看資料卡；在網路視圖可以拖曳節點；⌘／Ctrl＋滾輪或右上角按鈕縮放。
+      鍵盤：Tab 進入畫面後用方向鍵選人、Esc 取消、＋／－ 縮放。校園地圖是待作者定稿的草稿。
+    </p>
+    <div class="engine-grid">
+      <EngineDemo client:visible />
+      <div id="formula">
+        <FormulaCard
+          title="度與平均度"
+          formula={'\\htmlData{key=ki}{k_i} = \\sum_j \\htmlData{key=A}{A_{ij}}, \\qquad \\htmlData{key=kavg}{\\langle k \\rangle} = \\frac{1}{\\htmlData{key=N}{N}}\\sum_i k_i = \\frac{2\\htmlData{key=L}{L}}{N}'}
+          symbols={[
+            { key: 'A', symbol: 'A_{ij}', meaning: '鄰接矩陣：$A_{ij} = 1$ 代表 $i$ 和 $j$ 是朋友。' },
+            { key: 'ki', symbol: 'k_i', meaning: '度：一列的總和，也就是 $i$ 的朋友數。' },
+            { key: 'N', symbol: 'N', meaning: '人數。' },
+            { key: 'L', symbol: 'L', meaning: '連結數。每條連結被兩端各算一次，所以所有度的總和是 $2L$（握手定理）。' },
+            { key: 'kavg', symbol: '\\langle k \\rangle', meaning: '平均度。' },
+          ]}
+          range="真實網路的 $\\langle k \\rangle$ 遠小於 $N$，所以密度 $\\rho = \\langle k \\rangle / (N-1)$ 越大的網路越接近 0。"
+          related="變異數 $\\langle k^2 \\rangle - \\langle k \\rangle^2$ 在第 5 章會再出現。"
+          live={[
+            { key: 'N', label: 'N', digits: 0 },
+            { key: 'L', label: 'L', digits: 0 },
+            { key: 'kavg', label: '\\langle k \\rangle', digits: 2 },
+            { key: 'ki', label: 'k_{\\max}', digits: 0 },
+          ]}
+        />
+        <p class="desc small">滑過公式或符號列，左邊的視覺區會高亮對應的人或連結；數字是模擬的即時值。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="predict">
+    <h2>3　預測</h2>
+    <p class="desc">三種形式。送出後鎖定並存進 localStorage，下面的揭曉圖用同一個 id 畫出虛線。這頁多了「重新作答」按鈕方便測試；章節頁不會有。</p>
+    <div class="grid2">
+      <Predict client:visible id="playground/karate-mean" kind="number" allowReset
+        question="空手道社 34 位社員，平均每人有幾位社內朋友？" min={1} max={20} step={0.5} unit=" 位" initial={8} />
+      <Predict client:visible id="playground/ws-curve" kind="curve" allowReset
+        question="重連機率 p 變大時，平均距離（相對於 p = 0）會怎麼變？"
+        xs={[0.0001, 0.001, 0.01, 0.1, 1]} yMin={0} yMax={1.2} logX xLabel="重連機率 p" yLabel="⟨d⟩(p)/⟨d⟩(0)" />
+      <Predict client:visible id="playground/karate-pick" kind="node" allowReset
+        question="你覺得誰是空手道社裡最「重要」的人？" n={34} edges={karateEdges} labels={karateLabels} />
+      <div class="states">
+        <h3>其他狀態</h3>
+        <Predict client:visible id="playground/demo-locked" kind="number" persist={false}
+          question="已送出（鎖定）" min={1} max={20} step={0.5} unit=" 位" demoAnswer={{ kind: 'number', value: 6, at: 0 }} />
+        <Predict client:visible id="playground/demo-skipped" kind="number" persist={false}
+          question="已跳過" min={1} max={20} demoAnswer={{ kind: 'skipped', at: 0 }} />
+      </div>
+    </div>
+  </section>
+
+  <section id="chain">
+    <h2>4　邏輯鏈</h2>
+    <p class="desc">桌機橫向四格、手機直向。點「看完整推導」展開；點「拿掉這個假設」，依賴它的格子變灰並顯示會得到什麼。</p>
+    <h3>預設（第 1 章）</h3>
+    <LogicChain title="第 1 章邏輯鏈" steps={degreeChain} removal={removal} />
+    <h3>推導已展開</h3>
+    <LogicChain title="第 1 章邏輯鏈（展開）" steps={degreeChain} removal={removal} initialOpen={[1]} />
+    <h3>已拿掉假設</h3>
+    <LogicChain title="第 1 章邏輯鏈（拿掉假設）" steps={degreeChain} removal={removal} initialRemoved />
+    <h3>沒有可拿掉的假設（第 4 章）</h3>
+    <LogicChain title="第 4 章邏輯鏈" steps={smallWorldChain} />
+  </section>
+
+  <section id="reveal">
+    <h2>6　揭曉圖</h2>
+    <p class="desc">捲到圖完整出現時，真實資料才畫出來；讀者的預測用 --signal 虛線。每張圖下方列來源，「看數字」打開資料表。</p>
+    <div class="grid2">
+      <RevealChart data="playground/karate_degree" predictId="playground/karate-mean" showMean showMedian
+        title="多數社員只有少數朋友，少數人朋友特別多" predictLabel="你猜的平均" />
+      <RevealChart data="playground/watts_strogatz_curves" predictId="playground/ws-curve"
+        title="只要一點點重連，距離就大幅縮短，聚集係數卻幾乎不變" />
+      <RevealChart data="playground/karate_degree_betweenness"
+        title="朋友多的人通常也是橋，但兩者不完全一致" />
+      <RevealChart data="playground/florentine_betweenness"
+        title="梅迪奇家族在婚姻網路中的介數遠高於其他家族" />
+    </div>
+    <h3>狀態：揭曉前（只有預測）／揭曉後</h3>
+    <div class="grid2">
+      <RevealChart data="playground/karate_degree" revealed={false} demoPrediction={{ kind: 'number', value: 8, at: 0 }}
+        title="揭曉前：只顯示讀者的猜測" predictLabel="猜測" />
+      <RevealChart data="playground/karate_degree" revealed={true} demoPrediction={{ kind: 'number', value: 8, at: 0 }} showMean
+        title="揭曉後：真實分布與猜測對照" predictLabel="猜測" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); }
+  .lead { max-width: 72ch; }
+  .toc { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: 14px; margin-bottom: var(--space-6); }
+  section { margin: var(--space-8) 0; scroll-margin-top: var(--space-4); }
+  h2 { font-size: 24px; margin-bottom: var(--space-2); }
+  h3 { font-size: 16px; margin: var(--space-6) 0 var(--space-2); }
+  .desc { color: var(--muted); max-width: 72ch; margin-top: 0; }
+  .small { font-size: 14px; }
+  .engine-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); gap: var(--space-4); align-items: start; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: var(--space-4); align-items: start; }
+  .states { display: flex; flex-direction: column; gap: var(--space-3); }
+  .states h3 { margin: 0; }
+  @media (max-width: 900px) { .engine-grid { grid-template-columns: minmax(0, 1fr); } }
+</style>

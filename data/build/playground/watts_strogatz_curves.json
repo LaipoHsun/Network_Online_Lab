@@ -1,0 +1,119 @@
+{
+ "kind": "line",
+ "description": "重連機率 p 對平均距離與聚集係數的影響（相對於 p = 0）",
+ "source": {
+  "text": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）",
+  "url": "https://doi.org/10.1038/30918",
+  "sample": "模擬網路 N = 500",
+  "year": 1998
+ },
+ "x": {
+  "label": "重連機率 p",
+  "scale": "log"
+ },
+ "y": {
+  "label": "相對於 p = 0 的比值"
+ },
+ "series": [
+  {
+   "name": "平均距離 ⟨d⟩(p)/⟨d⟩(0)",
+   "points": [
+    {
+     "x": 0.0001,
+     "y": 0.9954423307086614,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.0003,
+     "y": 0.9291229921259843,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.001,
+     "y": 0.7374187401574803,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.003,
+     "y": 0.472084188976378,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.01,
+     "y": 0.28193187401574804,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.03,
+     "y": 0.20461124409448822,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.1,
+     "y": 0.15311584251968505,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.3,
+     "y": 0.1272703937007874,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 1.0,
+     "y": 0.11544185826771655,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    }
+   ]
+  },
+  {
+   "name": "聚集係數 C(p)/C(0)",
+   "points": [
+    {
+     "x": 0.0001,
+     "y": 0.999905303030303,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.0003,
+     "y": 0.9992801515151515,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.001,
+     "y": 0.9971936363636363,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.003,
+     "y": 0.9900422727272727,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.01,
+     "y": 0.966945670995671,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.03,
+     "y": 0.9139642890442891,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.1,
+     "y": 0.7297993140193141,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 0.3,
+     "y": 0.3542784687371452,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    },
+    {
+     "x": 1.0,
+     "y": 0.02795064181948083,
+     "source": "本站模擬：Watts–Strogatz 模型（Watts & Strogatz 1998），N = 500、K = 10，每個 p 平均 10 次（networkx 3.6.1）"
+    }
+   ]
+  }
+ ]
+}

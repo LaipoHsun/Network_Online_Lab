@@ -1,0 +1,227 @@
+{
+ "kind": "scatter",
+ "description": "空手道社每位成員的度與介數中心性",
+ "source": {
+  "text": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算",
+  "url": "https://doi.org/10.1086/jar.33.4.3629752",
+  "sample": "34 位社員、78 條連結",
+  "year": 1977
+ },
+ "x": {
+  "label": "朋友數 k"
+ },
+ "y": {
+  "label": "介數中心性（正規化）"
+ },
+ "series": [
+  {
+   "name": "成員",
+   "points": [
+    {
+     "x": 16,
+     "y": 0.43763528138528146,
+     "label": "0",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 9,
+     "y": 0.053936688311688304,
+     "label": "1",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 10,
+     "y": 0.14365680615680618,
+     "label": "2",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 6,
+     "y": 0.011909271284271283,
+     "label": "3",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.0006313131313131313,
+     "label": "4",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.02998737373737374,
+     "label": "5",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.029987373737373736,
+     "label": "6",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.0,
+     "label": "7",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 5,
+     "y": 0.05592682780182781,
+     "label": "8",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0008477633477633478,
+     "label": "9",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.0006313131313131313,
+     "label": "10",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 1,
+     "y": 0.0,
+     "label": "11",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "12",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 5,
+     "y": 0.04586339586339586,
+     "label": "13",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "14",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "15",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "16",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "17",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "18",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.03247504810004811,
+     "label": "19",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "20",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "21",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "22",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 5,
+     "y": 0.017613636363636363,
+     "label": "23",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.0022095959595959595,
+     "label": "24",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.0038404882154882154,
+     "label": "25",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 2,
+     "y": 0.0,
+     "label": "26",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.02233345358345358,
+     "label": "27",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 3,
+     "y": 0.0017947330447330447,
+     "label": "28",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.0029220779220779218,
+     "label": "29",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 4,
+     "y": 0.014411976911976909,
+     "label": "30",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 6,
+     "y": 0.13827561327561325,
+     "label": "31",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 12,
+     "y": 0.145247113997114,
+     "label": "32",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    },
+    {
+     "x": 17,
+     "y": 0.30407497594997596,
+     "label": "33",
+     "source": "Zachary 1977, Journal of Anthropological Research 33(4)；本站以 networkx 計算"
+    }
+   ]
+  }
+ ]
+}

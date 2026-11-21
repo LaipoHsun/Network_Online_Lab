@@ -1,0 +1,815 @@
+{
+ "note": "示意插畫用的草稿配置，不是精確地圖（見 docs/campus-map.md）。直向版由橫向版縮放而來，尚待手調。",
+ "landscape": {
+  "width": 1000,
+  "height": 700,
+  "locations": [
+   {
+    "id": "gate",
+    "label": "校門口",
+    "kind": "building",
+    "rect": {
+     "x": 40,
+     "y": 70,
+     "w": 90,
+     "h": 50
+    },
+    "road": "r_gate",
+    "capacity": 80
+   },
+   {
+    "id": "bell",
+    "label": "鐘",
+    "kind": "landmark",
+    "rect": {
+     "x": 150,
+     "y": 175,
+     "w": 22,
+     "h": 22
+    },
+    "road": "r_bell",
+    "capacity": 0
+   },
+   {
+    "id": "boulevard",
+    "label": "椰林大道",
+    "kind": "path",
+    "rect": {
+     "x": 150,
+     "y": 135,
+     "w": 640,
+     "h": 40
+    },
+    "road": "r_b2",
+    "capacity": 200
+   },
+   {
+    "id": "library",
+    "label": "總圖",
+    "kind": "building",
+    "rect": {
+     "x": 815,
+     "y": 120,
+     "w": 140,
+     "h": 110
+    },
+    "road": "r_b4",
+    "capacity": 120
+   },
+   {
+    "id": "lake",
+    "label": "湖",
+    "kind": "open",
+    "rect": {
+     "x": 400,
+     "y": 20,
+     "w": 150,
+     "h": 85
+    },
+    "road": "r_b2",
+    "capacity": 40
+   },
+   {
+    "id": "sci",
+    "label": "理學院",
+    "kind": "building",
+    "rect": {
+     "x": 600,
+     "y": 30,
+     "w": 120,
+     "h": 80
+    },
+    "road": "r_b3",
+    "capacity": 60,
+    "college": "sci"
+   },
+   {
+    "id": "eng",
+    "label": "工學院／電資",
+    "kind": "building",
+    "rect": {
+     "x": 200,
+     "y": 30,
+     "w": 150,
+     "h": 80
+    },
+    "road": "r_b1",
+    "capacity": 60,
+    "college": "eng"
+   },
+   {
+    "id": "liberal",
+    "label": "文學院",
+    "kind": "building",
+    "rect": {
+     "x": 150,
+     "y": 220,
+     "w": 120,
+     "h": 80
+    },
+    "road": "r_w1",
+    "capacity": 60,
+    "college": "lib"
+   },
+   {
+    "id": "cafeteria",
+    "label": "小福",
+    "kind": "building",
+    "rect": {
+     "x": 420,
+     "y": 300,
+     "w": 130,
+     "h": 90
+    },
+    "road": "r_c2",
+    "capacity": 150
+   },
+   {
+    "id": "clubs",
+    "label": "社辦",
+    "kind": "building",
+    "rect": {
+     "x": 830,
+     "y": 290,
+     "w": 120,
+     "h": 90
+    },
+    "road": "r_e1",
+    "capacity": 80
+   },
+   {
+    "id": "gym",
+    "label": "體育館與操場",
+    "kind": "open",
+    "rect": {
+     "x": 830,
+     "y": 430,
+     "w": 140,
+     "h": 140
+    },
+    "road": "r_e2",
+    "capacity": 120
+   },
+   {
+    "id": "socsci",
+    "label": "社科院",
+    "kind": "building",
+    "rect": {
+     "x": 610,
+     "y": 520,
+     "w": 130,
+     "h": 90
+    },
+    "road": "r_e3",
+    "capacity": 80,
+    "college": "socsci"
+   },
+   {
+    "id": "dorm_m",
+    "label": "男生宿舍區",
+    "kind": "building",
+    "rect": {
+     "x": 60,
+     "y": 470,
+     "w": 150,
+     "h": 110
+    },
+    "road": "r_w2",
+    "capacity": 120
+   },
+   {
+    "id": "dorm_f",
+    "label": "女生宿舍區",
+    "kind": "building",
+    "rect": {
+     "x": 330,
+     "y": 500,
+     "w": 150,
+     "h": 100
+    },
+    "road": "r_c3",
+    "capacity": 120
+   },
+   {
+    "id": "zhoushan",
+    "label": "舟山路",
+    "kind": "path",
+    "rect": {
+     "x": 80,
+     "y": 640,
+     "w": 800,
+     "h": 20
+    },
+    "road": "r_z2",
+    "capacity": 200
+   },
+   {
+    "id": "mrt",
+    "label": "捷運站",
+    "kind": "building",
+    "rect": {
+     "x": 0,
+     "y": 665,
+     "w": 80,
+     "h": 35
+    },
+    "road": "r_z0",
+    "capacity": 80
+   }
+  ],
+  "roads": {
+   "nodes": [
+    {
+     "id": "r_gate",
+     "x": 130,
+     "y": 150
+    },
+    {
+     "id": "r_bell",
+     "x": 190,
+     "y": 155
+    },
+    {
+     "id": "r_b1",
+     "x": 300,
+     "y": 155
+    },
+    {
+     "id": "r_b2",
+     "x": 475,
+     "y": 158
+    },
+    {
+     "id": "r_b3",
+     "x": 660,
+     "y": 162
+    },
+    {
+     "id": "r_b4",
+     "x": 800,
+     "y": 165
+    },
+    {
+     "id": "r_w1",
+     "x": 300,
+     "y": 300
+    },
+    {
+     "id": "r_w2",
+     "x": 300,
+     "y": 480
+    },
+    {
+     "id": "r_c1",
+     "x": 485,
+     "y": 255
+    },
+    {
+     "id": "r_c2",
+     "x": 485,
+     "y": 420
+    },
+    {
+     "id": "r_c3",
+     "x": 485,
+     "y": 560
+    },
+    {
+     "id": "r_e1",
+     "x": 800,
+     "y": 335
+    },
+    {
+     "id": "r_e2",
+     "x": 800,
+     "y": 470
+    },
+    {
+     "id": "r_e3",
+     "x": 800,
+     "y": 560
+    },
+    {
+     "id": "r_z0",
+     "x": 60,
+     "y": 650
+    },
+    {
+     "id": "r_z1",
+     "x": 300,
+     "y": 650
+    },
+    {
+     "id": "r_z2",
+     "x": 485,
+     "y": 650
+    },
+    {
+     "id": "r_z3",
+     "x": 800,
+     "y": 650
+    }
+   ],
+   "edges": [
+    [
+     "r_gate",
+     "r_bell"
+    ],
+    [
+     "r_bell",
+     "r_b1"
+    ],
+    [
+     "r_b1",
+     "r_b2"
+    ],
+    [
+     "r_b2",
+     "r_b3"
+    ],
+    [
+     "r_b3",
+     "r_b4"
+    ],
+    [
+     "r_b1",
+     "r_w1"
+    ],
+    [
+     "r_w1",
+     "r_w2"
+    ],
+    [
+     "r_w2",
+     "r_z1"
+    ],
+    [
+     "r_b2",
+     "r_c1"
+    ],
+    [
+     "r_c1",
+     "r_c2"
+    ],
+    [
+     "r_c2",
+     "r_c3"
+    ],
+    [
+     "r_c3",
+     "r_z2"
+    ],
+    [
+     "r_b4",
+     "r_e1"
+    ],
+    [
+     "r_e1",
+     "r_e2"
+    ],
+    [
+     "r_e2",
+     "r_e3"
+    ],
+    [
+     "r_e3",
+     "r_z3"
+    ],
+    [
+     "r_w1",
+     "r_c1"
+    ],
+    [
+     "r_c2",
+     "r_e1"
+    ],
+    [
+     "r_w2",
+     "r_c2"
+    ],
+    [
+     "r_c3",
+     "r_e3"
+    ],
+    [
+     "r_z0",
+     "r_z1"
+    ],
+    [
+     "r_z1",
+     "r_z2"
+    ],
+    [
+     "r_z2",
+     "r_z3"
+    ]
+   ]
+  }
+ },
+ "portrait": {
+  "width": 700,
+  "height": 1000,
+  "locations": [
+   {
+    "id": "gate",
+    "label": "校門口",
+    "kind": "building",
+    "rect": {
+     "x": 28,
+     "y": 100,
+     "w": 63,
+     "h": 71
+    },
+    "road": "r_gate",
+    "capacity": 80
+   },
+   {
+    "id": "bell",
+    "label": "鐘",
+    "kind": "landmark",
+    "rect": {
+     "x": 105,
+     "y": 250,
+     "w": 15,
+     "h": 31
+    },
+    "road": "r_bell",
+    "capacity": 0
+   },
+   {
+    "id": "boulevard",
+    "label": "椰林大道",
+    "kind": "path",
+    "rect": {
+     "x": 105,
+     "y": 193,
+     "w": 448,
+     "h": 57
+    },
+    "road": "r_b2",
+    "capacity": 200
+   },
+   {
+    "id": "library",
+    "label": "總圖",
+    "kind": "building",
+    "rect": {
+     "x": 570,
+     "y": 171,
+     "w": 98,
+     "h": 157
+    },
+    "road": "r_b4",
+    "capacity": 120
+   },
+   {
+    "id": "lake",
+    "label": "湖",
+    "kind": "open",
+    "rect": {
+     "x": 280,
+     "y": 29,
+     "w": 105,
+     "h": 121
+    },
+    "road": "r_b2",
+    "capacity": 40
+   },
+   {
+    "id": "sci",
+    "label": "理學院",
+    "kind": "building",
+    "rect": {
+     "x": 420,
+     "y": 43,
+     "w": 84,
+     "h": 114
+    },
+    "road": "r_b3",
+    "capacity": 60,
+    "college": "sci"
+   },
+   {
+    "id": "eng",
+    "label": "工學院／電資",
+    "kind": "building",
+    "rect": {
+     "x": 140,
+     "y": 43,
+     "w": 105,
+     "h": 114
+    },
+    "road": "r_b1",
+    "capacity": 60,
+    "college": "eng"
+   },
+   {
+    "id": "liberal",
+    "label": "文學院",
+    "kind": "building",
+    "rect": {
+     "x": 105,
+     "y": 314,
+     "w": 84,
+     "h": 114
+    },
+    "road": "r_w1",
+    "capacity": 60,
+    "college": "lib"
+   },
+   {
+    "id": "cafeteria",
+    "label": "小福",
+    "kind": "building",
+    "rect": {
+     "x": 294,
+     "y": 429,
+     "w": 91,
+     "h": 129
+    },
+    "road": "r_c2",
+    "capacity": 150
+   },
+   {
+    "id": "clubs",
+    "label": "社辦",
+    "kind": "building",
+    "rect": {
+     "x": 581,
+     "y": 414,
+     "w": 84,
+     "h": 129
+    },
+    "road": "r_e1",
+    "capacity": 80
+   },
+   {
+    "id": "gym",
+    "label": "體育館與操場",
+    "kind": "open",
+    "rect": {
+     "x": 581,
+     "y": 614,
+     "w": 98,
+     "h": 200
+    },
+    "road": "r_e2",
+    "capacity": 120
+   },
+   {
+    "id": "socsci",
+    "label": "社科院",
+    "kind": "building",
+    "rect": {
+     "x": 427,
+     "y": 743,
+     "w": 91,
+     "h": 129
+    },
+    "road": "r_e3",
+    "capacity": 80,
+    "college": "socsci"
+   },
+   {
+    "id": "dorm_m",
+    "label": "男生宿舍區",
+    "kind": "building",
+    "rect": {
+     "x": 42,
+     "y": 671,
+     "w": 105,
+     "h": 157
+    },
+    "road": "r_w2",
+    "capacity": 120
+   },
+   {
+    "id": "dorm_f",
+    "label": "女生宿舍區",
+    "kind": "building",
+    "rect": {
+     "x": 231,
+     "y": 714,
+     "w": 105,
+     "h": 143
+    },
+    "road": "r_c3",
+    "capacity": 120
+   },
+   {
+    "id": "zhoushan",
+    "label": "舟山路",
+    "kind": "path",
+    "rect": {
+     "x": 56,
+     "y": 914,
+     "w": 560,
+     "h": 29
+    },
+    "road": "r_z2",
+    "capacity": 200
+   },
+   {
+    "id": "mrt",
+    "label": "捷運站",
+    "kind": "building",
+    "rect": {
+     "x": 0,
+     "y": 950,
+     "w": 56,
+     "h": 50
+    },
+    "road": "r_z0",
+    "capacity": 80
+   }
+  ],
+  "roads": {
+   "nodes": [
+    {
+     "id": "r_gate",
+     "x": 91,
+     "y": 214
+    },
+    {
+     "id": "r_bell",
+     "x": 133,
+     "y": 221
+    },
+    {
+     "id": "r_b1",
+     "x": 210,
+     "y": 221
+    },
+    {
+     "id": "r_b2",
+     "x": 332,
+     "y": 226
+    },
+    {
+     "id": "r_b3",
+     "x": 462,
+     "y": 231
+    },
+    {
+     "id": "r_b4",
+     "x": 560,
+     "y": 236
+    },
+    {
+     "id": "r_w1",
+     "x": 210,
+     "y": 429
+    },
+    {
+     "id": "r_w2",
+     "x": 210,
+     "y": 686
+    },
+    {
+     "id": "r_c1",
+     "x": 340,
+     "y": 364
+    },
+    {
+     "id": "r_c2",
+     "x": 340,
+     "y": 600
+    },
+    {
+     "id": "r_c3",
+     "x": 340,
+     "y": 800
+    },
+    {
+     "id": "r_e1",
+     "x": 560,
+     "y": 479
+    },
+    {
+     "id": "r_e2",
+     "x": 560,
+     "y": 671
+    },
+    {
+     "id": "r_e3",
+     "x": 560,
+     "y": 800
+    },
+    {
+     "id": "r_z0",
+     "x": 42,
+     "y": 929
+    },
+    {
+     "id": "r_z1",
+     "x": 210,
+     "y": 929
+    },
+    {
+     "id": "r_z2",
+     "x": 340,
+     "y": 929
+    },
+    {
+     "id": "r_z3",
+     "x": 560,
+     "y": 929
+    }
+   ],
+   "edges": [
+    [
+     "r_gate",
+     "r_bell"
+    ],
+    [
+     "r_bell",
+     "r_b1"
+    ],
+    [
+     "r_b1",
+     "r_b2"
+    ],
+    [
+     "r_b2",
+     "r_b3"
+    ],
+    [
+     "r_b3",
+     "r_b4"
+    ],
+    [
+     "r_b1",
+     "r_w1"
+    ],
+    [
+     "r_w1",
+     "r_w2"
+    ],
+    [
+     "r_w2",
+     "r_z1"
+    ],
+    [
+     "r_b2",
+     "r_c1"
+    ],
+    [
+     "r_c1",
+     "r_c2"
+    ],
+    [
+     "r_c2",
+     "r_c3"
+    ],
+    [
+     "r_c3",
+     "r_z2"
+    ],
+    [
+     "r_b4",
+     "r_e1"
+    ],
+    [
+     "r_e1",
+     "r_e2"
+    ],
+    [
+     "r_e2",
+     "r_e3"
+    ],
+    [
+     "r_e3",
+     "r_z3"
+    ],
+    [
+     "r_w1",
+     "r_c1"
+    ],
+    [
+     "r_c2",
+     "r_e1"
+    ],
+    [
+     "r_w2",
+     "r_c2"
+    ],
+    [
+     "r_c3",
+     "r_e3"
+    ],
+    [
+     "r_z0",
+     "r_z1"
+    ],
+    [
+     "r_z1",
+     "r_z2"
+    ],
+    [
+     "r_z2",
+     "r_z3"
+    ]
+   ]
+  }
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "kind": "bar",
+ "description": "佛羅倫斯各家族在婚姻網路中的介數中心性",
+ "source": {
+  "text": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算",
+  "url": "https://doi.org/10.1086/230190",
+  "sample": "15 個家族、20 條婚姻連結",
+  "year": 1993
+ },
+ "x": {
+  "label": "家族"
+ },
+ "y": {
+  "label": "介數中心性（正規化）"
+ },
+ "series": [
+  {
+   "name": "家族",
+   "points": [
+    {
+     "x": "Medici",
+     "y": 0.521978021978022,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Guadagni",
+     "y": 0.2545787545787546,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Albizzi",
+     "y": 0.21245421245421245,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Salviati",
+     "y": 0.14285714285714288,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Ridolfi",
+     "y": 0.11355311355311355,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Bischeri",
+     "y": 0.1043956043956044,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Strozzi",
+     "y": 0.10256410256410257,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Barbadori",
+     "y": 0.09340659340659341,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Tornabuoni",
+     "y": 0.09157509157509157,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Castellani",
+     "y": 0.05494505494505495,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Peruzzi",
+     "y": 0.02197802197802198,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Acciaiuoli",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Pazzi",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Ginori",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    },
+    {
+     "x": "Lamberteschi",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993, American Journal of Sociology 98(6)；婚姻網路，本站以 networkx 計算"
+    }
+   ]
+  }
+ ]
+}

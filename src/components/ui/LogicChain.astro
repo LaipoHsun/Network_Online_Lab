@@ -1,0 +1,29 @@
+---
+// 邏輯鏈的 Astro 外殼：把文字裡的 $…$ 在建置時轉成 KaTeX HTML，再交給互動元件。
+// MDX 用法：<LogicChain steps={[{ kind: 'assumption', summary: '…', detail: '…$k_i$…' }, …]} removal={{ step: 0, effect: '…' }} />
+import 'katex/dist/katex.min.css';
+import LogicChainIsland from './LogicChain.svelte';
+import { texText } from '../../lib/ui/math';
+
+interface StepInput {
+  kind: 'assumption' | 'derivation' | 'result' | 'prediction';
+  summary: string;
+  detail?: string;
+  dependsOn?: number[];
+  critical?: boolean;
+}
+interface Props {
+  title?: string;
+  steps: StepInput[];
+  removal?: { step: number; effect: string };
+  initialOpen?: number[];
+  initialRemoved?: boolean;
+}
+const { title, steps, removal, initialOpen, initialRemoved } = Astro.props;
+const htmlSteps = steps.map((s) => ({
+  kind: s.kind, summaryHtml: texText(s.summary), detailHtml: s.detail ? texText(s.detail) : undefined,
+  dependsOn: s.dependsOn, critical: s.critical,
+}));
+const htmlRemoval = removal ? { step: removal.step, effectHtml: texText(removal.effect) } : undefined;
+---
+<LogicChainIsland client:visible {title} steps={htmlSteps} removal={htmlRemoval} {initialOpen} {initialRemoved} />

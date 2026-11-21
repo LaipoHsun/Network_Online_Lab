@@ -1,0 +1,26 @@
+---
+// 公式卡的 Astro 外殼：建置時把 TeX 轉成 HTML。
+// 公式裡用 \htmlData{key=k}{k_i} 標出可以高亮的符號，key 要和 symbols / live 的 key 一致。
+import 'katex/dist/katex.min.css';
+import FormulaCardIsland from './FormulaCard.svelte';
+import { tex, texText } from '../../lib/ui/math';
+
+interface Props {
+  title?: string;
+  formula: string;
+  symbols: { key: string; symbol: string; meaning: string }[];
+  range?: string;
+  related?: string;
+  live?: { key: string; label: string; digits?: number }[];
+  initialValues?: Record<string, number>;
+}
+const { title, formula, symbols, range, related, live, initialValues } = Astro.props;
+---
+<FormulaCardIsland client:visible
+  {title}
+  formulaHtml={tex(formula, true)}
+  symbols={symbols.map((s) => ({ key: s.key, symbolHtml: tex(s.symbol), meaningHtml: texText(s.meaning) }))}
+  rangeHtml={range ? texText(range) : undefined}
+  relatedHtml={related ? texText(related) : undefined}
+  live={live?.map((l) => ({ key: l.key, labelHtml: tex(l.label), digits: l.digits }))}
+  {initialValues} />

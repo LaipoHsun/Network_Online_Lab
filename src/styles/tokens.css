@@ -4,6 +4,8 @@
   --accent: #1D6F66; --accent-soft: #DBEAE6; --signal: #C8553D; --signal-soft: #F6E2DB;
   --college-sci: #5B8DB8; --college-socsci: #C7884A; --college-lib: #9A7BB5;
   --college-eng: #5E9E7E; --college-med: #C46A6A; --college-mgmt: #8E8E5A;
+  /* 校園地圖（草稿配色，待作者定稿） */
+  --map-grass: #E4EADB; --map-road: #D3D6CC; --map-walk: #E9EBE3; --map-water: #C9DDE0; --map-building: #F4F4EE; --map-roof: #C9CEC2; --map-tree: #8FAF8A;
   --font-display: "Noto Serif TC", "Songti TC", serif;
   --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -17,6 +19,7 @@
     --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
     --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
     --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
+    --map-grass: #1A2421; --map-road: #2A3433; --map-walk: #222C2B; --map-water: #1F3438; --map-building: #26302F; --map-roof: #3A4746; --map-tree: #3F5E48;
     color-scheme: dark;
   }
 }
@@ -25,6 +28,7 @@
   --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
   --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
   --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
+  --map-grass: #1A2421; --map-road: #2A3433; --map-walk: #222C2B; --map-water: #1F3438; --map-building: #26302F; --map-roof: #3A4746; --map-tree: #3F5E48;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -34,3 +38,4 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.35; text-wrap: bal
 a { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

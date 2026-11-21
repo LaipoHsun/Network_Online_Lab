@@ -1,0 +1,38 @@
+---
+// 揭曉圖的 Astro 外殼：在建置時從 data/build/<章>/<名稱>.json 讀資料（每筆都有 source）。
+// MDX 用法：<RevealChart data="playground/karate_degree" title="…一句結論…" predictId="…" />
+import RevealChartIsland from './RevealChart.svelte';
+
+interface Props {
+  /** data/build 底下的路徑，不含 .json，例如 'playground/karate_degree' */
+  data: string;
+  title: string;
+  predictId?: string;
+  predictAxis?: 'x' | 'y';
+  predictLabel?: string;
+  /** 自動加上平均數／中位數參考線（只對 distribution 有效） */
+  showMean?: boolean;
+  showMedian?: boolean;
+  revealed?: boolean | null;
+  demoPrediction?: unknown;
+}
+const { data, title, predictId, predictAxis, predictLabel, showMean, showMedian, revealed = null, demoPrediction = null } = Astro.props;
+
+const files = import.meta.glob<{ default: any }>('../../../data/build/**/*.json', { eager: true });
+const file = files[`../../../data/build/${data}.json`]?.default;
+if (!file) throw new Error(`RevealChart：找不到 data/build/${data}.json`);
+if (!file.source?.text) throw new Error(`RevealChart：data/build/${data}.json 缺少 source`);
+
+const kind = file.kind as 'line' | 'bar' | 'scatter' | 'distribution';
+const series = kind === 'distribution'
+  ? [{ name: file.description ?? '', points: file.histogram.map((p: { x: number; y: number }) => ({ x: p.x, y: p.y })) }]
+  : file.series.map((s: any) => ({ name: s.name, points: s.points.map((p: any) => ({ x: p.x, y: p.y, label: p.label })) }));
+const markers = [
+  ...(showMean && file.summary ? [{ axis: 'x', value: file.summary.mean, label: `平均 ${(+file.summary.mean).toFixed(2)}` }] : []),
+  ...(showMedian && file.summary ? [{ axis: 'x', value: file.summary.median, label: `中位數 ${file.summary.median}` }] : []),
+];
+---
+<RevealChartIsland client:visible
+  {title} {kind} {series} source={file.source}
+  xLabel={file.x.label} yLabel={file.y.label} logX={file.x.scale === 'log'} logY={file.y.scale === 'log'}
+  {predictId} {predictAxis} {predictLabel} {markers} {revealed} demoPrediction={demoPrediction as any} />

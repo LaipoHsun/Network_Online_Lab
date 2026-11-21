@@ -12,7 +12,9 @@
 ## 目前進度
 - 階段 1（骨架）已完成：Astro + Svelte + MDX、設計 tokens、首頁課程地圖、九章佔位頁、角色產生器與 `/playground/characters`、GitHub Pages 部署流程。
 - 階段 2（圖演算法庫）已完成：`src/lib/network`，期望值由 `data/scripts/networkx_expected.py` 產生到 `tests/fixtures/networkx/`；改了演算法或資料就重跑這支腳本（`python3 data/scripts/networkx_expected.py`）。
-- 下一步：階段 3「共用元件」（見 docs/design.md「給 Claude Code 的施工說明」）。
+- 階段 3（共用元件）已完成初版：小人引擎與雙視圖（`src/components/engine/`，模擬邏輯在 `src/lib/sim/campus.ts`）、Predict、LogicChain、FormulaCard、RevealChart（`src/components/ui/`），展示頁 `/playground`。章節要用引擎時，在 `src/components/chapters/` 寫一個 Svelte 元件傳入劇本（Astro 不能傳函式給 island），寫法參考 `src/components/playground/EngineDemo.svelte`。
+- 待作者決定：校園地圖定稿（目前 `src/data/campus.json` 與 `CampusMap.svelte` 是草稿，直向版由橫向縮放）、`--ill` 顏色。
+- 下一步：階段 4「第 6 章弱連結」。
 
 ## 內容
 - 不要自己寫或改任何研究數字。所有數字來自 `data/build/*.json`，每筆都有 `source`。
@@ -28,8 +30,8 @@
 - 所有套件版本寫死在 lockfile；TypeScript 維持 6.x（@astrojs/svelte 尚不支援 7）。
 
 ## 指令
-- `npm install`、`npm run dev`（http://localhost:4321）、`npm test`、`npm run build`。
-- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）。
+- `npm install`、`npm run dev`（http://localhost:4321；Astro 7 會在背景常駐，用 `npx astro dev stop` 停止）、`npm test`、`npm run build`。
+- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）。
 
 ## 完成的定義
 - `npm test` 和 `npm run build` 通過。

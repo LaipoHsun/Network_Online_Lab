@@ -1,0 +1,22 @@
+{
+  "name": "ai-network-online-lab",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.1"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.6",
+    "@astrojs/svelte": "^9.1.6",
+    "astro": "^7.4.13",
+    "svelte": "^5.59.1"
+  }
+}

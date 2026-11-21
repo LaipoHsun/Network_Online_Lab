@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CHAPTERS } from '../../data/chapters';
+import { renderCharacter, renderNode, randomCrowd, COLLEGE_LABEL, COLLEGES } from '../../lib/sprites/character';
+const crowd = randomCrowd(24, 2026);
+const states = ['idle', 'happy', 'sick', 'selected', 'removed'] as const;
+const stateLabel = { idle: '待機', happy: '開心', sick: '生病', selected: '被選中', removed: '被拿掉' };
+---
+<Base title="角色 · 網路實驗室">
+  <h1>小人角色</h1>
+  <p>規格見 <code>docs/characters.md</code>。所有小人都由同一個參數化產生器畫出，切換深淺主題時學院色會跟著變。</p>
+
+  <h2>各章主角</h2>
+  <div class="row">
+    {CHAPTERS.map((c) => (
+      <figure>
+        <div set:html={renderCharacter(c.hero.look, 'idle', { size: 72, title: c.hero.name })} />
+        <figcaption>{c.hero.name}<br /><small>{c.hero.dept} · 第 {c.n} 章</small></figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2>狀態</h2>
+  <div class="row">
+    {states.map((s) => (
+      <figure>
+        <div set:html={renderCharacter(CHAPTERS[8].hero.look, s, { size: 72 })} />
+        <figcaption>{stateLabel[s]}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2>學院色</h2>
+  <div class="row">
+    {COLLEGES.map((col) => (
+      <figure>
+        <div set:html={renderCharacter({ skin: 1, hair: 'short', hairColor: 0, college: col, accessory: 'none', year: 2 }, 'idle', { size: 56 })} />
+        <figcaption>{COLLEGE_LABEL[col]}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <h2>群眾（種子 2026）與網路視圖節點</h2>
+  <div class="row crowd">
+    {crowd.map((p) => <div set:html={renderCharacter(p, 'idle', { size: 48 })} />)}
+  </div>
+  <div class="row crowd">
+    {crowd.map((p) => <div set:html={renderNode(p, 28)} />)}
+  </div>
+</Base>
+<style>
+  .row { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: flex-end; margin-bottom: var(--space-6); }
+  figure { margin: 0; text-align: center; }
+  figcaption { font-size: 14px; line-height: 1.4; margin-top: 6px; }
+  small { color: var(--muted); }
+  .crowd { gap: var(--space-3); }
+</style>

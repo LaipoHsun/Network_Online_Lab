@@ -1,0 +1,36 @@
+/* 設計 tokens：顏色、字體、間距只能從這裡取用（見 docs/design.md「視覺語言」） */
+:root {
+  --bg: #F2F3EF; --panel: #FBFBF8; --ink: #1D2729; --muted: #5F6B6C; --line: #D9DDD5;
+  --accent: #1D6F66; --accent-soft: #DBEAE6; --signal: #C8553D; --signal-soft: #F6E2DB;
+  --college-sci: #5B8DB8; --college-socsci: #C7884A; --college-lib: #9A7BB5;
+  --college-eng: #5E9E7E; --college-med: #C46A6A; --college-mgmt: #8E8E5A;
+  --font-display: "Noto Serif TC", "Songti TC", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+  --radius: 12px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151B1C; --panel: #1C2425; --ink: #E5EBE8; --muted: #9AA8A6; --line: #2F3B3C;
+    --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
+    --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
+    --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151B1C; --panel: #1C2425; --ink: #E5EBE8; --muted: #9AA8A6; --line: #2F3B3C;
+  --accent: #5CBFB1; --accent-soft: #20393A; --signal: #EC8A6F; --signal-soft: #3A2721;
+  --college-sci: #7FAAD0; --college-socsci: #DDA36B; --college-lib: #B79BD0;
+  --college-eng: #7FBF9E; --college-med: #DB8B8B; --college-mgmt: #AEAE78;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.8; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.35; text-wrap: balance; }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

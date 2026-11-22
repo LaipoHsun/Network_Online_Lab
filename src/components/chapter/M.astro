@@ -1,0 +1,11 @@
+---
+// 行內公式（建置時用 KaTeX 繪製）：<M t="O_{ij}" />；display 時獨立一行。
+import 'katex/dist/katex.min.css';
+import { tex } from '../../lib/ui/math';
+interface Props { t: string; display?: boolean }
+const { t, display = false } = Astro.props;
+---
+<span class:list={['m', { display }]} set:html={tex(t, display)} />
+<style>
+  .display { display: block; overflow-x: auto; overflow-y: hidden; margin: var(--space-3) 0; }
+</style>

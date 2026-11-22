@@ -24,6 +24,7 @@ export type PredictAnswer =
   | { kind: 'number'; value: number; at: number }
   | { kind: 'curve'; xs: number[]; ys: number[]; at: number }
   | { kind: 'node'; node: number; label?: string; at: number }
+  | { kind: 'split'; labels: string[]; values: number[]; at: number }
   | { kind: 'skipped'; at: number };
 
 export const predictKey = (id: string) => `predict:${id}`;

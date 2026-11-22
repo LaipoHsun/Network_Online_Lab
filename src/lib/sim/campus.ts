@@ -165,6 +165,8 @@ export interface Script {
   meetProbability(a: Person, b: Person, location: CampusLocation, time: SlotTime, present: number): number;
   /** 一開始就認識的配對（例如室友）。 */
   initialTies?: [number, number][];
+  /** 「各做各的」地點：同在這裡不算相處、也不會認識（例如晚上的宿舍區）。 */
+  quietLocations?: string[];
 }
 
 export interface Tie { a: number; b: number; since: number; weight: number }
@@ -231,7 +233,7 @@ export class CampusSim {
     const newTies: [number, number][] = [];
     for (const [id, members] of groups) {
       const loc = this.location(id);
-      if (loc.kind === 'path' || loc.kind === 'landmark') continue;
+      if (loc.kind === 'path' || loc.kind === 'landmark' || this.script.quietLocations?.includes(id)) continue;
       for (let x = 0; x < members.length; x++) for (let y = x + 1; y < members.length; y++) {
         const a = members[x], b = members[y], key = pairKey(a, b);
         const tie = this.ties.get(key);

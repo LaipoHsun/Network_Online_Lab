@@ -1,0 +1,16 @@
+---
+// 八段式骨架的一段（docs/design.md「每章敘事骨架」）。n = 1..8，標題固定。
+import { SECTION_TITLES } from './sections';
+interface Props { n: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8; title?: string }
+const { n, title } = Astro.props;
+const MARK = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧'][n - 1];
+---
+<section id={`s${n}`} data-section={n} class="sec" aria-labelledby={`s${n}-h`}>
+  <h2 id={`s${n}-h`}><span class="mark">{MARK}</span>{title ?? SECTION_TITLES[n - 1]}</h2>
+  <slot />
+</section>
+<style>
+  .sec { padding: var(--space-6) 0 var(--space-8); border-top: 1px solid var(--line); scroll-margin-top: 64px; }
+  h2 { font-size: 24px; margin: 0 0 var(--space-4); display: flex; gap: var(--space-2); align-items: baseline; }
+  .mark { color: var(--accent); }
+</style>

@@ -197,7 +197,8 @@ export class CampusScene {
       for (const t of f.ties) {
         if (f.highlightEdges.has(t.a < t.b ? `${t.a}-${t.b}` : `${t.b}-${t.a}`)) { hot.push(t); continue; }
         if (t.grow < 1) { growing.push(t); continue; }
-        const r = e > 0.5 ? Math.sqrt(t.weight / maxW) : 0;
+        // 線的粗細 = 累積相處時間（兩個視圖都一樣）
+        const r = Math.sqrt(t.weight / maxW);
         buckets[r > 0.66 ? 2 : r > 0.33 ? 1 : 0][2].push(t);
       }
       const alphaScale = f.showEdges ? 1 : e;

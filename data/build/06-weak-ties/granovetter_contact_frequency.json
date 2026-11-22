@@ -1,0 +1,44 @@
+{
+ "kind": "bar",
+ "description": "透過人脈找到工作的人，當時多常和介紹人見面",
+ "source": {
+  "text": "Granovetter 1973, The Strength of Weak Ties, American Journal of Sociology 78(6), 頁 1371",
+  "url": "https://doi.org/10.1086/225469",
+  "sample": "波士頓郊區專業、技術與管理職換工作者中，透過人脈找到工作的 54 人（N = 54）",
+  "year": 1973
+ },
+ "digitized": false,
+ "definitions": {
+  "常常見面": "每週至少兩次",
+  "偶爾見面": "一年多於一次、但每週少於兩次",
+  "很少見面": "一年一次或更少"
+ },
+ "x": {
+  "label": "和介紹人見面的頻率"
+ },
+ "y": {
+  "label": "比例（%）"
+ },
+ "series": [
+  {
+   "name": "Granovetter 1973",
+   "points": [
+    {
+     "x": "常常見面",
+     "y": 16.7,
+     "source": "Granovetter 1973, American Journal of Sociology 78(6), p. 1371"
+    },
+    {
+     "x": "偶爾見面",
+     "y": 55.6,
+     "source": "Granovetter 1973, American Journal of Sociology 78(6), p. 1371"
+    },
+    {
+     "x": "很少見面",
+     "y": 27.8,
+     "source": "Granovetter 1973, American Journal of Sociology 78(6), p. 1371"
+    }
+   ]
+  }
+ ]
+}

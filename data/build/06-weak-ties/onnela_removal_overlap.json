@@ -1,0 +1,497 @@
+{
+ "kind": "line",
+ "description": "依鄰居重疊度 O排序剪斷連結時，最大連通群的相對大小",
+ "source": {
+  "text": "Onnela 等人 2007, Structure and tie strengths in mobile communication networks, PNAS 104(18), Fig. 3（由圖讀取，約略值）",
+  "url": "https://doi.org/10.1073/pnas.0610245104",
+  "sample": "某國約 20% 人口 18 週的手機通話紀錄",
+  "year": 2007
+ },
+ "digitized": true,
+ "digitization": {
+  "figure": "Fig. 3B",
+  "method": "由 arXiv 版 PDF 第 12 頁（Fig. 3）以 300 dpi 繪製後依顏色萃取：紅色為先剪弱連結、黑色為先剪強連結；座標框由長黑線偵測，每隔 f = 0.02 取該欄曲線像素的中位數，剔除落在文字標籤上的離群點，小於 0.02 視為 0（標記半徑造成的偏差）。為約略值。"
+ },
+ "critical_points": {
+  "text": "有限尺寸標度給出的臨界點（先剪弱連結）：f_c^w = 0.80 ± 0.04、f_c^O = 0.62 ± 0.05；先剪強連結時沒有相變",
+  "source": "Onnela et al. 2007, arXiv 版 p. 6"
+ },
+ "x": {
+  "label": "剪掉的連結比例 f"
+ },
+ "y": {
+  "label": "最大連通群的相對大小 R"
+ },
+ "series": [
+  {
+   "name": "先剪弱的",
+   "points": [
+    {
+     "x": 0.02,
+     "y": 0.969,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.04,
+     "y": 0.952,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.06,
+     "y": 0.928,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.08,
+     "y": 0.909,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.1,
+     "y": 0.892,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.12,
+     "y": 0.862,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.14,
+     "y": 0.827,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.16,
+     "y": 0.8,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.18,
+     "y": 0.774,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.2,
+     "y": 0.733,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.22,
+     "y": 0.704,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.24,
+     "y": 0.673,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.26,
+     "y": 0.629,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.28,
+     "y": 0.596,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.3,
+     "y": 0.582,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.32,
+     "y": 0.575,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.38,
+     "y": 0.476,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.4,
+     "y": 0.457,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.42,
+     "y": 0.433,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.44,
+     "y": 0.401,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.46,
+     "y": 0.351,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.48,
+     "y": 0.308,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.5,
+     "y": 0.262,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.52,
+     "y": 0.214,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.54,
+     "y": 0.144,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.56,
+     "y": 0.099,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.58,
+     "y": 0.048,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.6,
+     "y": 0.024,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.62,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.64,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.66,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.68,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.7,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.72,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.74,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.76,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.78,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.8,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.82,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.84,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.86,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.88,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.9,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.92,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.94,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.96,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.98,
+     "y": 0.0,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    }
+   ]
+  },
+  {
+   "name": "先剪強的",
+   "points": [
+    {
+     "x": 0.04,
+     "y": 0.978,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.06,
+     "y": 0.97,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.08,
+     "y": 0.969,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.1,
+     "y": 0.966,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.12,
+     "y": 0.95,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.14,
+     "y": 0.938,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.16,
+     "y": 0.93,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.18,
+     "y": 0.923,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.2,
+     "y": 0.918,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.22,
+     "y": 0.889,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.24,
+     "y": 0.88,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.26,
+     "y": 0.846,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.28,
+     "y": 0.834,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.3,
+     "y": 0.822,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.32,
+     "y": 0.803,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.34,
+     "y": 0.776,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.36,
+     "y": 0.764,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.38,
+     "y": 0.748,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.4,
+     "y": 0.714,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.42,
+     "y": 0.7,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.44,
+     "y": 0.684,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.46,
+     "y": 0.661,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.48,
+     "y": 0.639,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.5,
+     "y": 0.613,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.52,
+     "y": 0.572,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.54,
+     "y": 0.538,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.56,
+     "y": 0.512,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.58,
+     "y": 0.48,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.6,
+     "y": 0.433,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.62,
+     "y": 0.404,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.64,
+     "y": 0.387,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.66,
+     "y": 0.353,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.68,
+     "y": 0.394,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.72,
+     "y": 0.284,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.74,
+     "y": 0.245,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.76,
+     "y": 0.226,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.78,
+     "y": 0.203,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.8,
+     "y": 0.163,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.82,
+     "y": 0.144,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.84,
+     "y": 0.12,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.86,
+     "y": 0.084,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.88,
+     "y": 0.06,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.9,
+     "y": 0.046,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.92,
+     "y": 0.041,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    },
+    {
+     "x": 0.94,
+     "y": 0.029,
+     "source": "Onnela et al. 2007, PNAS 104(18), Fig. 3"
+    }
+   ]
+  }
+ ]
+}

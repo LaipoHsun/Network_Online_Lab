@@ -1,0 +1,102 @@
+---
+// 章節頁版型：章名、八段進度條（可點擊跳轉）、前置概念（懸浮說明）、內文。
+// 讀到第 ⑧ 段時把「讀過這一章」記在 localStorage（讀不到也沒關係）。
+import Base from './Base.astro';
+import { renderCharacter } from '../lib/sprites/character';
+import type { Chapter } from '../data/chapters';
+import { GLOSSARY } from '../data/glossary';
+import { SECTION_TITLES } from '../components/chapter/sections';
+
+interface Props { chapter: Chapter; prereqTerms?: string[] }
+const { chapter: c, prereqTerms = [] } = Astro.props;
+const prereqs = prereqTerms.map((id) => ({ id, ...GLOSSARY[id] }));
+---
+<Base title={`第 ${c.n} 章 · ${c.title} · 網路實驗室`} description={`${c.concept}：${c.title}`}>
+  <article class="chapter" data-slug={c.slug}>
+    <header class="ch-head">
+      <div class="sprite" set:html={renderCharacter(c.hero.look, 'idle', { size: 72, title: `${c.hero.name}（${c.hero.dept}）` })} />
+      <div>
+        <p class="kicker">第 {c.n} 章 · {c.concept}</p>
+        <h1>{c.title}</h1>
+        <p class="meta">約 {c.minutes} 分鐘 · 主角：{c.hero.name}（{c.hero.dept}）</p>
+        {prereqs.length > 0 && (
+          <p class="prereq">前置概念：
+            {prereqs.map((p, i) => (
+              <>
+                <button type="button" class="pre" popovertarget={`pre-${p.id}`}>{p.zh}</button>
+                <span id={`pre-${p.id}`} popover class="pre-pop" role="tooltip"><b>{p.zh}</b>（{p.en}，第 {p.chapter} 章）<br />{p.def}</span>
+                {i < prereqs.length - 1 && '、'}
+              </>
+            ))}
+          </p>
+        )}
+      </div>
+    </header>
+
+    <nav class="progress" aria-label="本章段落">
+      <ol>
+        {SECTION_TITLES.map((t, i) => (
+          <li><a href={`#s${i + 1}`} data-to={i + 1}><span class="dot" aria-hidden="true">{i + 1}</span><span class="t">{t}</span></a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <slot />
+  </article>
+</Base>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.progress');
+  const article = document.querySelector<HTMLElement>('.chapter');
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.progress a')];
+  const sections = [...document.querySelectorAll<HTMLElement>('section[data-section]')];
+  // 目前段落 = 視窗上方三分之一經過的最後一段（捲動時用 requestAnimationFrame 節流）
+  let ticking = false;
+  function update() {
+    ticking = false;
+    const y = window.innerHeight / 3;
+    let current = 1;
+    for (const s of sections) if (s.getBoundingClientRect().top < y) current = +s.dataset.section!;
+    links.forEach((a) => {
+      const n = +a.dataset.to!;
+      if (n === current) a.setAttribute('aria-current', 'step'); else a.removeAttribute('aria-current');
+      a.classList.toggle('done', n < current);
+    });
+  }
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+  // 讀到第 ⑧ 段就記下「讀過這一章」
+  const last = sections.find((s) => s.dataset.section === '8');
+  if (last && article) {
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      try {
+        const key = 'network-lab:read';
+        const read: string[] = JSON.parse(localStorage.getItem(key) ?? '[]');
+        if (!read.includes(article.dataset.slug!)) localStorage.setItem(key, JSON.stringify([...read, article.dataset.slug]));
+      } catch { /* 存不了就算了 */ }
+      io.disconnect();
+    });
+    io.observe(last);
+  }
+  if (nav) nav.dataset.ready = 'true';
+</script>
+
+<style>
+  .chapter { max-width: 1180px; }
+  .ch-head { display: flex; gap: var(--space-4); align-items: flex-start; margin-bottom: var(--space-4); }
+  .sprite { flex: none; background: var(--accent-soft); border-radius: 12px; padding: var(--space-2); }
+  .kicker { margin: 0; color: var(--accent); font-size: 14px; }
+  h1 { font-size: clamp(26px, 4vw, 36px); margin: var(--space-1) 0; }
+  .meta, .prereq { margin: 0; color: var(--muted); font-size: 14px; }
+  .pre { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; }
+  .pre-pop { max-width: min(320px, calc(100vw - 32px)); margin: auto; padding: var(--space-3) var(--space-4); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); font-size: 15px; line-height: 1.7; }
+  .progress { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); margin: 0 calc(-1 * clamp(16px, 4vw, 48px)); padding: var(--space-2) clamp(16px, 4vw, 48px); }
+  .progress ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+  .progress a { display: flex; flex-direction: column; align-items: center; gap: 2px; text-decoration: none; color: var(--muted); font-size: 12px; line-height: 1.3; padding-top: 6px; border-top: 3px solid var(--line); }
+  .progress a.done { border-top-color: var(--accent-soft); }
+  .progress a[aria-current] { border-top-color: var(--accent); color: var(--ink); font-weight: 500; }
+  .dot { font-family: var(--font-mono); font-size: 11px; }
+  .t { text-align: center; }
+  @media (max-width: 700px) { .t { display: none; } .progress a { font-size: 13px; } }
+</style>

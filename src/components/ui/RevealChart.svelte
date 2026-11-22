@@ -7,7 +7,7 @@
   import { type PredictAnswer, loadPrediction, onPrediction } from '../../lib/ui/storage';
   import { prefersReducedMotion } from '../../lib/ui/theme';
 
-  export interface ChartPoint { x: number | string; y: number; label?: string }
+  export interface ChartPoint { x: number | string; y: number; label?: string; ci?: [number, number] | null }
   export interface ChartSeries { name: string; points: ChartPoint[] }
   export interface ChartSource { text: string; url?: string; sample?: string; year?: number }
 
@@ -74,8 +74,9 @@
   });
   const yScale = $derived.by(() => {
     const ys = allPts.map((p) => p.y);
-    const extra = prediction?.kind === 'curve' ? prediction.ys : prediction?.kind === 'number' && predictAxis === 'y' ? [prediction.value] : [];
-    const hi = Math.max(...ys, ...extra);
+    const extra = prediction?.kind === 'curve' ? prediction.ys : prediction?.kind === 'split' ? prediction.values : prediction?.kind === 'number' && predictAxis === 'y' ? [prediction.value] : [];
+    const cis = allPts.flatMap((p) => (p.ci ? [p.ci[1]] : []));
+    const hi = Math.max(...ys, ...extra, ...cis);
     return logY ? scaleLog().domain([Math.min(...ys.filter((y) => y > 0)), hi]).range([height - M.b, M.t])
       : scaleLinear().domain([0, hi]).nice().range([height - M.b, M.t]);
   });
@@ -138,6 +139,7 @@
           {#each s.points as p}<circle cx={xOf(p.x)} cy={yScale(p.y)} r="3" class="dot" style:fill={PALETTE[si % 3]} />{/each}
         {:else}
           {#each s.points as p, pi}
+            {#if p.ci}<line x1={xOf(p.x)} x2={xOf(p.x)} y1={yScale(p.ci[0])} y2={yScale(p.ci[1])} class="ci" style:stroke={PALETTE[si % 3]} style:transition-delay="{pi * 15}ms" />{/if}
             <circle cx={xOf(p.x)} cy={yScale(p.y)} r="4.5" class="dot scatter" style:fill={PALETTE[si % 3]} style:transition-delay="{pi * 15}ms"><title>{p.label ?? ''} ({p.x}, {fmt(p.y)})</title></circle>
           {/each}
         {/if}
@@ -162,6 +164,13 @@
         <line x1={M.l} x2={width - M.r} y1={yScale(prediction.value)} y2={yScale(prediction.value)} class="pred" />
         <text x={M.l + 4} y={yScale(prediction.value) - 6} class="pred-label">{predictLabel}：{prediction.value}</text>
       {/if}
+    {:else if prediction?.kind === 'split' && categorical}
+      {#each prediction.labels as lab, i}
+        {#if xBand(lab) !== undefined}
+          <line x1={xBand(lab)! - 4} x2={xBand(lab)! + xBand.bandwidth() + 4} y1={yScale(prediction.values[i])} y2={yScale(prediction.values[i])} class="pred" />
+          <text x={xBand(lab)! + xBand.bandwidth() / 2} y={yScale(prediction.values[i]) - 6} text-anchor="middle" class="pred-label">{predictLabel} {prediction.values[i]}</text>
+        {/if}
+      {/each}
     {:else if prediction?.kind === 'curve'}
       <path d={predPath} class="pred" fill="none" />
     {/if}
@@ -198,6 +207,8 @@
   .line { fill: none; stroke-width: 2.5; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1400ms ease-in-out; }
   .dot { opacity: 0; transition: opacity 400ms ease-in-out 900ms; }
   .scatter { transition-duration: 400ms; fill-opacity: 0.75; }
+  .ci { stroke-width: 1.5; opacity: 0; transition: opacity 400ms ease-in-out 900ms; }
+  .shown .ci { opacity: 0.6; }
   .series-label, .marker-label { font-size: 12px; opacity: 0; transition: opacity 400ms 1200ms; }
   .marker { stroke: var(--ink); stroke-width: 1; opacity: 0; transition: opacity 400ms 900ms; }
   .marker-label { fill: var(--ink); }

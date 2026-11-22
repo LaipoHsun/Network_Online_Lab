@@ -1,0 +1,17 @@
+---
+// 術語：首次出現時中英並列（first），點一下看一句定義（docs/design.md「章節內導覽」）。
+// MDX：<Term id="weak-tie" first />、之後只寫 <Term id="weak-tie" />
+import { GLOSSARY } from '../../data/glossary';
+interface Props { id: string; first?: boolean }
+const { id, first = false } = Astro.props;
+const t = GLOSSARY[id];
+if (!t) throw new Error(`術語表沒有 ${id}`);
+const pid = `term-${id}-${Math.abs([...Astro.url.pathname + id + first].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7))}-${first ? 'f' : 'n'}`;
+---
+<button type="button" class="term" popovertarget={pid} aria-describedby={pid}>{t.zh}{first && <span class="en">（{t.en}）</span>}</button><span id={pid} popover class="term-pop" role="tooltip"><b>{t.zh}</b> <i>{t.en}</i><br />{t.def}</span>
+<style>
+  .term { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: help; text-decoration: underline dotted var(--accent); text-underline-offset: 4px; }
+  .en { color: var(--muted); }
+  .term-pop { max-width: min(320px, calc(100vw - 32px)); margin: auto; padding: var(--space-3) var(--space-4); border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); font-size: 15px; line-height: 1.7; box-shadow: 0 6px 24px color-mix(in srgb, var(--ink) 15%, transparent); }
+  .term-pop i { color: var(--muted); font-style: normal; font-family: var(--font-mono); font-size: 13px; }
+</style>

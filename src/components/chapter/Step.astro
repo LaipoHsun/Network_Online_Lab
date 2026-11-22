@@ -1,0 +1,24 @@
+---
+// 捲動敘事的一步：桌機左欄文字、右欄視覺（捲動時視覺黏在畫面上）；手機上視覺在前、文字在後。
+// MDX：<Step><div slot="visual"><JobScene client:visible /></div> 文字… </Step>
+// wide：沒有視覺時，文字也維持左欄寬度；full：內容橫跨兩欄（例如邏輯鏈、揭曉圖）。
+interface Props { full?: boolean }
+const { full = false } = Astro.props;
+const hasVisual = Astro.slots.has('visual');
+---
+<div class:list={['step', { 'has-visual': hasVisual, full }]}>
+  <div class="text"><slot /></div>
+  {hasVisual && <div class="visual"><div class="sticky"><slot name="visual" /></div></div>}
+</div>
+<style>
+  .step { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); margin: var(--space-4) 0; }
+  .text { max-width: 36em; }
+  .full .text { max-width: none; }
+  .text :global(p) { margin: 0 0 var(--space-4); }
+  .has-visual .visual { order: -1; }
+  @media (min-width: 960px) {
+    .step.has-visual { grid-template-columns: minmax(0, 34em) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
+    .has-visual .visual { order: 0; align-self: stretch; }
+    .sticky { position: sticky; top: 64px; }
+  }
+</style>

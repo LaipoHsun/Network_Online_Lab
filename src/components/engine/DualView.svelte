@@ -36,6 +36,8 @@
     live?: (g: Graph, sim: CampusSim) => Record<string, number>;
     /** 公式卡滑過符號 key 時要高亮哪些人、哪些連結 */
     highlight?: (key: string, g: Graph) => Highlight | null;
+    /** 章節場景要持續圈起來的人（例如已經知道職缺的人），每幀讀一次 */
+    ringed?: (i: number) => boolean;
     /** 網路視圖的節點直徑（8–28 px） */
     nodeSize?: (i: number, g: Graph) => number;
     onslot?: (sim: CampusSim) => void;
@@ -43,7 +45,7 @@
 
   let {
     script, layouts, label, active = null, view = $bindable('campus'), autoplay = true, initialSlot = 0,
-    showFps = false, metric, stateOf, live, highlight, nodeSize, onslot,
+    showFps = false, metric, stateOf, live, highlight, ringed, nodeSize, onslot,
   }: Props = $props();
 
   const SPEEDS = [1, 4, 16] as const;
@@ -75,7 +77,8 @@
   let scene: CampusScene | null = null;
   const sim = new CampusSim(script);
   const n = script.people.length;
-  let playhead = initialSlot;
+  // 不自動播放時停在該時段結束：大家已經走到目的地（和拖時間軸的行為一致）
+  let playhead = autoplay ? initialSlot : initialSlot + 0.999;
   let ties: Tie[] = [];
   let graph: Graph = sim.graph();
   let routes: Point[][] = [];
@@ -201,7 +204,8 @@
     scene.view = { x: mapT.x * scene.fit, y: mapT.y * scene.fit, k: mapT.k };
     scene.render({
       campus, net, viewT, walking, states, ties: frameTies, showEdges, selected,
-      highlightNodes: hiNodes, highlightEdges: hiEdges, talking, nodeSize: sizes, now, reducedMotion: reduced,
+      highlightNodes: ringed ? new Set([...hiNodes, ...script.people.map((_, i) => i).filter((i) => ringed(i))]) : hiNodes,
+      highlightEdges: hiEdges, talking, nodeSize: sizes, now, reducedMotion: reduced,
     });
     if (selected !== null) {
       const p = scene.screenPos(selected);

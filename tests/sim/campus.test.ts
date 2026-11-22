@@ -113,3 +113,15 @@ describe('群眾', () => {
     for (const p of a) expect(p.college).toBe(p.look.college);
   });
 });
+
+describe('quietLocations', () => {
+  it('在安靜地點同處不算相處、也不會認識', () => {
+    const base = demoScript(30);
+    const s = new CampusSim({ ...base, meetProbability: () => 1, where: () => 'dorm_m', quietLocations: ['dorm_m'] });
+    s.seek(20);
+    expect(s.currentTies()).toEqual([]);
+    const t = new CampusSim({ ...base, meetProbability: () => 1, where: () => 'dorm_m', initialTies: [[0, 1]], quietLocations: ['dorm_m'] });
+    t.seek(20);
+    expect(t.currentTies()[0].weight).toBe(0);
+  });
+});

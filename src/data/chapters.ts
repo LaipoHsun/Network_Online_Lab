@@ -23,7 +23,7 @@ export const CHAPTERS: Chapter[] = [
     hero: { name: '宜蓁', dept: '資工三', look: { skin: 1, hair: 'ponytail', hairColor: 2, college: 'eng', accessory: 'headphones', year: 3 } } },
   { n: 5, slug: '05-friendship-paradox', title: '為什麼你的朋友好像都比你受歡迎？', concept: '友誼悖論（friendship paradox）', prereq: ['度分布'], minutes: 20, status: 'planned',
     hero: { name: '家瑄', dept: '社工一', look: { skin: 3, hair: 'curly', hairColor: 0, college: 'socsci', accessory: 'backpack', year: 1 } } },
-  { n: 6, slug: '06-weak-ties', title: '暑期實習，是誰介紹的？', concept: '弱連結的力量（strength of weak ties）', prereq: ['聚集係數', '小世界'], minutes: 30, status: 'planned',
+  { n: 6, slug: '06-weak-ties', title: '暑期實習，是誰介紹的？', concept: '弱連結的力量（strength of weak ties）', prereq: ['聚集係數', '小世界'], minutes: 30, status: 'in-progress',
     hero: { name: '小瑜', dept: '經濟三', look: { skin: 2, hair: 'short', hairColor: 1, college: 'socsci', accessory: 'backpack', year: 3 } } },
   { n: 7, slug: '07-centrality', title: '系學會的消息，為什麼都經過他？', concept: '中心性（centrality）', prereq: ['距離', '橋'], minutes: 25, status: 'planned',
     hero: { name: '子軒', dept: '政治二', look: { skin: 1, hair: 'buzz', hairColor: 0, college: 'socsci', accessory: 'cap', year: 2 } } },

@@ -8,7 +8,7 @@
   interface Props {
     /** 儲存用的 id，例如 '01-degree/mean-friends'；揭曉圖用同一個 id */
     id: string;
-    kind: 'number' | 'curve' | 'node';
+    kind: 'number' | 'curve' | 'node' | 'split';
     question: string;
     hint?: string;
     // number
@@ -17,6 +17,8 @@
     xs?: number[]; yMin?: number; yMax?: number; xLabel?: string; yLabel?: string; logX?: boolean;
     // node
     n?: number; edges?: [number, number][]; labels?: string[];
+    // split：把 100% 分給幾個類別（例如常常／偶爾／很少見面）
+    categories?: string[];
     /** 存不存 localStorage（展示頁可以關掉） */
     persist?: boolean;
     /** 展示用：一開始的答案 */
@@ -28,7 +30,7 @@
     id, kind, question, hint,
     min = 0, max = 10, step = 1, unit = '', initial,
     xs = [], yMin = 0, yMax = 1, xLabel = '', yLabel = '', logX = false,
-    n = 0, edges = [], labels = [],
+    n = 0, edges = [], labels = [], categories = [],
     persist = true, demoAnswer = null, allowReset = false,
   }: Props = $props();
 
@@ -37,6 +39,9 @@
   let value = $state(initial ?? Math.round((min + max) / 2 / step) * step);
   let ys = $state<number[]>(xs.map(() => (yMin + yMax) / 2));
   let picked = $state<number | null>(null);
+  // 分界點（累積百分比），預設平均分配
+  let cuts = $state<number[]>(categories.slice(1).map((_, i) => Math.round(((i + 1) * 100) / categories.length)));
+  const shares = $derived(categories.map((_, i) => (i === categories.length - 1 ? 100 : cuts[i]) - (i === 0 ? 0 : cuts[i - 1])));
   let focusNode = $state(0);
   const locked = $derived(answer !== null);
 
@@ -48,6 +53,7 @@
     if (answer?.kind === 'number') value = answer.value;
     if (answer?.kind === 'curve') ys = [...answer.ys];
     if (answer?.kind === 'node') picked = answer.node;
+    if (answer?.kind === 'split') cuts = answer.values.slice(0, -1).map((_, i) => answer!.kind === 'split' ? answer.values.slice(0, i + 1).reduce((s, v) => s + v, 0) : 0);
     if (kind === 'node') layoutNodes();
   });
 
@@ -55,6 +61,7 @@
     let a: PredictAnswer;
     if (kind === 'number') a = { kind: 'number', value, at: Date.now() };
     else if (kind === 'curve') a = { kind: 'curve', xs, ys: [...ys], at: Date.now() };
+    else if (kind === 'split') a = { kind: 'split', labels: [...categories], values: [...shares], at: Date.now() };
     else { if (picked === null) return; a = { kind: 'node', node: picked, label: labels[picked], at: Date.now() }; }
     answer = a;
     if (persist) savePrediction(id, a);
@@ -97,6 +104,27 @@
   }
   const curvePath = $derived(xs.map((x, i) => `${i ? 'L' : 'M'}${xPos(x).toFixed(1)} ${yPos(ys[i]).toFixed(1)}`).join(''));
   const fmtX = (x: number) => (x < 0.01 ? x.toExponential(0) : String(x));
+
+  // ---- 比例條
+  let barEl: HTMLDivElement;
+  let dragging = -1;
+  function setCut(k: number, v: number) {
+    const lo = k === 0 ? 0 : cuts[k - 1], hi = k === cuts.length - 1 ? 100 : cuts[k + 1];
+    cuts[k] = Math.max(lo, Math.min(hi, Math.round(v)));
+  }
+  function barMove(e: PointerEvent) {
+    if (dragging < 0 || locked) return;
+    const r = barEl.getBoundingClientRect();
+    setCut(dragging, ((e.clientX - r.left) / r.width) * 100);
+  }
+  function cutKey(k: number, e: KeyboardEvent) {
+    if (locked) return;
+    const step = e.shiftKey ? 5 : 1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') setCut(k, cuts[k] + step);
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') setCut(k, cuts[k] - step);
+    else return;
+    e.preventDefault();
+  }
 
   // ---- 點一個人
   type N = SimulationNodeDatum & { i: number };
@@ -156,6 +184,23 @@
       {/each}
     </svg>
     <p class="hint">{yLabel}：用滑鼠或手指在圖上畫，或用方向鍵調整每個點。</p>
+  {:else if kind === 'split'}
+    <div class="split" bind:this={barEl} onpointermove={barMove} onpointerup={() => (dragging = -1)} onpointercancel={() => (dragging = -1)}>
+      {#each categories as c, i}
+        <div class="seg" style:width="{shares[i]}%" data-i={i % 3}>
+          <span class="seg-label">{c}</span><span class="num seg-val">{shares[i]}%</span>
+        </div>
+      {/each}
+      {#each cuts as v, k}
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+        <div class="cut" role="slider" tabindex={locked ? -1 : 0} style:left="{v}%"
+          aria-label="{categories[k]}和{categories[k + 1]}的分界" aria-valuemin={0} aria-valuemax={100} aria-valuenow={v}
+          aria-valuetext="{categories.map((c, i) => `${c} ${shares[i]}%`).join('，')}" aria-readonly={locked}
+          onpointerdown={(e) => { if (locked) return; dragging = k; barEl.setPointerCapture(e.pointerId); }}
+          onkeydown={(e) => cutKey(k, e)}></div>
+      {/each}
+    </div>
+    <p class="hint">拖曳分界線（或用方向鍵、Shift＋方向鍵一次 5%）分配 100%。</p>
   {:else}
     <svg class="net" viewBox="0 0 {NW} {NH}" role="radiogroup" aria-labelledby="{uid}-q">
       {#each edges as [a, b]}
@@ -207,6 +252,17 @@
   .node { fill: var(--accent); stroke: var(--panel); stroke-width: 1.5; cursor: pointer; }
   .node.picked { fill: var(--signal); }
   [data-locked="true"] .node { cursor: default; }
+  .split { position: relative; display: flex; height: 64px; margin: var(--space-3) 0 var(--space-1); border-radius: 8px; overflow: visible; touch-action: none; user-select: none; }
+  .seg { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; min-width: 0; line-height: 1.3; color: var(--ink); }
+  .seg[data-i="0"] { background: var(--accent); color: var(--panel); border-radius: 8px 0 0 8px; }
+  .seg[data-i="1"] { background: var(--accent-soft); }
+  .seg[data-i="2"] { background: var(--bg); border: 1px solid var(--line); border-radius: 0 8px 8px 0; }
+  .seg-label { font-size: 13px; white-space: nowrap; }
+  .seg-val { font-size: 16px; font-weight: 500; }
+  .cut { position: absolute; top: -6px; bottom: -6px; width: 14px; margin-left: -7px; cursor: ew-resize; display: flex; justify-content: center; }
+  .cut::before { content: ''; width: 4px; border-radius: 2px; background: var(--signal); }
+  .cut:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; border-radius: 4px; }
+  [data-locked="true"] .cut { cursor: default; }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
   button { font: inherit; font-size: 15px; border-radius: 8px; padding: 6px 14px; min-height: 36px; cursor: pointer; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
   .primary { background: var(--signal); border-color: var(--signal); color: var(--panel); }

@@ -1,0 +1,26 @@
+---
+// 章尾「下一個問題」卡片：用本章模型的限制引出另一章。
+import { CHAPTERS } from '../../data/chapters';
+import { renderCharacter } from '../../lib/sprites/character';
+interface Props { to: number }
+const next = CHAPTERS.find((c) => c.n === Astro.props.to)!;
+const base = import.meta.env.BASE_URL;
+const ready = next.status !== 'planned';
+---
+<aside class="next" aria-label="下一個問題">
+  <div class="sprite" set:html={renderCharacter(next.hero.look, 'idle', { size: 54, title: next.hero.name })} />
+  <div>
+    <p class="label">下一個問題</p>
+    <p class="q"><slot /></p>
+    {ready
+      ? <a href={`${base}s1/${next.slug}/`}>第 {next.n} 章：{next.title} →</a>
+      : <span class="soon">第 {next.n} 章：{next.title}（製作中）</span>}
+  </div>
+</aside>
+<style>
+  .next { display: flex; gap: var(--space-4); align-items: flex-start; background: var(--accent-soft); border-radius: var(--radius); padding: var(--space-4); margin-top: var(--space-6); }
+  .sprite { flex: none; }
+  .label { margin: 0; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .q { margin: var(--space-1) 0 var(--space-2); font-family: var(--font-display); font-size: 19px; font-weight: 600; line-height: 1.5; }
+  .soon { color: var(--muted); font-size: 15px; }
+</style>

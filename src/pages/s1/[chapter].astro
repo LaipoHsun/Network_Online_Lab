@@ -1,13 +1,24 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Chapter from '../../layouts/Chapter.astro';
 import { CHAPTERS } from '../../data/chapters';
 export function getStaticPaths() {
   return CHAPTERS.map((c) => ({ params: { chapter: c.slug }, props: { c } }));
 }
 const { c } = Astro.props;
+// 章節內文：src/content/chapters/<slug>.mdx（還沒有就顯示佔位頁）
+const modules = import.meta.glob<{ default: any; frontmatter?: { prereqTerms?: string[] } }>('../../content/chapters/*.mdx', { eager: true });
+const mod = modules[`../../content/chapters/${c.slug}.mdx`];
+const Content = mod?.default;
 ---
-<Base title={`第 ${c.n} 章 · ${c.title}`}>
-  <p>第 {c.n} 章 · {c.concept}</p>
-  <h1>{c.title}</h1>
-  <p>這一章還在製作中。規格見 <code>docs/chapters/{c.slug}.md</code>。</p>
-</Base>
+{Content ? (
+  <Chapter chapter={c} prereqTerms={mod.frontmatter?.prereqTerms ?? []}>
+    <Content />
+  </Chapter>
+) : (
+  <Base title={`第 ${c.n} 章 · ${c.title}`}>
+    <p>第 {c.n} 章 · {c.concept}</p>
+    <h1>{c.title}</h1>
+    <p>這一章還在製作中。規格見 <code>docs/chapters/{c.slug}.md</code>。</p>
+  </Base>
+)}

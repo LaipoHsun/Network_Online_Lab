@@ -1,0 +1,205 @@
+{
+ "kind": "scatter",
+ "description": "LinkedIn 實驗：兩人共同朋友數（結構性連結強度）與這條連結帶來工作的機率",
+ "source": {
+  "text": "Rajkumar 等人 2022, A causal test of the strength of weak ties, Science 377(6612), Fig. 3B 右（IV 估計，由圖讀取）",
+  "url": "https://doi.org/10.1126/science.abl4476",
+  "sample": "LinkedIn 五年間超過 2,000 萬人的隨機實驗；約 20 億條新連結、60 萬份新工作",
+  "year": 2022
+ },
+ "digitized": true,
+ "digitization": {
+  "figure": "Fig. 3B（右，IV）",
+  "method": "Fig. 3 為向量圖：以 PyMuPDF 讀出青色標記與誤差線的 PDF 座標，再用刻度文字位置做線性換算。x 為圖上各點位置換算的共同朋友數（論文以分箱呈現），誤差線為圖上的信賴區間。"
+ },
+ "x": {
+  "label": "共同朋友數（結構性連結強度）"
+ },
+ "y": {
+  "label": "帶來工作的機率"
+ },
+ "series": [
+  {
+   "name": "IV 估計",
+   "points": [
+    {
+     "x": 0.7,
+     "y": 0.00185,
+     "ci": [
+      0.00103,
+      0.00267
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 2.5,
+     "y": 0.0023,
+     "ci": [
+      0.00205,
+      0.00256
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 4.2,
+     "y": 0.0025,
+     "ci": [
+      0.00239,
+      0.00262
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 6.0,
+     "y": 0.00293,
+     "ci": [
+      0.00284,
+      0.00303
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 7.7,
+     "y": 0.00357,
+     "ci": [
+      0.00347,
+      0.00367
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 9.4,
+     "y": 0.00381,
+     "ci": [
+      0.00371,
+      0.00392
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 11.2,
+     "y": 0.00328,
+     "ci": [
+      0.00317,
+      0.0034
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 12.9,
+     "y": 0.0031,
+     "ci": [
+      0.00295,
+      0.00324
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 14.7,
+     "y": 0.00216,
+     "ci": [
+      0.00201,
+      0.00232
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 16.4,
+     "y": 0.00175,
+     "ci": [
+      0.00157,
+      0.00192
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 18.2,
+     "y": 0.00156,
+     "ci": [
+      0.00136,
+      0.00176
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 19.9,
+     "y": 0.00123,
+     "ci": [
+      0.00102,
+      0.00144
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 21.7,
+     "y": 0.0014,
+     "ci": [
+      0.00113,
+      0.00166
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 23.4,
+     "y": 0.00104,
+     "ci": [
+      0.00076,
+      0.00133
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 25.1,
+     "y": 0.00049,
+     "ci": [
+      0.00026,
+      0.00073
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 26.9,
+     "y": 0.0012,
+     "ci": [
+      0.00076,
+      0.00165
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 28.6,
+     "y": 0.00166,
+     "ci": [
+      0.00104,
+      0.00227
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 30.4,
+     "y": 0.00096,
+     "ci": [
+      0.00042,
+      0.00151
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 32.1,
+     "y": 2e-05,
+     "ci": null,
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    },
+    {
+     "x": 33.9,
+     "y": 0.00146,
+     "ci": [
+      0.00044,
+      0.00249
+     ],
+     "source": "Rajkumar et al. 2022, Science 377, Fig. 3B (IV)"
+    }
+   ]
+  }
+ ]
+}

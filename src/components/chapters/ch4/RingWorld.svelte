@@ -3,7 +3,7 @@
   // mode="intro"：第 ① 段，60 位小人圍成一圈，偶爾有一條午夜抽卡的捷徑。
   // mode="lattice"：場景 A，只認識同系、隔壁的人（p = 0）。點兩個人，看信沿最短路徑飛過去。
   // mode="ws"：場景 B，調「抽卡成功率」p；下方是 ⟨d⟩(p)/⟨d⟩(0) 與 C(p)/C(0) 的對數軸曲線。
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import { bfsLayers, shortestPath, type Graph } from '../../../lib/network';
   import { renderCharacter } from '../../../lib/sprites/character';
   import { emitLive } from '../../../lib/ui/bus';
@@ -49,14 +49,18 @@
   const onPath = $derived(new Set(path.slice(1).map((v, i) => (path[i] < v ? `${path[i]}-${v}` : `${v}-${path[i]}`))));
 
   // 午夜抽卡：p 變大時，新出現的捷徑閃一下
+  // 只依賴 shortcutSet 和 st；其餘的寫入（含通知公式卡）放在 untrack 裡，避免公式卡的狀態被算成這個 effect 的依賴而無限循環
   $effect(() => {
     const now = shortcutSet;
-    const f = new Set([...now].filter((k) => !prevShortcuts.has(k)));
-    prevShortcuts = now;
-    fresh = f;
-    if (f.size && !prefersReducedMotion()) setTimeout(() => { if (fresh === f) fresh = new Set(); }, 1600);
-    emitLive({ d: st.d, C: st.C, N, K, lattice: N / (2 * K), random: Math.log(N) / Math.log(K) }, 'ch4');
-    cancelAnimationFrame(raf); path = []; rippleT = -1; letterT = -1;
+    const live = { d: st.d, C: st.C, N, K, lattice: N / (2 * K), random: Math.log(N) / Math.log(K) };
+    untrack(() => {
+      const f = new Set([...now].filter((k) => !prevShortcuts.has(k)));
+      prevShortcuts = now;
+      fresh = f;
+      if (f.size && !prefersReducedMotion()) setTimeout(() => { if (fresh === f) fresh = new Set(); }, 1600);
+      emitLive(live, 'ch4');
+      cancelAnimationFrame(raf); path = []; rippleT = -1; letterT = -1;
+    });
   });
 
   function send() {

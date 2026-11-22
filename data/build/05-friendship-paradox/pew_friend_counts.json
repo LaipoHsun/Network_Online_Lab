@@ -1,0 +1,38 @@
+{
+ "kind": "bar",
+ "description": "一般用戶的朋友數，和他們朋友的平均朋友數",
+ "source": {
+  "text": "Pew Research Center 2012, Why Most Facebook Users Get More Than They Give, Part 3: The structure of friendship",
+  "url": "https://www.pewresearch.org/internet/2012/02/03/part-3-the-structure-of-friendship/",
+  "sample": "Pew 研究樣本中的 Facebook 用戶",
+  "year": 2012
+ },
+ "digitized": false,
+ "x": {
+  "label": ""
+ },
+ "y": {
+  "label": "朋友數（平均）"
+ },
+ "series": [
+  {
+   "name": "Pew 2012",
+   "points": [
+    {
+     "x": "用戶本人",
+     "y": 245,
+     "source": "Pew Research Center 2012, Part 3: The structure of friendship（Your friends have more friends than you 段）：the average Facebook user has 245 friends"
+    },
+    {
+     "x": "用戶的朋友",
+     "y": 359,
+     "source": "Pew Research Center 2012, Part 3: The structure of friendship（Your friends have more friends than you 段）：the average friend has a mean of 359 Facebook friends"
+    }
+   ]
+  }
+ ],
+ "facts": {
+  "top10_threshold": 780,
+  "top10_source": "Pew Research Center 2012, Part 3: The structure of friendship（Your friends have more friends than you 段）：only those … among the 10% largest friends lists (more than 780 friends) had more friends than their average friend"
+ }
+}

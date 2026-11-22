@@ -5,6 +5,14 @@ export interface Term { zh: string; en: string; def: string; chapter: number }
 
 export const GLOSSARY: Record<string, Term> = {
   degree: { zh: '度', en: 'degree', def: '一個人有幾位朋友，也就是連到他的連結數。', chapter: 1 },
+  network: { zh: '網路', en: 'network', def: '一群節點（人）和節點之間的連結（關係）。數學上也叫做圖（graph）。', chapter: 1 },
+  'adjacency-matrix': { zh: '鄰接矩陣', en: 'adjacency matrix', def: 'N × N 的表格：第 i 列第 j 行是 1 代表 i 和 j 是朋友，0 代表不是。', chapter: 1 },
+  'average-degree': { zh: '平均度', en: 'average degree', def: '所有人的度的平均，等於 2L / N（L 是連結數，N 是人數）。', chapter: 1 },
+  'degree-distribution': { zh: '度分布', en: 'degree distribution', def: '朋友數為 k 的人佔全體的比例 p_k，畫成圖就是「有多少人有幾位朋友」。', chapter: 1 },
+  handshake: { zh: '握手定理', en: 'handshaking lemma', def: '每條連結被兩端各算一次，所以所有人的度加起來等於連結數的兩倍。', chapter: 1 },
+  density: { zh: '密度', en: 'density', def: '實際的連結數除以「所有人兩兩之間都連起來」時的連結數。', chapter: 1 },
+  sparse: { zh: '稀疏', en: 'sparse', def: '平均度遠小於人數，密度接近 0：每個人只認識全體中極少的一部分。', chapter: 1 },
+  hub: { zh: '樞紐', en: 'hub', def: '朋友數遠多於一般人的少數節點。', chapter: 1 },
   clustering: { zh: '聚集係數', en: 'clustering coefficient', def: '你的朋友之間彼此也是朋友的比例；越高代表朋友圈越「收合」。', chapter: 3 },
   'small-world': { zh: '小世界', en: 'small world', def: '網路裡多數人很「聚集」，但任兩人之間平均只隔幾步。', chapter: 4 },
   'tie-strength': { zh: '連結強度', en: 'tie strength', def: '兩人關係的強弱，常用見面頻率、相處時間或通話時間來量。', chapter: 6 },

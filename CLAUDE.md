@@ -15,7 +15,8 @@
 - 階段 3（共用元件）已完成初版：小人引擎與雙視圖（`src/components/engine/`，模擬邏輯在 `src/lib/sim/campus.ts`）、Predict、LogicChain、FormulaCard、RevealChart（`src/components/ui/`），展示頁 `/playground`。章節要用引擎時，在 `src/components/chapters/` 寫一個 Svelte 元件傳入劇本（Astro 不能傳函式給 island），寫法參考 `src/components/playground/EngineDemo.svelte`。
 - 已定案（作者授權由 Claude 決定）：校園地圖採用目前這一版（`src/data/campus.json`、`CampusMap.svelte`；直向版由橫向縮放，之後可逐點手調）；`--ill` = 梅紫 #8E3B8C／深色 #B95FB5。
 - 階段 4（第 6 章）初稿完成，待作者審定內文：章節版型（`src/layouts/Chapter.astro`、`src/components/chapter/`：八段進度條、Step 捲動雙欄、Term 術語、M 行內公式、NextQuestion）、內文 `src/content/chapters/06-weak-ties.mdx`（Claude 撰寫的初稿）、場景 `src/components/chapters/ch6/`、資料 `data/build/06-weak-ties/`（Onnela、Rajkumar 為由論文圖讀取，標 digitized）。
-- 下一步：作者審第 6 章內文；之後階段 5 其餘八章（順序 1 → 3 → 4 → 5 → 2 → 7 → 8 → 9）。
+- 階段 5 第 1 章初稿完成，待作者審定內文：`src/content/chapters/01-degree.mdx`、場景 `src/components/chapters/ch1/`（宿營劇本、即時度分布、鄰接矩陣）、資料 `data/build/01-degree/`（Ugander 2011 Fig. 1(b) 為向量圖，直接讀座標，標 digitized）。引擎新增 `Script.days`（只跑幾天）與 DualView 的 `onselect`。
+- 下一步：作者審第 6、1 章內文；之後階段 5 其餘章節（順序 3 → 4 → 5 → 2 → 7 → 8 → 9）。
 
 ## 內容
 - 不要自己寫或改任何研究數字。所有數字來自 `data/build/*.json`，每筆都有 `source`。
@@ -32,7 +33,7 @@
 
 ## 指令
 - `npm install`、`npm run dev`（http://localhost:4321；Astro 7 會在背景常駐，用 `npx astro dev stop` 停止）、`npm test`、`npm run build`。
-- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章；PDF 不放進 repo，來源見腳本開頭）。
+- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章）、`python3 data/scripts/ch1_data.py --ugander <pdf>`（第 1 章）；PDF 不放進 repo，來源見各腳本開頭。
 
 ## 完成的定義
 - `npm test` 和 `npm run build` 通過。

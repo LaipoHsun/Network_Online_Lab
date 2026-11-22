@@ -28,6 +28,8 @@
     predictLabel?: string;
     /** 額外的參考線，例如平均數、中位數 */
     markers?: { axis: 'x' | 'y'; value: number; label: string }[];
+    /** 額外的數字型預測（例如同時猜中位數和平均數），一律畫成 x 方向的垂直線 */
+    morePredictions?: { id: string; label: string }[];
     /** 展示用：強制揭曉狀態、或直接給一個預測 */
     revealed?: boolean | null;
     demoPrediction?: PredictAnswer | null;
@@ -35,12 +37,14 @@
   let {
     title, kind, series, source, xLabel, yLabel, logX = false, logY = false,
     predictId, predictAxis = 'x', predictLabel = '你的猜測', markers = [], revealed = null, demoPrediction = null,
+    morePredictions = [],
   }: Props = $props();
 
   const uid = $props.id();
   let width = $state(640);
   let shown = $state(revealed ?? false);
   let prediction = $state<PredictAnswer | null>(demoPrediction);
+  let extra = $state<(number | null)[]>(morePredictions.map(() => null));
   let showTable = $state(false);
   let root: HTMLElement;
   const height = $derived(Math.max(220, Math.min(380, width * 0.6)));
@@ -49,6 +53,9 @@
   onMount(() => {
     if (predictId && !demoPrediction) prediction = loadPrediction(predictId);
     const offP = predictId && !demoPrediction ? onPrediction(predictId, (a) => (prediction = a)) : () => {};
+    const num = (a: PredictAnswer | null) => (a?.kind === 'number' ? a.value : null);
+    extra = morePredictions.map((m) => num(loadPrediction(m.id)));
+    const offs = morePredictions.map((m, i) => onPrediction(m.id, (a) => { extra[i] = num(a); }));
     const ro = new ResizeObserver(([e]) => (width = Math.max(280, e.contentRect.width)));
     ro.observe(root);
     let io: IntersectionObserver | null = null;
@@ -59,7 +66,7 @@
       io.observe(root);
     }
     if (prefersReducedMotion()) root.classList.add('instant');
-    return () => { offP(); ro.disconnect(); io?.disconnect(); };
+    return () => { offP(); offs.forEach((f) => f()); ro.disconnect(); io?.disconnect(); };
   });
 
   // ---- 尺度
@@ -68,7 +75,8 @@
   const xBand = $derived(scaleBand<string>().domain(allPts.map((p) => String(p.x)).filter((v, i, a) => a.indexOf(v) === i)).range([M.l, width - M.r]).padding(0.18));
   const xNum = $derived.by(() => {
     const xs = allPts.map((p) => +p.x);
-    const pv = prediction?.kind === 'number' && predictAxis === 'x' ? [prediction.value] : [];
+    const pv = [...(prediction?.kind === 'number' && predictAxis === 'x' ? [prediction.value] : []), ...extra.filter((v): v is number => v !== null)]
+      .filter((v) => !logX || v > 0);
     const lo = Math.min(...xs, ...pv), hi = Math.max(...xs, ...pv);
     return logX ? scaleLog().domain([lo, hi]).range([M.l, width - M.r]) : scaleLinear().domain([Math.min(0, lo), hi]).nice().range([M.l, width - M.r]);
   });
@@ -174,6 +182,13 @@
     {:else if prediction?.kind === 'curve'}
       <path d={predPath} class="pred" fill="none" />
     {/if}
+    {#each morePredictions as m, i}
+      {#if extra[i] !== null && (!logX || extra[i]! > 0)}
+        {@const off = (prediction?.kind === 'number' ? 1 : 0) + i}
+        <line x1={xOf(extra[i]!)} x2={xOf(extra[i]!)} y1={M.t} y2={height - M.b} class="pred" />
+        <text x={xOf(extra[i]!) + 4} y={M.t + 12 + (markers.length + off) * 16} class="pred-label">{m.label}：{extra[i]}</text>
+      {/if}
+    {/each}
   </svg>
 
   <div class="below">

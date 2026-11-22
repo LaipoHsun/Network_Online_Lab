@@ -147,8 +147,9 @@ export function slotTime(slot: number): SlotTime {
   return { slot, week: Math.floor(slot / perWeek), day: Math.floor((slot % perWeek) / SLOTS_PER_DAY), period: slot % SLOTS_PER_DAY };
 }
 
-export function slotLabel(slot: number): string {
+export function slotLabel(slot: number, byDay = false): string {
   const t = slotTime(slot);
+  if (byDay) return `第 ${t.week * 7 + t.day + 1} 天${PERIOD_LABEL[t.period]}`;
   return `第 ${t.week + 1} 週 ${DAY_LABEL[t.day]}${PERIOD_LABEL[t.period]}`;
 }
 
@@ -159,6 +160,8 @@ export interface Script {
   seed: number;
   /** 一學期幾週 */
   weeks: number;
+  /** 只跑前幾天（例如三天的迎新宿營）；有設定時時間軸以「天」顯示，總長 = days 天 */
+  days?: number;
   /** 第 i 個人在這個時段要去的地點 id。 */
   where(person: Person, i: number, time: SlotTime, rng: Rng): string;
   /** 同在 location 的兩人在這個時段相認識的機率（尚未認識時才會呼叫）；present 是當下在這個地點的人數。 */
@@ -195,7 +198,7 @@ export class CampusSim {
 
   constructor(script: Script) {
     this.script = script;
-    this.totalSlots = script.weeks * 7 * SLOTS_PER_DAY;
+    this.totalSlots = (script.days ?? script.weeks * 7) * SLOTS_PER_DAY;
     this.locById = new Map(script.layout.locations.map((l) => [l.id, l]));
     this.rng = seededRandom(script.seed);
     this.reset();

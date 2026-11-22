@@ -1,0 +1,265 @@
+{
+ "kind": "line",
+ "description": "2011 年 5 月 Facebook 全球活躍用戶：朋友數少於 k 位的人所佔比例",
+ "source": {
+  "text": "Ugander, Karrer, Backstrom & Marlow 2011, The Anatomy of the Facebook Social Graph, arXiv:1111.4503, Fig. 1(b)（由圖讀取）",
+  "url": "https://arxiv.org/abs/1111.4503",
+  "sample": "2011 年 5 月全球 7.21 億位活躍 Facebook 用戶、687 億條好友關係",
+  "year": 2011
+ },
+ "digitized": true,
+ "digitization": {
+  "figure": "Fig. 1(b)（全球）",
+  "method": "arXiv 版 PDF 第 3 頁 Fig. 1(b) 為向量圖：以 PyMuPDF 讀出全球曲線（CCDF，對數–對數）的所有線段頂點，用軸上刻度短線的位置做對數座標換算（頂點恰好落在整數 k 上）。CCDF 是「朋友數 ≥ k 的比例」，這裡改畫成累積分布：y = 100 × (1 − CCDF(k)) = 朋友數少於 k 的人所佔百分比。"
+ },
+ "summary": {
+  "median": 99,
+  "median_source": "Ugander et al. 2011, arXiv 版 p. 3：The median friend count for global users in our study was 99.",
+  "mean": 190,
+  "mean_source": "Ugander et al. 2011, arXiv 版 p. 2：687 億條邊、7.21 億人，平均約 190 位朋友（2 × 68.7e9 / 721e6 ≈ 190.6）",
+  "users": 721000000,
+  "users_source": "Ugander et al. 2011, arXiv 版 p. 1–2",
+  "largest_component": 99.91,
+  "largest_component_source": "Ugander et al. 2011, arXiv 版 p. 1、p. 5",
+  "friend_cap": 5000,
+  "friend_cap_source": "Ugander et al. 2011, arXiv 版 p. 3：Facebook 當時的好友上限",
+  "below_10": 9.4,
+  "below_25": 19.7,
+  "below_200": 70.2,
+  "below_source": "由 Fig. 1(b) 讀取（約略值）"
+ },
+ "x": {
+  "label": "朋友數 k",
+  "scale": "log"
+ },
+ "y": {
+  "label": "朋友數少於 k 的人（%）"
+ },
+ "series": [
+  {
+   "name": "Facebook 全球用戶",
+   "points": [
+    {
+     "x": 1,
+     "y": 0.0,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 2,
+     "y": 2.0,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 3,
+     "y": 3.38,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 4,
+     "y": 4.42,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 5,
+     "y": 5.38,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 6,
+     "y": 6.27,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 7,
+     "y": 7.08,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 8,
+     "y": 7.89,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 10,
+     "y": 9.43,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 12,
+     "y": 10.89,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 14,
+     "y": 12.26,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 17,
+     "y": 14.3,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 20,
+     "y": 16.36,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 24,
+     "y": 19.07,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 29,
+     "y": 22.18,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 35,
+     "y": 25.61,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 41,
+     "y": 28.8,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 49,
+     "y": 32.58,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 59,
+     "y": 36.85,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 70,
+     "y": 40.96,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 84,
+     "y": 45.62,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 100,
+     "y": 50.29,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 119,
+     "y": 55.19,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 143,
+     "y": 60.49,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 170,
+     "y": 65.52,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 203,
+     "y": 70.63,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 242,
+     "y": 75.58,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 289,
+     "y": 80.23,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 346,
+     "y": 84.54,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 412,
+     "y": 88.18,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 492,
+     "y": 91.3,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 588,
+     "y": 93.83,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 702,
+     "y": 95.76,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 838,
+     "y": 97.16,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 1000,
+     "y": 98.14,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 1194,
+     "y": 98.81,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 1425,
+     "y": 99.22,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 1701,
+     "y": 99.48,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 2031,
+     "y": 99.65,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 2424,
+     "y": 99.76,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 2894,
+     "y": 99.84,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 3455,
+     "y": 99.9,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 4125,
+     "y": 99.94,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    },
+    {
+     "x": 4924,
+     "y": 100.0,
+     "source": "Ugander et al. 2011, arXiv:1111.4503, Fig. 1(b)"
+    }
+   ]
+  }
+ ]
+}

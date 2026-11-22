@@ -41,11 +41,13 @@
     /** 網路視圖的節點直徑（8–28 px） */
     nodeSize?: (i: number, g: Graph) => number;
     onslot?: (sim: CampusSim) => void;
+    /** 選取（或取消選取）一個人時呼叫 */
+    onselect?: (i: number | null) => void;
   }
 
   let {
     script, layouts, label, active = null, view = $bindable('campus'), autoplay = true, initialSlot = 0,
-    showFps = false, metric, stateOf, live, highlight, ringed, nodeSize, onslot,
+    showFps = false, metric, stateOf, live, highlight, ringed, nodeSize, onslot, onselect,
   }: Props = $props();
 
   const SPEEDS = [1, 4, 16] as const;
@@ -99,6 +101,7 @@
 
   const layout = $derived(layouts[orientation]);
   const totalSlots = sim.totalSlots;
+  const byDay = script.days !== undefined;
 
   function syncSim(s: number) {
     sim.seek(s + 1);
@@ -114,7 +117,7 @@
     }
     slotIdx = s;
     const m = numEdges(graph);
-    summary = `${slotLabel(s)} · ${n} 人 · ${m} 條連結 · 平均朋友數 ${averageDegree(graph).toFixed(1)}`;
+    summary = `${slotLabel(s, byDay)} · ${n} 人 · ${m} 條連結 · 平均朋友數 ${averageDegree(graph).toFixed(1)}`;
   }
 
   function updateForceLinks() {
@@ -241,6 +244,7 @@
   }
   function select(i: number | null) {
     selected = i;
+    onselect?.(i);
     if (i === null) card = null;
     else announce = cardText(i);
   }
@@ -380,6 +384,7 @@
   const cardMetric = $derived(selected === null || !metric ? null : (slotIdx, metric(selected, graph)));
   const cardDegree = $derived(selected === null ? 0 : (slotIdx, graph.adj[selected].length));
   const weekOf = (s: number) => Math.floor(s / (SLOTS_PER_DAY * 7)) + 1;
+  const dayOf = (s: number) => Math.floor(s / SLOTS_PER_DAY) + 1;
 </script>
 
 <div class="dual" bind:this={host}>
@@ -395,9 +400,9 @@
     <label class="timeline">
       <span class="visually-hidden">學期時間軸</span>
       <input type="range" min="0" max={totalSlots - 1} step="1" value={slotIdx}
-        aria-valuetext={slotLabel(slotIdx)}
+        aria-valuetext={slotLabel(slotIdx, byDay)}
         oninput={(e) => { playing = false; seekTo(+(e.currentTarget as HTMLInputElement).value); }} />
-      <span class="week">第 {weekOf(slotIdx)} / {script.weeks} 週</span>
+      <span class="week">{byDay ? `第 ${dayOf(slotIdx)} / ${script.days} 天` : `第 ${weekOf(slotIdx)} / ${script.weeks} 週`}</span>
     </label>
   </div>
 

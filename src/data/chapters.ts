@@ -13,7 +13,7 @@ export interface Chapter {
 
 // 主角外觀與 docs/characters.md 的「固定角色表」一致
 export const CHAPTERS: Chapter[] = [
-  { n: 1, slug: '01-degree', title: '迎新週：你加了多少 LINE 好友？', concept: '度與度分布（degree distribution）', prereq: [], minutes: 20, status: 'planned',
+  { n: 1, slug: '01-degree', title: '迎新週：你加了多少 LINE 好友？', concept: '度與度分布（degree distribution）', prereq: [], minutes: 20, status: 'in-progress',
     hero: { name: '品妤', dept: '經濟一', look: { skin: 1, hair: 'bun', hairColor: 0, college: 'socsci', accessory: 'none', year: 1 } } },
   { n: 2, slug: '02-bipartite', title: '宿舍、系所還是年級：你的朋友從哪裡來？', concept: '二分網路與投影（bipartite projection）', prereq: ['度'], minutes: 20, status: 'planned',
     hero: { name: '語涵', dept: '社會二', look: { skin: 0, hair: 'long', hairColor: 1, college: 'socsci', accessory: 'scarf', year: 2 } } },

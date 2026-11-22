@@ -1,0 +1,177 @@
+---
+prereqTerms: []
+draft: true
+---
+{/* 第 1 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/01-degree.md。
+    研究數字只用 data/build/01-degree/*.json（Ugander 等人 2011）。 */}
+import Section from '../../components/chapter/Section.astro';
+import Step from '../../components/chapter/Step.astro';
+import Term from '../../components/chapter/Term.astro';
+import M from '../../components/chapter/M.astro';
+import NextQuestion from '../../components/chapter/NextQuestion.astro';
+import Predict from '../../components/ui/Predict.svelte';
+import LogicChain from '../../components/ui/LogicChain.astro';
+import FormulaCard from '../../components/ui/FormulaCard.astro';
+import RevealChart from '../../components/ui/RevealChart.astro';
+import CampScene from '../../components/chapters/ch1/CampScene.svelte';
+import AdjacencyMatrix from '../../components/chapters/ch1/AdjacencyMatrix.svelte';
+
+<Section n={1}>
+<Step>
+<div slot="visual"><CampScene client:visible mode="intro" /></div>
+
+經濟系大一的品妤剛參加完三天的迎新宿營，手機裡的 LINE 多了 40 位好友。同寢室的室友多了 200 位。
+
+品妤開始懷疑：是不是自己太安靜了？
+
+這裡把宿營搬到了校園地圖上：80 位新生分成 10 個小隊，早上小隊活動、中午在小福吃飯、下午玩大地遊戲、晚上在體育館辦晚會，前兩晚還有夜遊。同一個地方待在一起，就有機會互加好友。橘色圈的是品妤。
+
+**品妤到底「正不正常」？要回答這個問題，得先知道「正常」長什麼樣子。**
+</Step>
+</Section>
+
+<Section n={2}>
+<Step>
+<div slot="visual">
+<Predict client:visible id="01-degree/median" kind="number" min={1} max={1000} step={1} initial={250} unit="位"
+  question="2011 年的 Facebook 上，一位「典型」用戶（中位數）有幾位朋友？"
+  hint="中位數：把所有人依朋友數排好，站在正中間那個人的朋友數。" />
+<Predict client:visible id="01-degree/mean" kind="number" min={1} max={1000} step={1} initial={250} unit="位"
+  question="那「平均」一位用戶有幾位朋友？"
+  hint="平均數：全部人的朋友數加起來，除以人數。" />
+</div>
+
+先猜兩個數字：一個是中位數，一個是平均數。
+
+你可能覺得兩題問的是同一件事。送出之後，第 ⑥ 段會把你的兩個答案畫在真實資料上。
+</Step>
+</Section>
+
+<Section n={3}>
+<Step full>
+### 場景 A：迎新宿營
+
+在社會網路的語言裡，每個人是一個節點，每段友誼是一條連結，合起來叫做<Term id="network" first />。一個人有幾位朋友，叫做他的<Term id="degree" first />。
+
+宿營旁邊的直方圖會隨著時間即時更新：橫軸是朋友數，縱軸是有幾個人有這麼多朋友。實線是平均數，虛線是中位數。這張圖叫做<Term id="degree-distribution" first />。
+
+先把「社交性差異」設成「沒有差異」：每個人一樣愛交朋友。三天後，大家的朋友數都擠在平均附近，平均數和中位數幾乎重疊。
+
+再把差異調到「大」：有些人特別愛認識新朋友，有些人比較內向。這次分布往右拉出一條長尾巴，少數交際花的朋友是一般人的好幾倍，平均數被拉得比中位數高。
+
+<CampScene client:visible mode="camp" />
+</Step>
+
+<Step full>
+### 場景 B：點你自己
+
+這是宿營結束時的網路。節點越大，代表朋友越多。
+
+點任何一位小人，當作你自己。直方圖下方會告訴你：有多少人的朋友比較少，又有多少人比較多。試試看點品妤，再點她的室友。
+
+在社交性差異大的時候，你會常常看到同一件事：一個人的朋友數**低於平均**，卻仍然**在中位數以上**。也就是說，這個人比一半以上的人朋友多，卻還是覺得自己「不如平均」。
+
+<CampScene client:visible mode="you" />
+</Step>
+</Section>
+
+<Section n={4}>
+<Step>
+<div slot="visual"><AdjacencyMatrix client:visible /></div>
+
+一張網路可以寫成一個表格，叫做<Term id="adjacency-matrix" first /> <M t="A" />。第 <M t="i" /> 列第 <M t="j" /> 行的 <M t="A_{ij} = 1" />，代表 <M t="i" /> 和 <M t="j" /> 是朋友；是 0 就不是。友誼是雙向的，所以 <M t="A_{ij} = A_{ji}" />，表格沿著對角線對稱。
+
+一個人的度，就是他那一列的總和：<M t="k_i = \sum_j A_{ij}" />。點表格裡的任何一格，加上或拿掉一段友誼，看看最右邊那一行怎麼變。
+
+再看表格下方的加總。不管你怎麼點，所有人的度加起來永遠是連結數的兩倍。這叫做<Term id="handshake" first />：每條連結有兩端，被兩個人各算一次。這是本書第一個「從定義直接推出來」的結構。
+</Step>
+
+<Step>
+<div slot="visual">
+<FormulaCard
+  title="度、平均度與密度"
+  formula={'\\begin{gathered} \\htmlData{key=k}{k_i} = \\sum_j \\htmlData{key=A}{A_{ij}} \\\\[4pt] \\htmlData{key=kbar}{\\langle k \\rangle} = \\frac{1}{\\htmlData{key=N}{N}}\\sum_i k_i = \\frac{2\\htmlData{key=L}{L}}{N} \\\\[4pt] \\htmlData{key=rho}{\\rho} = \\frac{L}{\\binom{N}{2}} = \\frac{\\langle k \\rangle}{N-1} \\end{gathered}'}
+  symbols={[
+    { key: 'A', symbol: 'A_{ij}', meaning: '鄰接矩陣：$i$ 和 $j$ 是朋友時為 1，否則為 0。' },
+    { key: 'k', symbol: 'k_i', meaning: '$i$ 的度：他有幾位朋友。' },
+    { key: 'N', symbol: 'N', meaning: '網路裡的人數。' },
+    { key: 'L', symbol: 'L', meaning: '連結數（友誼的總數）。' },
+    { key: 'kbar', symbol: '\\langle k \\rangle', meaning: '平均度。用握手定理，所有度的總和是 $2L$。' },
+    { key: 'rho', symbol: '\\rho', meaning: '密度：實際的連結數，除以「所有人兩兩都是朋友」時的 $\\binom{N}{2}$ 條。' },
+  ]}
+  range="$k_i$ 介於 0 和 $N-1$ 之間。$\rho = 0$：沒有人認識任何人；$\rho = 1$：每個人都認識其他所有人。"
+  related="度分布 $p_k$ = 度為 $k$ 的人所佔的比例。它的變異數 $\langle k^2 \rangle - \langle k \rangle^2$ 在第 5 章會再出現。"
+  live={[
+    { key: 'N', label: 'N', digits: 0 },
+    { key: 'L', label: 'L', digits: 0 },
+    { key: 'kbar', label: '\\langle k \\rangle', digits: 1 },
+    { key: 'rho', label: '\\rho', digits: 3 },
+  ]}
+/>
+</div>
+
+把所有人的度平均起來，就是<Term id="average-degree" first /> <M t="\langle k \rangle" />。因為所有度的總和是 <M t="2L" />，平均度就是 <M t="2L/N" />：不用一個一個數，只要知道人數和連結數。
+
+<Term id="density" first /> <M t="\rho" /> 問的是：在所有可能的朋友配對裡，有多少真的是朋友？公式卡裡的即時數字來自場景 A 的宿營。宿營只有 80 人，大家又整天待在一起，密度還算高。
+
+真實的網路幾乎都是<Term id="sparse" first />的：平均度遠小於人數。一個人的朋友數有上限（時間和注意力有限），人數卻可以一直變多，所以網路越大，<M t="\rho" /> 就越接近 0。你只認識全體學生中極少的一部分。
+
+度分布 <M t="p_k" /> 是度為 <M t="k" /> 的人所佔的比例，也就是場景 A 的直方圖。平均數和中位數只有在分布左右對稱時才會相等；分布往右偏（有一條朝大數字延伸的長尾巴）時，平均數會大於中位數。
+</Step>
+</Section>
+
+<Section n={5}>
+<Step full>
+如果每個人都一樣愛交朋友，朋友數會長什麼樣子？下面這條推理從一個假設出發，最後得到一個可以拿真實資料檢驗的預測。點開每一步看細節，也可以拿掉第一步的假設，看看結論怎麼變。
+
+<LogicChain
+  title="第 1 章邏輯鏈"
+  steps={[
+    { kind: 'assumption', critical: true, summary: '每次相遇都以同樣的機率 $p$ 成為朋友，而且每個人的相遇次數都一樣。', detail: '也就是場景 A 的「沒有差異」：沒有人特別外向或特別內向，大家參加一樣多的活動。' },
+    { kind: 'derivation', summary: '一個人的度是許多「小機率事件」的總和，近似 Poisson 分布，標準差約為 $\\sqrt{\\langle k \\rangle}$。', detail: '每遇到一個人，就像擲一枚「成為朋友」機率很小的硬幣。擲很多次之後，成功次數的分布會接近 Poisson 分布：平均 $\\langle k \\rangle$，標準差 $\\sqrt{\\langle k \\rangle}$。\n\n例如平均有 9 位朋友時，標準差約 3 位，大多數人落在 3 到 15 位之間。' },
+    { kind: 'result', summary: '朋友數集中在平均附近：幾乎沒有人的朋友數是平均的十倍。', detail: 'Poisson 分布的尾巴下降得非常快。平均 9 位時，有 90 位朋友的機率小到可以忽略。' },
+    { kind: 'prediction', summary: '平均數 ≈ 中位數。', detail: '分布左右大致對稱，所以「平均一個人有幾位朋友」和「典型的人有幾位朋友」是同一個答案。這個預測可以用真實資料檢驗：第 ⑥ 段揭曉。' },
+  ]}
+  removal={{ step: 0, effect: '有人特別愛交朋友時，度分布變成往右的長尾：少數人的朋友是平均的好幾倍，平均數被拉高到中位數之上。這就是場景 A 把差異調大時看到的。' }}
+/>
+</Step>
+</Section>
+
+<Section n={6}>
+<Step full>
+### 2011 年的 Facebook
+
+<RevealChart data="01-degree/ugander_cdf" showMedian showMean
+  predictId="01-degree/median" predictLabel="你猜的中位數"
+  morePredictions={[{ id: '01-degree/mean', label: '你猜的平均' }]}
+  title="中位數 99 位、平均約 190 位：一半的人朋友不到 100 位" />
+
+Ugander 等人（2011）分析了 2011 年 5 月 Facebook 上全部 7.21 億位活躍用戶。這個網路幾乎完全連在一起：99.91% 的人屬於同一個<Term id="giant-component" first />。
+
+圖上的曲線是累積分布：橫軸是朋友數 <M t="k" />（對數尺度），縱軸是朋友少於 <M t="k" /> 位的人佔多少比例。約一成的人朋友少於 10 位，約兩成少於 25 位。曲線在 100 附近穿過 50%：中位數是 99 位。可是平均數約 190 位，幾乎是中位數的兩倍。約七成的人，朋友少於 200 位。
+
+把你的兩個猜測（虛線）和真實的中位數、平均數（實線）比一比。多數人會把兩個數字猜得很接近，因為直覺上「平均的人」就是「典型的人」。只有在分布對稱時才是這樣。
+
+平均數被誰拉高？被少數朋友有好幾千位的<Term id="hub" first />。當時 Facebook 的好友上限是 5,000 人，曲線一路延伸到這個上限。
+</Step>
+</Section>
+
+<Section n={7}>
+<Step full>
+**經濟學：注意力是稀缺資源。** 一個人的朋友數，是時間和注意力這些稀缺資源分配的結果；而它的分配就像所得一樣右偏。用平均數來描述「大家」，會高估大多數人的處境。如果一項政策假設「平均每個學生有 N 個可以求助的人」，那麼大多數學生實際能求助的人，比這個數字還少。
+
+**社會學：人脈本身就是階層。** 度是最簡單的<Term id="social-capital" first />指標：認識的人越多，能取得的資訊和幫忙就越多。朋友數分配得極不平均，代表「人脈」本身就會造成階層化。稀疏性也說明每個人只看得到社會的一小塊，對「別人過得怎樣」的印象，來自自己那一小塊。這是第 5 章友誼悖論和比較心理的起點。
+</Step>
+</Section>
+
+<Section n={8}>
+<Step full>
+- **線上好友不等於真實朋友。** LINE、Facebook 上的好友，有很多只是點頭之交。
+- **平台規則會改變分布。** Facebook 當時有 5,000 人的好友上限，也會鼓勵朋友很少的用戶多加朋友；這些設計都會留在度分布上。
+- **度忽略了關係的強弱。** 一位天天見面的室友和一位只在宿營說過話的人，在度裡都只算 1。第 6 章會處理連結強度。
+
+回到品妤：40 位好友少於室友的 200 位，但「平均」這個數字本身會被少數交際花拉高。和中位數比，她其實很普通。
+
+<NextQuestion to={2}>這些朋友是從哪裡來的？是同一個宿舍、同一個系，還是同一個年級？</NextQuestion>
+</Step>
+</Section>

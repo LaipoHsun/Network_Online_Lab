@@ -15,10 +15,12 @@ interface Props {
   showMedian?: boolean;
   revealed?: boolean | null;
   demoPrediction?: unknown;
+  /** 額外的數字型預測（x 方向），例如同時猜中位數和平均數 */
+  morePredictions?: { id: string; label: string }[];
   /** 額外的參考線，例如臨界點 */
   markers?: { axis: 'x' | 'y'; value: number; label: string }[];
 }
-const { data, title, predictId, predictAxis, predictLabel, showMean, showMedian, revealed = null, demoPrediction = null, markers: extraMarkers = [] } = Astro.props;
+const { data, title, predictId, predictAxis, predictLabel, showMean, showMedian, revealed = null, demoPrediction = null, markers: extraMarkers = [], morePredictions = [] } = Astro.props;
 
 const files = import.meta.glob<{ default: any }>('../../../data/build/**/*.json', { eager: true });
 const file = files[`../../../data/build/${data}.json`]?.default;
@@ -30,7 +32,7 @@ const series = kind === 'distribution'
   ? [{ name: file.description ?? '', points: file.histogram.map((p: { x: number; y: number }) => ({ x: p.x, y: p.y })) }]
   : file.series.map((s: any) => ({ name: s.name, points: s.points.map((p: any) => ({ x: p.x, y: p.y, label: p.label, ci: p.ci ?? null })) }));
 const markers = [
-  ...(showMean && file.summary ? [{ axis: 'x', value: file.summary.mean, label: `平均 ${(+file.summary.mean).toFixed(2)}` }] : []),
+  ...(showMean && file.summary ? [{ axis: 'x', value: file.summary.mean, label: `平均 ${Number.isInteger(+file.summary.mean) ? file.summary.mean : (+file.summary.mean).toFixed(2)}` }] : []),
   ...(showMedian && file.summary ? [{ axis: 'x', value: file.summary.median, label: `中位數 ${file.summary.median}` }] : []),
   ...extraMarkers,
 ];
@@ -38,4 +40,4 @@ const markers = [
 <RevealChartIsland client:visible
   {title} {kind} {series} source={file.source}
   xLabel={file.x.label} yLabel={file.y.label} logX={file.x.scale === 'log'} logY={file.y.scale === 'log'}
-  {predictId} {predictAxis} {predictLabel} {markers} {revealed} demoPrediction={demoPrediction as any} />
+  {predictId} {predictAxis} {predictLabel} {markers} {morePredictions} {revealed} demoPrediction={demoPrediction as any} />

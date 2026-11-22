@@ -168,6 +168,11 @@ export interface Script {
   meetProbability(a: Person, b: Person, location: CampusLocation, time: SlotTime, present: number): number;
   /** 一開始就認識的配對（例如室友）。 */
   initialTies?: [number, number][];
+  /**
+   * 每個時段開始、決定大家去哪之前呼叫（可選）。章節可以在這裡依「目前的朋友關係」安排活動，
+   * 例如第 3 章的宵夜：有人約、再帶上自己的朋友。只能用傳進來的 rng，模擬才會可重播。
+   */
+  beforeSlot?(time: SlotTime, rng: Rng, sim: { neighbors(i: number): number[]; hasTie(a: number, b: number): boolean }): void;
   /** 「各做各的」地點：同在這裡不算相處、也不會認識（例如晚上的宿舍區）。 */
   quietLocations?: string[];
 }
@@ -193,6 +198,8 @@ export class CampusSim {
   readonly totalSlots: number;
   private rng: Rng;
   private ties = new Map<number, Tie>();
+  /** 每個人目前的朋友（和 ties 同步），給 beforeSlot 查詢用 */
+  private adj: number[][] = [];
   private locById: Map<string, CampusLocation>;
   readonly history: SlotResult[] = [];
 
@@ -208,8 +215,12 @@ export class CampusSim {
   reset(): void {
     this.rng = seededRandom(this.script.seed);
     this.ties.clear();
+    this.adj = this.script.people.map(() => []);
     this.history.length = 0;
-    for (const [a, b] of this.script.initialTies ?? []) this.ties.set(pairKey(a, b), { a: Math.min(a, b), b: Math.max(a, b), since: -1, weight: 0 });
+    for (const [a, b] of this.script.initialTies ?? []) {
+      this.ties.set(pairKey(a, b), { a: Math.min(a, b), b: Math.max(a, b), since: -1, weight: 0 });
+      this.adj[a].push(b); this.adj[b].push(a);
+    }
   }
 
   /** 已經跑完的時段數。 */
@@ -226,6 +237,7 @@ export class CampusSim {
     if (this.slot >= this.totalSlots) return null;
     const time = slotTime(this.slot);
     const { people } = this.script;
+    this.script.beforeSlot?.(time, this.rng, this);
     const at = people.map((p, i) => {
       const id = this.script.where(p, i, time, this.rng);
       this.location(id); // 檢查地點存在
@@ -244,6 +256,7 @@ export class CampusSim {
         const p = this.script.meetProbability(people[a], people[b], loc, time, members.length);
         if (p > 0 && this.rng() < p) {
           this.ties.set(key, { a: Math.min(a, b), b: Math.max(a, b), since: this.slot, weight: SLOT_MINUTES });
+          this.adj[a].push(b); this.adj[b].push(a);
           newTies.push([Math.min(a, b), Math.max(a, b)]);
         }
       }
@@ -259,6 +272,11 @@ export class CampusSim {
     if (target < this.slot) this.reset();
     while (this.slot < target) this.step();
   }
+
+  /** 第 i 個人目前的朋友（不要修改回傳的陣列）。 */
+  neighbors(i: number): number[] { return this.adj[i]; }
+
+  hasTie(a: number, b: number): boolean { return this.ties.has(pairKey(a, b)); }
 
   /** 目前所有連結（含權重），依 (a, b) 排序。 */
   currentTies(): Tie[] {

@@ -17,7 +17,7 @@ export const CHAPTERS: Chapter[] = [
     hero: { name: '品妤', dept: '經濟一', look: { skin: 1, hair: 'bun', hairColor: 0, college: 'socsci', accessory: 'none', year: 1 } } },
   { n: 2, slug: '02-bipartite', title: '宿舍、系所還是年級：你的朋友從哪裡來？', concept: '二分網路與投影（bipartite projection）', prereq: ['度'], minutes: 20, status: 'planned',
     hero: { name: '語涵', dept: '社會二', look: { skin: 0, hair: 'long', hairColor: 1, college: 'socsci', accessory: 'scarf', year: 2 } } },
-  { n: 3, slug: '03-triadic-closure', title: '室友的朋友：為什麼朋友圈會「收合」？', concept: '三元閉合與聚集係數（clustering coefficient）', prereq: ['度', '投影'], minutes: 25, status: 'planned',
+  { n: 3, slug: '03-triadic-closure', title: '室友的朋友：為什麼朋友圈會「收合」？', concept: '三元閉合與聚集係數（clustering coefficient）', prereq: ['度', '投影'], minutes: 25, status: 'in-progress',
     hero: { name: '承恩', dept: '物理一', look: { skin: 2, hair: 'short', hairColor: 0, college: 'sci', accessory: 'glasses', year: 1 } } },
   { n: 4, slug: '04-small-world', title: 'Dcard 午夜抽卡：為什麼世界這麼小？', concept: '小世界（small world）', prereq: ['度', '聚集係數'], minutes: 25, status: 'planned',
     hero: { name: '宜蓁', dept: '資工三', look: { skin: 1, hair: 'ponytail', hairColor: 2, college: 'eng', accessory: 'headphones', year: 3 } } },

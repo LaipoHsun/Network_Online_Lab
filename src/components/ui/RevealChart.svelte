@@ -101,7 +101,10 @@
     const first = xBand(dom[0])! + xBand.bandwidth() / 2;
     return first + ((t - nums[0]) / ((nums[nums.length - 1] - nums[0]) || 1)) * step * (nums.length - 1);
   }
-  const yTicks = $derived(yScale.ticks(5));
+  // 對數軸只標 10 的次方，避免 1、2、3…擠成一團
+  const yTicks = $derived(logY
+    ? (yScale.ticks() as number[]).filter((t) => Math.abs(Math.log10(t) - Math.round(Math.log10(t))) < 1e-9)
+    : yScale.ticks(5));
   const xTicks = $derived(categorical ? xBand.domain()
     : logX ? (xNum.ticks() as number[]).filter((t) => Math.abs(Math.log10(t) - Math.round(Math.log10(t))) < 1e-9)
     : (xNum.ticks(6) as number[]));

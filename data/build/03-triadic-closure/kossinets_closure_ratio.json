@@ -1,0 +1,95 @@
+{
+ "kind": "line",
+ "description": "沒有共同課程的兩個陌生人：有 k 位共同朋友時，開始聯絡的機率是沒有共同朋友時的幾倍",
+ "source": {
+  "text": "由 Kossinets & Watts 2006, Science 311(5757), Fig. 1B（三角形：沒有共同課程）的讀數換算（約略值）",
+  "url": "https://doi.org/10.1126/science.1116869",
+  "sample": "美國一所大型大學一學年的 email 紀錄；22,611 位學生",
+  "year": 2006
+ },
+ "digitized": true,
+ "digitization": {
+  "figure": "Fig. 1B（三角形）",
+  "method": "以 kossinets_mutual_acquaintances.json 的「沒有共同課程」各點除以共同朋友 0 位的那一點。兩個讀數各有約 ±10–20% 的誤差，比值的誤差約 ±30%，只適合看數量級。"
+ },
+ "x": {
+  "label": "共同朋友數"
+ },
+ "y": {
+  "label": "是沒有共同朋友時的幾倍",
+  "scale": "log"
+ },
+ "series": [
+  {
+   "name": "沒有共同課程",
+   "points": [
+    {
+     "x": 0,
+     "label": "0",
+     "y": 1.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 1,
+     "label": "1",
+     "y": 100.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 2,
+     "label": "2",
+     "y": 450.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 3,
+     "label": "3",
+     "y": 910.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 4,
+     "label": "4",
+     "y": 1500.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 5,
+     "label": "5",
+     "y": 2000.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 6,
+     "label": "6",
+     "y": 2700.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 7,
+     "label": "7",
+     "y": 3300.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 8,
+     "label": "8",
+     "y": 4000.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 9,
+     "label": "9",
+     "y": 4800.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    },
+    {
+     "x": 10,
+     "label": "10+",
+     "y": 7200.0,
+     "source": "Kossinets & Watts 2006, Science 311, Fig. 1B（換算）"
+    }
+   ]
+  }
+ ]
+}

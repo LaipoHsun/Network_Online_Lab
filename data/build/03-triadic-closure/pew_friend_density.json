@@ -1,0 +1,18 @@
+{
+ "kind": "facts",
+ "description": "Facebook 用戶好友圈的密度（好友之間彼此也是好友的比例）",
+ "source": {
+  "text": "Pew Research Center 2012, Why Most Facebook Users Get More Than They Give, Part 3: The structure of friendship",
+  "url": "https://www.pewresearch.org/internet/2012/02/03/part-3-the-structure-of-friendship/",
+  "sample": "Pew 研究樣本中的 Facebook 用戶",
+  "year": 2012
+ },
+ "digitized": false,
+ "facts": {
+  "mean_density": 0.12,
+  "sd_density": 0.07,
+  "max_density": 0.42,
+  "mean_friends": 245,
+  "quote_source": "原文：The average Facebook user's friends list has a density of only .12 (SD=.07). There was a maximum density of .42 … with 245 friends …"
+ }
+}

@@ -15,6 +15,8 @@
     min?: number; max?: number; step?: number; unit?: string; initial?: number;
     // curve：在 xs 上各放一個可拖的點
     xs?: number[]; yMin?: number; yMax?: number; xLabel?: string; yLabel?: string; logX?: boolean;
+    /** curve：y 軸用對數尺度（例如「是幾倍」），yMin 必須大於 0 */
+    logY?: boolean;
     // node
     n?: number; edges?: [number, number][]; labels?: string[];
     // split：把 100% 分給幾個類別（例如常常／偶爾／很少見面）
@@ -29,7 +31,7 @@
   let {
     id, kind, question, hint,
     min = 0, max = 10, step = 1, unit = '', initial,
-    xs = [], yMin = 0, yMax = 1, xLabel = '', yLabel = '', logX = false,
+    xs = [], yMin = 0, yMax = 1, xLabel = '', yLabel = '', logX = false, logY = false,
     n = 0, edges = [], labels = [], categories = [],
     persist = true, demoAnswer = null, allowReset = false,
   }: Props = $props();
@@ -37,7 +39,10 @@
   const uid = $props.id();
   let answer = $state<PredictAnswer | null>(demoAnswer);
   let value = $state(initial ?? Math.round((min + max) / 2 / step) * step);
-  let ys = $state<number[]>(xs.map(() => (yMin + yMax) / 2));
+  // y 在 [0, 1] 的相對位置（對數或線性）與實際數值互換
+  const toT = (y: number) => (logY ? (Math.log10(y) - Math.log10(yMin)) / (Math.log10(yMax) - Math.log10(yMin)) : (y - yMin) / (yMax - yMin || 1));
+  const fromT = (t: number) => { const c = Math.max(0, Math.min(1, t)); return logY ? 10 ** (Math.log10(yMin) + c * (Math.log10(yMax) - Math.log10(yMin))) : yMin + c * (yMax - yMin); };
+  let ys = $state<number[]>(xs.map(() => fromT(0.5)));
   let picked = $state<number | null>(null);
   // 分界點（累積百分比），預設平均分配
   let cuts = $state<number[]>(categories.slice(1).map((_, i) => Math.round(((i + 1) * 100) / categories.length)));
@@ -82,8 +87,12 @@
     const t = logX ? (Math.log10(x) - Math.log10(lo)) / (Math.log10(hi) - Math.log10(lo)) : (x - lo) / (hi - lo || 1);
     return PAD.l + t * (W - PAD.l - PAD.r);
   };
-  const yPos = (y: number) => PAD.t + (1 - (y - yMin) / (yMax - yMin || 1)) * (H - PAD.t - PAD.b);
-  const yFrom = (py: number) => Math.max(yMin, Math.min(yMax, yMin + (1 - (py - PAD.t) / (H - PAD.t - PAD.b)) * (yMax - yMin)));
+  const yPos = (y: number) => PAD.t + (1 - toT(y)) * (H - PAD.t - PAD.b);
+  const yFrom = (py: number) => fromT(1 - (py - PAD.t) / (H - PAD.t - PAD.b));
+  const yTicks = logY
+    ? Array.from({ length: Math.round(Math.log10(yMax / yMin)) + 1 }, (_, i) => yMin * 10 ** i)
+    : [yMin, (yMin + yMax) / 2, yMax];
+  const fmtY = (y: number) => (logY ? (y >= 1000 ? Math.round(y).toLocaleString('zh-TW') : String(+y.toPrecision(2))) : String(+y.toFixed(2)));
   let curveSvg: SVGSVGElement;
   let drawing = false;
   function drawAt(e: PointerEvent) {
@@ -94,16 +103,15 @@
     ys[best] = yFrom(py);
   }
   function handleKey(i: number, e: KeyboardEvent) {
-    const d = (yMax - yMin) / 20;
-    if (e.key === 'ArrowUp' || e.key === 'ArrowRight') ys[i] = Math.min(yMax, ys[i] + d);
-    else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') ys[i] = Math.max(yMin, ys[i] - d);
+    if (e.key === 'ArrowUp' || e.key === 'ArrowRight') ys[i] = fromT(toT(ys[i]) + 0.05);
+    else if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') ys[i] = fromT(toT(ys[i]) - 0.05);
     else if (e.key === 'Home') ys[i] = yMin;
     else if (e.key === 'End') ys[i] = yMax;
     else return;
     e.preventDefault();
   }
   const curvePath = $derived(xs.map((x, i) => `${i ? 'L' : 'M'}${xPos(x).toFixed(1)} ${yPos(ys[i]).toFixed(1)}`).join(''));
-  const fmtX = (x: number) => (x < 0.01 ? x.toExponential(0) : String(x));
+  const fmtX = (x: number) => (x !== 0 && Math.abs(x) < 0.01 ? x.toExponential(0) : String(x));
 
   // ---- 比例條
   let barEl: HTMLDivElement;
@@ -171,15 +179,15 @@
       onpointerup={() => (drawing = false)}
       style:touch-action={locked ? 'auto' : 'none'}>
       <rect x={PAD.l} y={PAD.t} width={W - PAD.l - PAD.r} height={H - PAD.t - PAD.b} class="plot" />
-      {#each [yMin, (yMin + yMax) / 2, yMax] as t}
-        <text x={PAD.l - 6} y={yPos(t) + 4} text-anchor="end" class="tick">{+t.toFixed(2)}</text>
+      {#each yTicks as t}
+        <text x={PAD.l - 6} y={yPos(t) + 4} text-anchor="end" class="tick">{fmtY(t)}</text>
       {/each}
       {#each xs as x}<text x={xPos(x)} y={H - PAD.b + 14} text-anchor="middle" class="tick">{fmtX(x)}</text>{/each}
       <text x={(W + PAD.l) / 2} y={H - 4} text-anchor="middle" class="axis">{xLabel}{logX ? '（對數尺度）' : ''}</text>
       <path d={curvePath} class="line" />
       {#each xs as x, i}
         <circle cx={xPos(x)} cy={yPos(ys[i])} r="7" class="handle" role="slider" tabindex={locked ? -1 : 0}
-          aria-label="{xLabel} = {fmtX(x)} 時的 {yLabel}" aria-valuemin={yMin} aria-valuemax={yMax} aria-valuenow={+ys[i].toFixed(2)}
+          aria-label="{xLabel} = {fmtX(x)} 時的 {yLabel}" aria-valuemin={yMin} aria-valuemax={yMax} aria-valuenow={+ys[i].toFixed(2)} aria-valuetext={fmtY(ys[i])}
           aria-readonly={locked} onkeydown={(e) => !locked && handleKey(i, e)} />
       {/each}
     </svg>

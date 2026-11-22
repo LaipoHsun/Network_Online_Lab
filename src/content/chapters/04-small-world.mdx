@@ -1,0 +1,160 @@
+---
+prereqTerms: ['degree', 'clustering']
+draft: true
+---
+{/* 第 4 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/04-small-world.md。
+    研究數字只用 data/build/04-small-world/*.json。 */}
+import Section from '../../components/chapter/Section.astro';
+import Step from '../../components/chapter/Step.astro';
+import Term from '../../components/chapter/Term.astro';
+import M from '../../components/chapter/M.astro';
+import NextQuestion from '../../components/chapter/NextQuestion.astro';
+import Predict from '../../components/ui/Predict.svelte';
+import LogicChain from '../../components/ui/LogicChain.astro';
+import FormulaCard from '../../components/ui/FormulaCard.astro';
+import RevealChart from '../../components/ui/RevealChart.astro';
+import RingWorld from '../../components/chapters/ch4/RingWorld.svelte';
+
+<Section n={1}>
+<Step>
+<div slot="visual"><RingWorld client:visible mode="intro" /></div>
+
+2011 年，兩位台大資管系的學生做了 Dcard：每天午夜 12 點，系統把你隨機配對到別校、別系的一位學生。
+
+資工系大三的宜蓁，某天抽到一位高雄的醫學系學生。聊了幾句，發現對方的室友是自己的國中同學。
+
+**台灣任意兩個人之間，平均隔了幾個人？**
+</Step>
+</Section>
+
+<Section n={2}>
+<Step>
+<div slot="visual">
+<Predict client:visible id="04-small-world/facebook" kind="number" min={1} max={10} step={0.1} initial={5} unit="步"
+  question="Facebook 上任意兩個人，平均要經過幾步才連得到？"
+  hint="1 步 = 直接是朋友；2 步 = 朋友的朋友。" />
+<Predict client:visible id="04-small-world/taiwan" kind="number" min={1} max={10} step={0.1} initial={5} unit="步"
+  question="那台灣任意兩個人呢？" />
+</div>
+
+猜兩個數字：Facebook 上任意兩個人之間的平均距離，以及台灣任意兩個人之間的平均距離。
+
+這裡的「步」指的是要走過幾段朋友關係。你和朋友是 1 步，你和朋友的朋友是 2 步。
+</Step>
+</Section>
+
+<Section n={3}>
+<Step>
+<div slot="visual"><RingWorld client:visible mode="lattice" /></div>
+
+### 場景 A：只認識同系的人
+
+這是 60 位學生，按系所圍成一圈。每個人只認識左右各兩位同學：同系、隔壁座位的人。
+
+從一個人沿著朋友關係走到另一個人的路線叫做<Term id="path" first />，最短路徑的步數叫做兩人的<Term id="distance" first />。點圈上的任何一位小人，看一封信從宜蓁那裡出發，沿著最短路徑飛過去。
+
+信出發前，綠色漣漪會一層一層往外擴散：先找出距離 1 的人，再找距離 2 的人。這個找法叫做<Term id="bfs" first />。
+
+信要寄到圓圈對面，得一個一個傳過去，走十幾步。圓心的數字是全班的<Term id="average-distance" first /> <M t="\langle d \rangle" />：大約 8 步。
+</Step>
+
+<Step full>
+### 場景 B：開啟午夜抽卡
+
+現在打開 Dcard。拉高「抽卡成功率」<M t="p" />：每條原本的連結，都有 <M t="p" /> 的機會被換成一條連到圈上隨機某人的捷徑。新出現的捷徑會閃一下。
+
+先試 <M t="p = 0.01" /> 到 <M t="0.05" />：只多了幾條捷徑，平均距離就掉了好幾步，再寄一次同樣的信看看。可是圓心的聚集係數 <M t="C" /> 幾乎沒變：大部分的朋友圈還是原來的樣子。
+
+旁邊的曲線是重點。在很寬的一段 <M t="p" /> 裡，距離（綠線）已經掉到接近完全隨機的網路，三角形（橘線）卻還和格子差不多。這種「朋友圈很緊密、但任兩人都很近」的網路，就叫<Term id="small-world" first />。
+
+<RingWorld client:visible mode="ws" />
+</Step>
+</Section>
+
+<Section n={4}>
+<Step>
+<div slot="visual">
+<FormulaCard
+  title="平均距離的三個公式"
+  formula={'\\begin{gathered} \\htmlData{key=d}{\\langle d \\rangle} = \\frac{1}{\\htmlData{key=N}{N}(N-1)}\\sum_{i \\ne j} d_{ij} \\\\[6pt] \\htmlData{key=lattice}{\\langle d \\rangle_{\\text{lattice}}} \\approx \\frac{N}{2\\htmlData{key=K}{K}} \\\\[6pt] \\htmlData{key=random}{\\langle d \\rangle_{\\text{random}}} \\approx \\frac{\\ln N}{\\ln \\langle k \\rangle} \\end{gathered}'}
+  symbols={[
+    { key: 'd', symbol: '\\langle d \\rangle', meaning: '平均距離：所有配對 $(i, j)$ 的最短路徑長度 $d_{ij}$ 的平均。$d_{ij}$ 用 BFS 算。' },
+    { key: 'N', symbol: 'N', meaning: '人數。' },
+    { key: 'K', symbol: 'K', meaning: '格子裡每人認識幾位（左右各 $K/2$ 位）。' },
+    { key: 'lattice', symbol: '\\langle d \\rangle_{\\text{lattice}}', meaning: '環狀格子的平均距離：和 $N$ 成正比。' },
+    { key: 'random', symbol: '\\langle d \\rangle_{\\text{random}}', meaning: '隨機網路的平均距離：和 $\\ln N$ 成正比。' },
+  ]}
+  range="$\langle d \rangle \ge 1$；等於 1 代表每個人都直接認識其他所有人。"
+  related="第 3 章的聚集係數 $C$ 衡量三角形；這章的 $\langle d \rangle$ 衡量距離。小世界網路同時有高 $C$ 和小 $\langle d \rangle$。"
+  live={[
+    { key: 'd', label: '\\langle d \\rangle', digits: 2 },
+    { key: 'lattice', label: 'N/2K', digits: 2 },
+    { key: 'random', label: '\\ln N / \\ln K', digits: 2 },
+    { key: 'C', label: 'C', digits: 2 },
+  ]}
+/>
+</div>
+
+<M t="d_{ij}" /> 是 <M t="i" /> 到 <M t="j" /> 最短路徑的步數。把所有配對平均起來，就是平均距離 <M t="\langle d \rangle" />。
+
+在環狀格子裡，每一步最多往前走 <M t="K/2" /> 個座位，圓圈對面的人在 <M t="N/2" /> 個座位外，所以平均距離約為 <M t="N/(2K)" />。人數加倍，距離也加倍。
+
+隨機網路完全不同。從一個人出發，1 步可以碰到約 <M t="\langle k \rangle" /> 人，2 步約 <M t="\langle k \rangle^2" /> 人，<M t="d" /> 步約 <M t="\langle k \rangle^d" /> 人。令它等於全部的人數 <M t="N" />，就得到 <M t="d \approx \ln N / \ln \langle k \rangle" />：距離只和人數的對數成正比。公式卡裡的即時數字來自上面的場景，可以拿 <M t="\langle d \rangle" /> 和兩個估算比一比。
+
+**拿台灣來算算看。** 2025 年底台灣的戶籍人口是 23,299,132 人，<M t="\ln N \approx 16.96" />。假設每人認識約 1,000 人，<M t="\ln 1000 \approx 6.91" />，得到 <M t="\langle d \rangle \approx 16.96 / 6.91 \approx 2.5" />。這只是數量級的粗估（真實的朋友圈有很多重疊），但重點在後面：人口再多十倍，距離只多 <M t="\ln 10 / \ln 1000 \approx 0.33" /> 步。
+
+為什麼少數捷徑就夠了？<Term id="watts-strogatz" first />給了答案：一條捷徑可以讓許多配對的距離一起縮短，因為圈上兩邊的人都能借用它；但它只拆掉附近一兩個三角形。所以在一段很寬的 <M t="p" /> 裡，距離已經接近隨機網路，聚集係數卻還接近格子。
+</Step>
+</Section>
+
+<Section n={5}>
+<Step full>
+<LogicChain
+  title="第 4 章邏輯鏈"
+  steps={[
+    { kind: 'assumption', critical: true, summary: '多數關係是局部的（同系、同宿舍），少數是隨機的遠距關係（抽卡、交換學生、搬家）。', detail: '這就是場景 B 的設定：大部分連結還在格子上，只有比例 $p$ 的連結被換成捷徑。' },
+    { kind: 'derivation', summary: '遠距關係讓「幾步之內能碰到的人數」從線性增加變成指數增加。', detail: '在格子上，走 $d$ 步只能碰到約 $Kd$ 人。只要沿途偶爾有一條捷徑，你就跳到圈上另一個位置，從那裡又開始往兩邊擴散。擴散的起點越來越多，碰到的人數就像 $\\langle k \\rangle^d$ 一樣成倍增加。' },
+    { kind: 'result', summary: '$\\langle d \\rangle$ 和 $\\ln N$ 成正比，同時 $C$ 還很高。', detail: '捷徑很少，所以大部分的三角形還在；但只要幾條，就足以讓距離從 $N/(2K)$ 掉到接近 $\\ln N / \\ln \\langle k \\rangle$。' },
+    { kind: 'prediction', summary: '大型社會網路的平均距離很小，而且網路變大時只會緩慢增加。', detail: '這可以用真實網路檢驗：量幾億人的平均距離，看它是不是只有個位數。第 ⑥ 段揭曉。' },
+  ]}
+  removal={{ step: 0, effect: '如果所有關係都是局部的（沒有任何遠距關係），網路就是格子：距離和人數成正比。台灣兩千多萬人，即使每人認識 1,000 人，按 N/(2K) 算，任兩人平均也要相隔一萬多步。' }}
+/>
+</Step>
+</Section>
+
+<Section n={6}>
+<Step full>
+### 三次測量，一條時間線
+
+<RevealChart data="04-small-world/small_world_distances" predictId="04-small-world/facebook" predictAxis="y" predictLabel="你猜的 Facebook"
+  title="從 Milgram 的信到 Facebook 的十幾億人：平均都只要 4 到 6 步" />
+
+**1969 年，Milgram 的信。** Travers 和 Milgram 請 296 位住在內布拉斯加和波士頓的人，把一份文件寄給住在麻州的一位股票經紀人。規則是：只能寄給自己直接認識、而且覺得比較可能認識目標的人。結果 296 人中只有 217 人真的寄出，最後只有 64 份到達目標，是寄出的 29%。在這 64 條成功的鏈裡，平均經過 5.2 位中間人。大部分的信沒有寄到，所以「六度分隔」只描述了成功的那些。另外，48% 的鏈在到達目標前，都經過同樣三個人。
+
+**2011 年，Facebook 全球。** Backstrom 等人（2012）計算了當時約 7.21 億位活躍用戶、約 690 億條友誼之間的平均距離：4.74。
+
+**2016 年，Facebook 全球。** Facebook 研究團隊對 15.9 億位用戶重新計算，平均距離降到 4.57。在美國國內，分隔度數只有 3.46。
+
+**小陷阱：距離和<Term id="degrees-of-separation" first />差 1。** 4.74 的距離，等於中間經過 3.74 個人；4.57 等於 3.57 個中間人，所以 Facebook 的部落格標題是「三點五度分隔」。Milgram 報告的 5.2 是中間人數，換成距離是 6.2（圖上是距離）。你的猜測是距離還是中間人數？
+
+**台灣呢？** 第 ④ 段用 <M t="\ln N / \ln \langle k \rangle" /> 粗估約 2.5 步。這不是測量值，只是告訴你數量級：兩千多萬人，大概也只隔兩三個人。
+</Step>
+</Section>
+
+<Section n={7}>
+<Step full>
+**社會學：「大家都認識」有結構原因。** 只要有一部分人跨地區、跨階層生活（離家讀書、換工作、交換學生、在網路上認識陌生人），社會就是一個小世界。台灣常有「轉兩個人就認識」的經驗，不只是因為台灣小。Milgram 的「漏斗」現象，近一半的鏈都經過同樣三個人，也預告了第 7 章的中心性：有些人在網路裡特別關鍵。
+
+**經濟學：距離短，衝擊傳得也快。** 資訊、謠言、時尚和金融衝擊，都沿著同樣的短路徑傳遞。市場整合（一個地方的價格很快影響其他地方）和系統性風險（一家銀行出事很快波及全體），是同一個網路性質的兩面。
+</Step>
+</Section>
+
+<Section n={8}>
+<Step full>
+- **短路徑「存在」不等於「找得到」。** Milgram 實驗裡的人並不知道整張網路，只能憑感覺往「比較可能認識目標」的方向寄。Kleinberg（2000，*Nature*）證明：只有當捷徑的長度分布剛好符合某種條件時，人們只靠局部資訊才找得到短路徑。這叫做可導航性。
+- **隨機網路的公式假設每個人朋友數差不多。** 真實網路裡朋友數極不平均（第 1 章），少數朋友很多的人會讓距離更短。
+- **線上網路不等於真實社會。** Facebook 的距離只算用戶之間的距離，不在 Facebook 上的人不算。
+
+<NextQuestion to={5}>如果朋友數很不平均，會發生什麼怪事？</NextQuestion>
+</Step>
+</Section>

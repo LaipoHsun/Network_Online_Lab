@@ -1,0 +1,20 @@
+{
+ "kind": "facts",
+ "description": "台灣任兩人平均距離的粗估：⟨d⟩ ≈ ln N / ln ⟨k⟩（假設每人認識約 1,000 人；只是數量級的估算）",
+ "source": {
+  "text": "人口：內政部戶政司，114 年 12 月底戶籍登記人口數",
+  "url": "https://www.ris.gov.tw/info-liferay/app/channel/newsDetail/26007114",
+  "year": 2025
+ },
+ "digitized": false,
+ "facts": {
+  "population": 23299132,
+  "population_source": "內政部戶政司：114年12月底人口數為23,299,132人",
+  "assumed_acquaintances": 1000,
+  "assumed_note": "「每人認識約 1,000 人」是規格中的假設，不是測量值",
+  "ln_N": 16.96,
+  "ln_k": 6.91,
+  "estimate": 2.46,
+  "extra_per_10x": 0.33
+ }
+}

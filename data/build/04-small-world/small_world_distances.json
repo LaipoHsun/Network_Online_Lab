@@ -1,0 +1,61 @@
+{
+ "kind": "bar",
+ "description": "三次「世界有多小」的測量：兩人之間平均要走幾步（距離）",
+ "source": {
+  "text": "Travers & Milgram 1969（Sociometry）；Backstrom 等人 2012（arXiv:1111.4570）；Facebook Research 2016（部落格）",
+  "url": "https://arxiv.org/abs/1111.4570",
+  "sample": "Milgram：296 位起點者、64 條成功的鏈；Facebook 2011：約 7.21 億位用戶、690 億條友誼；Facebook 2016：15.9 億位用戶"
+ },
+ "digitized": false,
+ "x": {
+  "label": "研究"
+ },
+ "y": {
+  "label": "平均距離（步）"
+ },
+ "series": [
+  {
+   "name": "平均距離",
+   "points": [
+    {
+     "x": "Milgram 1969",
+     "y": 6.2,
+     "label": "成功的 64 條鏈；論文報告中間人 5.2 位，距離 = 5.2 + 1",
+     "source": "Travers & Milgram 1969, Sociometry 32(4), p. 425（摘要）：mean number of intermediaries … is 5.2（換算成距離 +1）"
+    },
+    {
+     "x": "Facebook 2011",
+     "y": 4.74,
+     "label": "全球約 7.21 億人",
+     "source": "Backstrom et al. 2012, arXiv:1111.4570, 摘要：The average distance we observe is 4.74, corresponding to 3.74 intermediaries"
+    },
+    {
+     "x": "Facebook 2016",
+     "y": 4.57,
+     "label": "全球 15.9 億人",
+     "source": "Facebook Research 2016, Three and a half degrees of separation：The average distance we observe is 4.57, corresponding to 3.57 intermediaries"
+    }
+   ]
+  }
+ ],
+ "facts": {
+  "milgram_starters": 296,
+  "milgram_sent": 217,
+  "milgram_completed": 64,
+  "milgram_completed_pct_of_sent": 29,
+  "milgram_intermediaries": 5.2,
+  "milgram_funnel_pct": 48,
+  "milgram_source": "Travers & Milgram 1969：N = 296；217 of the 296 starting persons actually sent the document；64 of the folders, or 29 per cent of those sent out … reached the target；48 per cent of the chains passing through three persons before reaching the target",
+  "fb2011_users": 721000000,
+  "fb2011_links": 69000000000,
+  "fb2011_distance": 4.74,
+  "fb2011_degrees": 3.74,
+  "fb2011_source": "Backstrom et al. 2012, arXiv:1111.4570, 摘要",
+  "fb2016_users": 1590000000,
+  "fb2016_distance": 4.57,
+  "fb2016_degrees": 3.57,
+  "fb2016_us_degrees": 3.46,
+  "fb2016_source": "Facebook Research 2016, Three and a half degrees of separation：Within the US, people are connected to each other by an average of 3.46 degrees",
+  "fb2016_url": "https://research.facebook.com/blog/2016/02/three-and-a-half-degrees-of-separation/"
+ }
+}

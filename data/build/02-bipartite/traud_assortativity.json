@@ -1,0 +1,77 @@
+{
+ "kind": "bar",
+ "description": "Facebook100：100 所美國大學的好友網路裡，朋友是否傾向和自己同年級、同宿舍、同主修、同高中（同質性係數的中位數）",
+ "source": {
+  "text": "Traud, Mucha & Porter 2012, Social structure of Facebook networks, Physica A 391: 4165–4180, Table A.2",
+  "url": "https://doi.org/10.1016/j.physa.2011.12.021",
+  "sample": "2005 年 9 月 Facebook 只開放 .edu 信箱時的 100 所美國大學完整好友網路，每校 762 到 41,536 人",
+  "year": 2012
+ },
+ "digitized": false,
+ "x": {
+  "label": "屬性"
+ },
+ "y": {
+  "label": "同質性係數（100 校中位數）"
+ },
+ "series": [
+  {
+   "name": "100 校中位數",
+   "points": [
+    {
+     "x": "年級",
+     "y": 0.436,
+     "source": "Traud, Mucha & Porter 2012, Physica A 391, Table A.2（Full 欄）：100 校的中位數（本腳本計算）"
+    },
+    {
+     "x": "宿舍",
+     "y": 0.221,
+     "source": "Traud, Mucha & Porter 2012, Physica A 391, Table A.2（Full 欄）：100 校的中位數（本腳本計算）"
+    },
+    {
+     "x": "主修",
+     "y": 0.05,
+     "source": "Traud, Mucha & Porter 2012, Physica A 391, Table A.2（Full 欄）：100 校的中位數（本腳本計算）"
+    },
+    {
+     "x": "高中",
+     "y": 0.03,
+     "source": "Traud, Mucha & Porter 2012, Physica A 391, Table A.2（Full 欄）：100 校的中位數（本腳本計算）"
+    }
+   ]
+  }
+ ],
+ "facts": {
+  "schools": 100,
+  "top_counts": {
+   "年級": 92,
+   "宿舍": 8,
+   "主修": 0,
+   "高中": 0
+  },
+  "top_counts_note": "每所學校完整網路中，同質性係數最高的屬性（本腳本由 Table A.2 計算）",
+  "residence_top_schools": [
+   "Auburn",
+   "Caltech",
+   "Mich",
+   "Mississippi",
+   "Oklahoma",
+   "Rice",
+   "Texas",
+   "UCSC"
+  ],
+  "smallest": {
+   "name": "Caltech",
+   "nodes": 762,
+   "edges": 16651
+  },
+  "largest": {
+   "name": "Penn",
+   "nodes": 41536,
+   "edges": 1362220
+  },
+  "sizes_source": "Traud, Mucha & Porter 2012, Table A.1（Full 欄）",
+  "paper_text": "For almost all of the institutions and each of the 4 network subsets, the class year attribute produces higher assortativity values than the other available demographic characteristics.（p. 4170）",
+  "abstract": "… common high school is more important to the social organization of large institutions and … the importance of common major varies significantly between institutions.（摘要）"
+ }
+}

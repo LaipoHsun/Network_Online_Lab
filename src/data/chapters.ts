@@ -15,7 +15,7 @@ export interface Chapter {
 export const CHAPTERS: Chapter[] = [
   { n: 1, slug: '01-degree', title: '迎新週：你加了多少 LINE 好友？', concept: '度與度分布（degree distribution）', prereq: [], minutes: 20, status: 'in-progress',
     hero: { name: '品妤', dept: '經濟一', look: { skin: 1, hair: 'bun', hairColor: 0, college: 'socsci', accessory: 'none', year: 1 } } },
-  { n: 2, slug: '02-bipartite', title: '宿舍、系所還是年級：你的朋友從哪裡來？', concept: '二分網路與投影（bipartite projection）', prereq: ['度'], minutes: 20, status: 'planned',
+  { n: 2, slug: '02-bipartite', title: '宿舍、系所還是年級：你的朋友從哪裡來？', concept: '二分網路與投影（bipartite projection）', prereq: ['度'], minutes: 20, status: 'in-progress',
     hero: { name: '語涵', dept: '社會二', look: { skin: 0, hair: 'long', hairColor: 1, college: 'socsci', accessory: 'scarf', year: 2 } } },
   { n: 3, slug: '03-triadic-closure', title: '室友的朋友：為什麼朋友圈會「收合」？', concept: '三元閉合與聚集係數（clustering coefficient）', prereq: ['度', '投影'], minutes: 25, status: 'in-progress',
     hero: { name: '承恩', dept: '物理一', look: { skin: 2, hair: 'short', hairColor: 0, college: 'sci', accessory: 'glasses', year: 1 } } },

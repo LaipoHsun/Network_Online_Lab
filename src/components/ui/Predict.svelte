@@ -8,7 +8,7 @@
   interface Props {
     /** 儲存用的 id，例如 '01-degree/mean-friends'；揭曉圖用同一個 id */
     id: string;
-    kind: 'number' | 'curve' | 'node' | 'split';
+    kind: 'number' | 'curve' | 'node' | 'split' | 'rank';
     question: string;
     hint?: string;
     // number
@@ -19,7 +19,7 @@
     logY?: boolean;
     // node
     n?: number; edges?: [number, number][]; labels?: string[];
-    // split：把 100% 分給幾個類別（例如常常／偶爾／很少見面）
+    // split：把 100% 分給幾個類別（例如常常／偶爾／很少見面）；rank：把這些類別排順序（第一名在最上面）
     categories?: string[];
     /** 存不存 localStorage（展示頁可以關掉） */
     persist?: boolean;
@@ -48,6 +48,7 @@
   let cuts = $state<number[]>(categories.slice(1).map((_, i) => Math.round(((i + 1) * 100) / categories.length)));
   const shares = $derived(categories.map((_, i) => (i === categories.length - 1 ? 100 : cuts[i]) - (i === 0 ? 0 : cuts[i - 1])));
   let focusNode = $state(0);
+  let order = $state<string[]>([...categories]);
   const locked = $derived(answer !== null);
 
   onMount(() => {
@@ -59,6 +60,7 @@
     if (answer?.kind === 'curve') ys = [...answer.ys];
     if (answer?.kind === 'node') picked = answer.node;
     if (answer?.kind === 'split') cuts = answer.values.slice(0, -1).map((_, i) => answer!.kind === 'split' ? answer.values.slice(0, i + 1).reduce((s, v) => s + v, 0) : 0);
+    if (answer?.kind === 'rank') order = [...answer.order];
     if (kind === 'node') layoutNodes();
   });
 
@@ -67,9 +69,17 @@
     if (kind === 'number') a = { kind: 'number', value, at: Date.now() };
     else if (kind === 'curve') a = { kind: 'curve', xs, ys: [...ys], at: Date.now() };
     else if (kind === 'split') a = { kind: 'split', labels: [...categories], values: [...shares], at: Date.now() };
+    else if (kind === 'rank') a = { kind: 'rank', order: [...order], at: Date.now() };
     else { if (picked === null) return; a = { kind: 'node', node: picked, label: labels[picked], at: Date.now() }; }
     answer = a;
     if (persist) savePrediction(id, a);
+  }
+  function move(i: number, d: -1 | 1) {
+    const j = i + d;
+    if (locked || j < 0 || j >= order.length) return;
+    const o = [...order]; [o[i], o[j]] = [o[j], o[i]]; order = o;
+    // 鍵盤操作時，焦點跟著項目移動
+    requestAnimationFrame(() => document.getElementById(`${uid}-r${j}-${d < 0 ? 'up' : 'down'}`)?.focus());
   }
   function skip() {
     answer = { kind: 'skipped', at: Date.now() };
@@ -209,6 +219,17 @@
       {/each}
     </div>
     <p class="hint">拖曳分界線（或用方向鍵、Shift＋方向鍵一次 5%）分配 100%。</p>
+  {:else if kind === 'rank'}
+    <ol class="rank" aria-labelledby="{uid}-q">
+      {#each order as c, i (c)}
+        <li>
+          <span class="pos num">{i + 1}</span><span class="rc">{c}</span>
+          <button type="button" id="{uid}-r{i}-up" class="mv" disabled={locked || i === 0} aria-label="把{c}往前移" onclick={() => move(i, -1)}>↑</button>
+          <button type="button" id="{uid}-r{i}-down" class="mv" disabled={locked || i === order.length - 1} aria-label="把{c}往後移" onclick={() => move(i, 1)}>↓</button>
+        </li>
+      {/each}
+    </ol>
+    <p class="hint">用 ↑ ↓ 調整順序，最上面是你認為影響最大的。</p>
   {:else}
     <svg class="net" viewBox="0 0 {NW} {NH}" role="radiogroup" aria-labelledby="{uid}-q">
       {#each edges as [a, b]}
@@ -277,4 +298,10 @@
   .primary:disabled { opacity: 0.5; cursor: default; }
   .ghost { background: none; color: var(--muted); }
   .done { margin: 0; font-size: 14px; color: var(--muted); }
+  .rank { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .rank li { display: flex; align-items: center; gap: var(--space-2); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; }
+  .rank .pos { width: 1.6em; color: var(--accent); font-weight: 600; }
+  .rank .rc { flex: 1; font-size: 15px; }
+  .rank .mv { font: inherit; width: 34px; height: 34px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 6px; cursor: pointer; }
+  .rank .mv:disabled { opacity: 0.35; cursor: default; }
 </style>

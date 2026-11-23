@@ -19,7 +19,8 @@
 - 階段 5 第 3 章初稿完成，待作者審定內文：`src/content/chapters/03-triadic-closure.mdx`、場景 `src/components/chapters/ch3/`（宵夜劇本、C(t) 圖、自我網路）、資料 `data/build/03-triadic-closure/`（Kossinets & Watts 2006 Fig. 1B 為點陣圖，依標記位置讀取，標 digitized；Pew 2012 密度 0.12 取自原文）。引擎新增 `Script.beforeSlot` 與 `CampusSim.neighbors/hasTie`；Predict 曲線支援 `logY`。
 - 階段 5 第 4、5 章初稿完成，待作者審定內文：第 4 章 `src/components/chapters/ch4/`（環狀格子 + Watts–Strogatz，60 人圈與 400 人曲線）、資料 `data/build/04-small-world/`（Milgram、Backstrom、Facebook 2016 皆取自原文；台灣人口取自內政部 114 年 12 月底）；第 5 章 `src/components/chapters/ch5/`（配置模型、兩種抽樣、流感哨兵）、資料 `data/build/05-friendship-paradox/`（Pew 取自原文；Christakis & Fowler 2010 Figure 3 左依顏色讀取，標 digitized）。
 - 從 $effect 裡呼叫 emitLive 要包在 untrack 裡（公式卡的狀態會被算成依賴而無限循環）。
-- 下一步：作者審第 6、1、3、4、5 章內文；之後階段 5 其餘章節（順序 2 → 7 → 8 → 9）。
+- 階段 5 第 2 章初稿完成，待作者審定內文：`src/components/chapters/ch2/`（四種焦點權重的校園劇本、二分圖 ⇄ 投影）、資料 `data/build/02-bipartite/`（Traud, Mucha & Porter 2012 附錄 Table A.1、A.2 的文字，100 校全部解析）。Predict 新增 `rank`（排序）題型，RevealChart 會在長條下標出讀者的名次。
+- 下一步：作者審第 1–6 章內文；之後階段 5 其餘章節（順序 7 → 8 → 9）。
 
 ## 內容
 - 不要自己寫或改任何研究數字。所有數字來自 `data/build/*.json`，每筆都有 `source`。
@@ -36,7 +37,7 @@
 
 ## 指令
 - `npm install`、`npm run dev`（http://localhost:4321；Astro 7 會在背景常駐，用 `npx astro dev stop` 停止）、`npm test`、`npm run build`。
-- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章）、`python3 data/scripts/ch1_data.py --ugander <pdf>`（第 1 章）、`python3 data/scripts/ch3_data.py --kossinets <pdf> [--overlay <png>]`（第 3 章）、`python3 data/scripts/ch4_data.py`（第 4 章）、`python3 data/scripts/ch5_data.py --christakis-fig <jpg>`（第 5 章）；PDF 不放進 repo，來源見各腳本開頭。
+- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章）、`python3 data/scripts/ch1_data.py --ugander <pdf>`（第 1 章）、`python3 data/scripts/ch3_data.py --kossinets <pdf> [--overlay <png>]`（第 3 章）、`python3 data/scripts/ch4_data.py`（第 4 章）、`python3 data/scripts/ch5_data.py --christakis-fig <jpg>`（第 5 章）、`python3 data/scripts/ch2_data.py --traud <pdf>`（第 2 章）；PDF 不放進 repo，來源見各腳本開頭。
 
 ## 完成的定義
 - `npm test` 和 `npm run build` 通過。

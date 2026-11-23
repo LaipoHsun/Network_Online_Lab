@@ -1,0 +1,157 @@
+---
+prereqTerms: ['degree']
+draft: true
+---
+{/* 第 2 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/02-bipartite.md。
+    研究數字只用 data/build/02-bipartite/*.json（Traud, Mucha & Porter 2012 附錄 Table A.1、A.2）。 */}
+import Section from '../../components/chapter/Section.astro';
+import Step from '../../components/chapter/Step.astro';
+import Term from '../../components/chapter/Term.astro';
+import M from '../../components/chapter/M.astro';
+import NextQuestion from '../../components/chapter/NextQuestion.astro';
+import Predict from '../../components/ui/Predict.svelte';
+import LogicChain from '../../components/ui/LogicChain.astro';
+import FormulaCard from '../../components/ui/FormulaCard.astro';
+import RevealChart from '../../components/ui/RevealChart.astro';
+import FocusScene from '../../components/chapters/ch2/FocusScene.svelte';
+import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
+
+<Section n={1}>
+<Step>
+<div slot="visual"><FocusScene client:visible mode="intro" /></div>
+
+社會系大二的語涵，某天翻了自己的好友清單，發現一件事：大一住宿舍認識的人，比同系的還多。
+
+這裡是 70 位學生的一學期。每個人住在某一棟宿舍的某一層、屬於一個系、參加零到兩個社團、修幾門通識課。白天上課、晚上回宿舍，小人在這些地方之間來回。橘色圈的是語涵。
+
+**對大學生來說，決定朋友圈的是宿舍、系所、年級，還是高中？**
+</Step>
+</Section>
+
+<Section n={2}>
+<Step>
+<div slot="visual">
+<Predict client:visible id="02-bipartite/rank" kind="rank"
+  question="在美國大學的 Facebook 好友網路裡，哪個屬性最能解釋「誰和誰是朋友」？請排序。"
+  hint="第一名是你認為影響最大的。"
+  categories={['宿舍', '主修', '年級', '高中']} />
+</div>
+
+把四個屬性排個順序：同宿舍、同主修、同年級、同高中，哪一個最能預測兩個人是不是朋友？
+
+台大的學生可能會直覺地把「主修」排很前面，因為系上的課、系學會、系隊都是同一群人。送出之後，第 ⑥ 段用 100 所美國大學的資料揭曉。
+</Step>
+</Section>
+
+<Section n={3}>
+<Step full>
+### 場景 A：一學期的校園日程
+
+人和人不是憑空認識的，而是在某個<Term id="focus" first />裡碰面：同一堂必修、同一層宿舍、同一個社團、同一門通識。旁邊的四排按鈕，是每種焦點「多容易讓人變成朋友」的權重。
+
+一開始四種都設在「中」。看看長條圖：學期末的朋友裡，同宿舍同一層的佔最多，就像語涵一樣。細線是「隨便兩個人」剛好同層、同系……的比例；長條比細線長越多，代表那個焦點越能解釋誰和誰是朋友。
+
+試試看把宿舍調到「0」、系所調到「強」，學校就像一個「沒有宿舍文化、系所很強」的地方。再把通識課調到「強」、其他都調弱：朋友幾乎全部來自那門通識課。**朋友圈長什麼樣子，很大一部分是由制度決定的。**
+
+<FocusScene client:visible mode="foci" />
+</Step>
+
+<Step>
+<div slot="visual"><Bipartite client:visible /></div>
+
+### 場景 B：兩種畫法
+
+「誰參加了哪個焦點」本身就是一張網路，只是它有兩種節點：一邊是人，一邊是焦點，連結只出現在人和焦點之間。這叫做<Term id="bipartite" first />。
+
+把焦點拿掉，只要兩個人共享至少一個焦點就把他們連起來，這個動作叫做<Term id="projection" first />。按「投影」看看：那門 30 人的通識課，瞬間變成 30 個人兩兩相連的一大團。
+
+用「標出焦點」選擇一個焦點，可以看到它在兩種畫法裡各自對應到哪些人和連結。共享兩個焦點的人，投影後的連結比較粗。
+</Step>
+</Section>
+
+<Section n={4}>
+<Step>
+<div slot="visual">
+<FormulaCard
+  title="從二分網路到投影"
+  formula={'\\begin{gathered} \\htmlData{key=B}{B} \\in \\{0,1\\}^{\\htmlData{key=N}{N} \\times \\htmlData{key=M}{M}} \\\\[6pt] \\htmlData{key=P}{P} = B B^{\\top}, \\qquad P_{ij} = \\sum_{m} B_{im} B_{jm} \\end{gathered}'}
+  symbols={[
+    { key: 'B', symbol: 'B', meaning: '關聯矩陣：$B_{im} = 1$ 代表學生 $i$ 屬於焦點 $m$。' },
+    { key: 'N', symbol: 'N', meaning: '人數。' },
+    { key: 'M', symbol: 'M', meaning: '焦點數。' },
+    { key: 'P', symbol: 'P_{ij}', meaning: '投影：$i$ 和 $j$ 共同的焦點數。$P_{ij} > 0$ 就在投影網路裡相連。' },
+  ]}
+  range="$P_{ij} = 0$：兩人沒有共同的焦點。對角線 $P_{ii}$ 是 $i$ 參加的焦點數，投影時不算。"
+  related="一個有 $s$ 個成員的焦點，投影後產生 $s(s-1)/2$ 條連結和許多三角形，接到第 3 章的聚集係數。"
+  live={[
+    { key: 'N', label: 'N', digits: 0 },
+    { key: 'M', label: 'M', digits: 0 },
+    { key: 'L', label: '\\text{投影後的連結數}', digits: 0 },
+    { key: 'big', label: '\\text{最大焦點產生的連結}', digits: 0 },
+  ]}
+/>
+</div>
+
+二分網路可以寫成一個 <M t="N \times M" /> 的<Term id="incidence-matrix" first /> <M t="B" />：<M t="B_{im} = 1" /> 代表學生 <M t="i" /> 屬於焦點 <M t="m" />。
+
+投影就是矩陣乘法 <M t="P = BB^{\top}" />。<M t="P_{ij}" /> 數的是 <M t="i" /> 和 <M t="j" /> 共同的焦點數：兩人在同一個焦點各有一個 1，乘起來才是 1。
+
+**投影最常見的陷阱：大焦點會製造大量「假的」連結。** 一個有 <M t="s" /> 個成員的焦點，投影後會產生 <M t="s(s-1)/2" /> 條連結。30 人的通識課產生 435 條，但修同一門課的 30 個人，真正彼此認識的可能只有一小部分。分析投影網路時，常常要依焦點大小調整連結的權重，或只保留共享多個焦點的配對。
+
+**投影本身就會製造三角形。** 同一個焦點的成員兩兩相連，任三個人都是一個三角形。所以投影網路的聚集係數一定偏高：這不代表朋友圈很「收合」，只是畫法的結果。第 3 章會再談聚集係數。
+</Step>
+</Section>
+
+<Section n={5}>
+<Step full>
+<LogicChain
+  title="第 2 章邏輯鏈"
+  steps={[
+    { kind: 'assumption', critical: true, summary: 'Feld 的焦點理論：人們在共同的活動中心相遇；焦點越小、互動越密集，越容易產生朋友。', detail: 'Feld（1981，American Journal of Sociology）把職場、社團、鄰里這類把人聚在一起的結構叫做「焦點」。不是先有朋友再一起活動，而是先在焦點裡碰面，才有機會變成朋友。' },
+    { kind: 'derivation', summary: '誰和誰是朋友，大部分可以用「兩人共同焦點的數量與性質」來預測。', detail: '共同焦點越多、焦點越小、碰面越頻繁，兩人變成朋友的機率越高。場景 A 的四個權重就是在調整「每種焦點有多強」。' },
+    { kind: 'result', summary: '哪個焦點主導朋友圈，取決於制度：宿舍是否多年固定、系所的課是否綁在一起。', detail: '在場景 A 裡，同樣 70 個人，只要改變焦點權重，主導朋友圈的屬性就跟著改變。' },
+    { kind: 'prediction', summary: '住宿制度不同的學校，朋友圈會被不同的屬性主導。', detail: '這可以用很多學校的資料檢驗：比較各校「同年級」「同宿舍」「同主修」的朋友比例。第 ⑥ 段揭曉。' },
+  ]}
+  removal={{ step: 0, effect: '如果人可以在任何地方隨機認識任何人，焦點就不重要了：朋友和自己同宿舍、同系的比例，會接近「隨便兩個人」的比例（場景 A 的細線）。' }}
+/>
+</Step>
+</Section>
+
+<Section n={6}>
+<Step full>
+### Facebook100：100 所美國大學
+
+<RevealChart data="02-bipartite/traud_assortativity" predictId="02-bipartite/rank" predictLabel="你排"
+  title="年級遠遠領先，宿舍第二，主修和高中都很弱" />
+
+Traud、Mucha 和 Porter（2012）分析了 2005 年 9 月的 Facebook：當時只有 .edu 信箱能註冊，他們拿到最早加入的 100 所美國大學的完整好友網路，每校從 762 人（Caltech）到 41,536 人（Penn）不等。
+
+對每一所學校，他們計算朋友在各個屬性上的<Term id="homophily" first />係數：0 代表朋友和自己同年級（或同宿舍……）的比例跟隨機一樣，越大代表越集中在同一群。上圖是 100 所學校的中位數。
+
+- **年級**遙遙領先：在 100 所學校中，有 92 所是年級的係數最高。
+- **宿舍**排第二，而且在 8 所學校裡超過年級，成為最強的屬性，例如 Caltech 和 Rice。這類學校往往宿舍比較小，或學生會在同一棟連住好幾年（Caltech 和 Rice 都是住宿學院制）。
+- **主修**和**高中**都很弱。論文也提醒：大型學校裡高中的影響比較大，而主修的影響在各校之間差很多。
+
+比比看你的排序（橫軸下方的「你排第 n」）。很多台大讀者會把主修排第一。
+
+**留一個問題給你：** 台大的系所制度比美國大學強得多，必修課綁在一起、系學會和系隊也很活躍。如果拿台大的資料來算，主修還會這麼弱嗎？
+</Step>
+</Section>
+
+<Section n={7}>
+<Step full>
+**社會學：同質性不一定是「喜歡」，可能只是「遇到」。** Feld 的焦點理論把「為什麼會認識」從個人偏好移到結構機會。我們常看到朋友和自己很像（同年級、同背景），也就是<Term id="homophily" />。但這有很大一部分可能不是「喜歡和自己像的人」，而是「只遇得到和自己像的人」：和你修同樣的課、住同一層的，本來就是同年級、同背景的人。
+
+**經濟學：宿舍分配是設計社會網路。** 宿舍和室友的分配常常是隨機的，這讓它成為研究<Term id="peer-effects" first />最好的自然實驗。Sacerdote（2001，*Quarterly Journal of Economics*）利用 Dartmouth 隨機分配室友的制度，估計室友對成績和參加兄弟會等決定的影響。對學校來說，住宿政策、必修課怎麼排、通識課開多大，都是在設計學生的社會網路。
+</Step>
+</Section>
+
+<Section n={8}>
+<Step full>
+- **投影會丟失資訊。** 投影後你只知道兩個人有連結，不知道他們是在哪個焦點認識的，也不知道那個焦點有多大。
+- **焦點本身是內生的。** 你可能是因為朋友在吉他社，才加入吉他社。焦點產生朋友，朋友也產生焦點。
+- **Facebook 好友不等於真實朋友，2005 年的美國也不等於現在的台灣。** 第 ⑥ 段的結果描述的是當時的美國大學生。
+
+<NextQuestion to={3}>朋友的朋友，會不會變成你的朋友？</NextQuestion>
+</Step>
+</Section>

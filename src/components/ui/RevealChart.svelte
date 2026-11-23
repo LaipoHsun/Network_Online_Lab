@@ -184,6 +184,12 @@
       {/each}
     {:else if prediction?.kind === 'curve'}
       <path d={predPath} class="pred" fill="none" />
+    {:else if prediction?.kind === 'rank' && categorical}
+      {#each prediction.order as lab, i}
+        {#if xBand(lab) !== undefined}
+          <text x={xBand(lab)! + xBand.bandwidth() / 2} y={height - M.b + 29} text-anchor="middle" class="pred-label">{predictLabel}第 {i + 1}</text>
+        {/if}
+      {/each}
     {/if}
     {#each morePredictions as m, i}
       {#if extra[i] !== null && (!logX || extra[i]! > 0)}

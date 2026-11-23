@@ -1,0 +1,37 @@
+{
+ "kind": "people",
+ "description": "同樣多的陌生配對裡，有幾對會開始聯絡",
+ "source": {
+  "text": "由 Kossinets & Watts 2006, Science 311(5757), Fig. 1B（三角形：沒有共同課程）的讀數換算（約略值）",
+  "url": "https://doi.org/10.1126/science.1116869",
+  "sample": "美國一所大型大學一學年的 email 紀錄；22,611 位學生",
+  "year": 2006
+ },
+ "digitized": true,
+ "unit": "每個小人代表「一對開始聯絡的陌生人」",
+ "rows": [
+  {
+   "label": "沒有共同朋友",
+   "groups": [
+    {
+     "label": "開始聯絡",
+     "count": 1,
+     "tone": "muted",
+     "source": "03-triadic-closure/kossinets_closure_ratio.json 中 1 位共同朋友的倍數（由圖讀取後換算，約略值）"
+    }
+   ]
+  },
+  {
+   "label": "有 1 位共同朋友",
+   "groups": [
+    {
+     "label": "開始聯絡",
+     "count": 100,
+     "tone": "accent",
+     "source": "03-triadic-closure/kossinets_closure_ratio.json 中 1 位共同朋友的倍數（由圖讀取後換算，約略值）"
+    }
+   ]
+  }
+ ],
+ "note": "兩列的配對數一樣多。沒有共同朋友的配對每有 1 對開始聯絡，有 1 位共同朋友的配對就有約 100 對（只看沒有一起修課的學生）。"
+}

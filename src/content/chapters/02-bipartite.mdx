@@ -2,7 +2,7 @@
 prereqTerms: ['degree']
 draft: true
 ---
-{/* 第 2 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/02-bipartite.md。
+{/* 第 2 章初稿（Claude 撰寫，待作者審定；已依作者意見改成七段：① 靜態場景卡、③ 只留一個場景、⑥ 加上小人圖、拿掉 ⑧）。規格：docs/chapters/02-bipartite.md。
     研究數字只用 data/build/02-bipartite/*.json（Traud, Mucha & Porter 2012 附錄 Table A.1、A.2）。 */}
 import Section from '../../components/chapter/Section.astro';
 import Step from '../../components/chapter/Step.astro';
@@ -14,15 +14,14 @@ import LogicChain from '../../components/ui/LogicChain.astro';
 import FormulaCard from '../../components/ui/FormulaCard.astro';
 import RevealChart from '../../components/ui/RevealChart.astro';
 import FocusScene from '../../components/chapters/ch2/FocusScene.svelte';
-import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
+import SceneCard from '../../components/chapter/SceneCard.astro';
+import PeopleUnits from '../../components/ui/PeopleUnits.astro';
 
 <Section n={1}>
 <Step>
-<div slot="visual"><FocusScene client:visible mode="intro" /></div>
+<div slot="visual"><SceneCard chapter={2} quote="大一住宿舍認識的人，怎麼比同系的還多？" friends={7} highlight={[0, 1, 2]} links={[[0, 1], [1, 2], [0, 2], [4, 5]]} /></div>
 
 社會系大二的語涵，某天翻了自己的好友清單，發現一件事：大一住宿舍認識的人，比同系的還多。
-
-這裡是 70 位學生的一學期。每個人住在某一棟宿舍的某一層、屬於一個系、參加零到兩個社團、修幾門通識課。白天上課、晚上回宿舍，小人在這些地方之間來回。橘色圈的是語涵。
 
 **對大學生來說，決定朋友圈的是宿舍、系所、年級，還是高中？**
 </Step>
@@ -45,7 +44,9 @@ import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
 
 <Section n={3}>
 <Step full>
-### 場景 A：一學期的校園日程
+### 一學期的校園日程
+
+這裡是 70 位學生的一學期。每個人住在某一棟宿舍的某一層、屬於一個系、參加零到兩個社團、修幾門通識課。白天上課、晚上回宿舍，小人在這些地方之間來回。橘色圈的是語涵。
 
 人和人不是憑空認識的，而是在某個<Term id="focus" first />裡碰面：同一堂必修、同一層宿舍、同一個社團、同一門通識。旁邊的四排按鈕，是每種焦點「多容易讓人變成朋友」的權重。
 
@@ -56,17 +57,6 @@ import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
 <FocusScene client:visible mode="foci" />
 </Step>
 
-<Step>
-<div slot="visual"><Bipartite client:visible /></div>
-
-### 場景 B：兩種畫法
-
-「誰參加了哪個焦點」本身就是一張網路，只是它有兩種節點：一邊是人，一邊是焦點，連結只出現在人和焦點之間。這叫做<Term id="bipartite" first />。
-
-把焦點拿掉，只要兩個人共享至少一個焦點就把他們連起來，這個動作叫做<Term id="projection" first />。按「投影」看看：那門 30 人的通識課，瞬間變成 30 個人兩兩相連的一大團。
-
-用「標出焦點」選擇一個焦點，可以看到它在兩種畫法裡各自對應到哪些人和連結。共享兩個焦點的人，投影後的連結比較粗。
-</Step>
 </Section>
 
 <Section n={4}>
@@ -83,14 +73,10 @@ import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
   ]}
   range="$P_{ij} = 0$：兩人沒有共同的焦點。對角線 $P_{ii}$ 是 $i$ 參加的焦點數，投影時不算。"
   related="一個有 $s$ 個成員的焦點，投影後產生 $s(s-1)/2$ 條連結和許多三角形，接到第 3 章的聚集係數。"
-  live={[
-    { key: 'N', label: 'N', digits: 0 },
-    { key: 'M', label: 'M', digits: 0 },
-    { key: 'L', label: '\\text{投影後的連結數}', digits: 0 },
-    { key: 'big', label: '\\text{最大焦點產生的連結}', digits: 0 },
-  ]}
 />
 </div>
+
+「誰參加了哪個焦點」本身就是一張網路，只是它有兩種節點：一邊是人，一邊是焦點，連結只出現在人和焦點之間。這叫做<Term id="bipartite" first />。把焦點拿掉，只要兩個人共享至少一個焦點就把他們連起來，這個動作叫做<Term id="projection" first />。
 
 二分網路可以寫成一個 <M t="N \times M" /> 的<Term id="incidence-matrix" first /> <M t="B" />：<M t="B_{im} = 1" /> 代表學生 <M t="i" /> 屬於焦點 <M t="m" />。
 
@@ -108,11 +94,11 @@ import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
   title="第 2 章邏輯鏈"
   steps={[
     { kind: 'assumption', critical: true, summary: 'Feld 的焦點理論：人們在共同的活動中心相遇；焦點越小、互動越密集，越容易產生朋友。', detail: 'Feld（1981，American Journal of Sociology）把職場、社團、鄰里這類把人聚在一起的結構叫做「焦點」。不是先有朋友再一起活動，而是先在焦點裡碰面，才有機會變成朋友。' },
-    { kind: 'derivation', summary: '誰和誰是朋友，大部分可以用「兩人共同焦點的數量與性質」來預測。', detail: '共同焦點越多、焦點越小、碰面越頻繁，兩人變成朋友的機率越高。場景 A 的四個權重就是在調整「每種焦點有多強」。' },
-    { kind: 'result', summary: '哪個焦點主導朋友圈，取決於制度：宿舍是否多年固定、系所的課是否綁在一起。', detail: '在場景 A 裡，同樣 70 個人，只要改變焦點權重，主導朋友圈的屬性就跟著改變。' },
+    { kind: 'derivation', summary: '誰和誰是朋友，大部分可以用「兩人共同焦點的數量與性質」來預測。', detail: '共同焦點越多、焦點越小、碰面越頻繁，兩人變成朋友的機率越高。第 ③ 段的四個權重就是在調整「每種焦點有多強」。' },
+    { kind: 'result', summary: '哪個焦點主導朋友圈，取決於制度：宿舍是否多年固定、系所的課是否綁在一起。', detail: '在第 ③ 段裡，同樣 70 個人，只要改變焦點權重，主導朋友圈的屬性就跟著改變。' },
     { kind: 'prediction', summary: '住宿制度不同的學校，朋友圈會被不同的屬性主導。', detail: '這可以用很多學校的資料檢驗：比較各校「同年級」「同宿舍」「同主修」的朋友比例。第 ⑥ 段揭曉。' },
   ]}
-  removal={{ step: 0, effect: '如果人可以在任何地方隨機認識任何人，焦點就不重要了：朋友和自己同宿舍、同系的比例，會接近「隨便兩個人」的比例（場景 A 的細線）。' }}
+  removal={{ step: 0, effect: '如果人可以在任何地方隨機認識任何人，焦點就不重要了：朋友和自己同宿舍、同系的比例，會接近「隨便兩個人」的比例（第 ③ 段的細線）。' }}
 />
 </Step>
 </Section>
@@ -123,6 +109,8 @@ import Bipartite from '../../components/chapters/ch2/Bipartite.svelte';
 
 <RevealChart data="02-bipartite/traud_assortativity" predictId="02-bipartite/rank" predictLabel="你排"
   title="年級遠遠領先，宿舍第二，主修和高中都很弱" />
+
+<PeopleUnits data="02-bipartite/people_schools" title="100 所學校裡，92 所的朋友圈由年級主導" />
 
 Traud、Mucha 和 Porter（2012）分析了 2005 年 9 月的 Facebook：當時只有 .edu 信箱能註冊，他們拿到最早加入的 100 所美國大學的完整好友網路，每校從 762 人（Caltech）到 41,536 人（Penn）不等。
 
@@ -143,14 +131,6 @@ Traud、Mucha 和 Porter（2012）分析了 2005 年 9 月的 Facebook：當時�
 **社會學：同質性不一定是「喜歡」，可能只是「遇到」。** Feld 的焦點理論把「為什麼會認識」從個人偏好移到結構機會。我們常看到朋友和自己很像（同年級、同背景），也就是<Term id="homophily" />。但這有很大一部分可能不是「喜歡和自己像的人」，而是「只遇得到和自己像的人」：和你修同樣的課、住同一層的，本來就是同年級、同背景的人。
 
 **經濟學：宿舍分配是設計社會網路。** 宿舍和室友的分配常常是隨機的，這讓它成為研究<Term id="peer-effects" first />最好的自然實驗。Sacerdote（2001，*Quarterly Journal of Economics*）利用 Dartmouth 隨機分配室友的制度，估計室友對成績和參加兄弟會等決定的影響。對學校來說，住宿政策、必修課怎麼排、通識課開多大，都是在設計學生的社會網路。
-</Step>
-</Section>
-
-<Section n={8}>
-<Step full>
-- **投影會丟失資訊。** 投影後你只知道兩個人有連結，不知道他們是在哪個焦點認識的，也不知道那個焦點有多大。
-- **焦點本身是內生的。** 你可能是因為朋友在吉他社，才加入吉他社。焦點產生朋友，朋友也產生焦點。
-- **Facebook 好友不等於真實朋友，2005 年的美國也不等於現在的台灣。** 第 ⑥ 段的結果描述的是當時的美國大學生。
 
 <NextQuestion to={3}>朋友的朋友，會不會變成你的朋友？</NextQuestion>
 </Step>

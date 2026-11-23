@@ -1,0 +1,44 @@
+{
+ "kind": "people",
+ "description": "100 所學校，各由哪個屬性主導朋友圈",
+ "source": {
+  "text": "Traud, Mucha & Porter 2012, Social structure of Facebook networks, Physica A 391: 4165–4180, Table A.2",
+  "url": "https://doi.org/10.1016/j.physa.2011.12.021",
+  "sample": "2005 年 9 月 Facebook 只開放 .edu 信箱時的 100 所美國大學完整好友網路，每校 762 到 41,536 人",
+  "year": 2012
+ },
+ "digitized": false,
+ "unit": "每個小人代表一所學校",
+ "rows": [
+  {
+   "label": "100 所學校",
+   "groups": [
+    {
+     "label": "年級最強",
+     "count": 92,
+     "tone": "accent",
+     "source": "02-bipartite/traud_assortativity.json 的 facts.top_counts（由 Traud 等人 2012 Table A.2 計算）"
+    },
+    {
+     "label": "宿舍最強",
+     "count": 8,
+     "tone": "signal",
+     "source": "02-bipartite/traud_assortativity.json 的 facts.top_counts（由 Traud 等人 2012 Table A.2 計算）"
+    },
+    {
+     "label": "主修最強",
+     "count": 0,
+     "tone": "muted",
+     "source": "02-bipartite/traud_assortativity.json 的 facts.top_counts（由 Traud 等人 2012 Table A.2 計算）"
+    },
+    {
+     "label": "高中最強",
+     "count": 0,
+     "tone": "muted",
+     "source": "02-bipartite/traud_assortativity.json 的 facts.top_counts（由 Traud 等人 2012 Table A.2 計算）"
+    }
+   ]
+  }
+ ],
+ "note": "每所學校只算「同質性係數最高的那個屬性」。宿舍最強的學校包括 Caltech 和 Rice。"
+}

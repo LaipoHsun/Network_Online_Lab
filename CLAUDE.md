@@ -3,7 +3,7 @@
 這是一個中文互動網站，用台大學生的日常、會動的小人和真實研究資料，教大學生社會網路（network science）。
 
 ## 先讀
-- `docs/design.md`：全站規格（讀者、設計原則、八段式章節骨架、視覺語言、共用元件、技術架構、開發順序）。
+- `docs/design.md`：全站規格（讀者、設計原則、章節骨架（已改為七段，見該節開頭的作者修訂）、視覺語言、共用元件、技術架構、開發順序）。
 - `docs/characters.md`：小人角色規格。程式在 `src/lib/sprites/character.ts`。
 - `docs/campus-map.md`：校園地圖規格。
 - `docs/chapters/<章>.md`：要做哪一章就讀哪一章。
@@ -20,7 +20,9 @@
 - 階段 5 第 4、5 章初稿完成，待作者審定內文：第 4 章 `src/components/chapters/ch4/`（環狀格子 + Watts–Strogatz，60 人圈與 400 人曲線）、資料 `data/build/04-small-world/`（Milgram、Backstrom、Facebook 2016 皆取自原文；台灣人口取自內政部 114 年 12 月底）；第 5 章 `src/components/chapters/ch5/`（配置模型、兩種抽樣、流感哨兵）、資料 `data/build/05-friendship-paradox/`（Pew 取自原文；Christakis & Fowler 2010 Figure 3 左依顏色讀取，標 digitized）。
 - 從 $effect 裡呼叫 emitLive 要包在 untrack 裡（公式卡的狀態會被算成依賴而無限循環）。
 - 階段 5 第 2 章初稿完成，待作者審定內文：`src/components/chapters/ch2/`（四種焦點權重的校園劇本、二分圖 ⇄ 投影）、資料 `data/build/02-bipartite/`（Traud, Mucha & Porter 2012 附錄 Table A.1、A.2 的文字，100 校全部解析）。Predict 新增 `rank`（排序）題型，RevealChart 會在長條下標出讀者的名次。
-- 下一步：作者審第 1–6 章內文；之後階段 5 其餘章節（順序 7 → 8 → 9）。
+- 2026-11 作者修訂章節結構（第 1–7 章都已套用）：七段、拿掉 ⑧；① 用 `src/components/chapter/SceneCard.astro`（靜態）；③ 只留一個主要場景（各章原本的場景 B、C 已從內文移除，元件檔還在）；⑥ 加上 `src/components/ui/PeopleUnits.astro`（資料由 `data/scripts/people_data.py` 從各章 data/build 換算）。
+- 階段 5 第 7 章初稿完成，待作者審定內文：`src/components/chapters/ch7/`（四種眼鏡、佛羅倫斯家族網路）、資料 `data/build/07-centrality/`（中心性由 networkx 計算；Milgram 的 G 先生取自原文）。
+- 下一步：作者審第 1–7 章內文；之後階段 5 其餘章節（順序 8 → 9）。
 
 ## 內容
 - 不要自己寫或改任何研究數字。所有數字來自 `data/build/*.json`，每筆都有 `source`。
@@ -37,7 +39,7 @@
 
 ## 指令
 - `npm install`、`npm run dev`（http://localhost:4321；Astro 7 會在背景常駐，用 `npx astro dev stop` 停止）、`npm test`、`npm run build`。
-- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章）、`python3 data/scripts/ch1_data.py --ugander <pdf>`（第 1 章）、`python3 data/scripts/ch3_data.py --kossinets <pdf> [--overlay <png>]`（第 3 章）、`python3 data/scripts/ch4_data.py`（第 4 章）、`python3 data/scripts/ch5_data.py --christakis-fig <jpg>`（第 5 章）、`python3 data/scripts/ch2_data.py --traud <pdf>`（第 2 章）；PDF 不放進 repo，來源見各腳本開頭。
+- 資料：`python3 data/scripts/networkx_expected.py`（測試期望值與 data/raw）、`python3 data/scripts/playground_data.py`（/playground 的揭曉圖資料）、`python3 data/scripts/ch6_data.py --onnela <pdf> --rajkumar <pdf>`（第 6 章）、`python3 data/scripts/ch1_data.py --ugander <pdf>`（第 1 章）、`python3 data/scripts/ch3_data.py --kossinets <pdf> [--overlay <png>]`（第 3 章）、`python3 data/scripts/ch4_data.py`（第 4 章）、`python3 data/scripts/ch5_data.py --christakis-fig <jpg>`（第 5 章）、`python3 data/scripts/ch2_data.py --traud <pdf>`（第 2 章）、`python3 data/scripts/ch7_data.py`（第 7 章）、`python3 data/scripts/people_data.py`（各章第 ⑥ 段的小人圖，最後跑）；PDF 不放進 repo，來源見各腳本開頭。
 
 ## 完成的定義
 - `npm test` 和 `npm run build` 通過。

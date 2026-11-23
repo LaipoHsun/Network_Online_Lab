@@ -1,0 +1,277 @@
+{
+ "kind": "bar",
+ "description": "佛羅倫斯 15 個家族在婚姻網路中的介數中心性（由高到低）",
+ "source": {
+  "text": "Padgett & Ansell 1993, Robust Action and the Rise of the Medici, 1400–1434, American Journal of Sociology 98(6)；婚姻網路取自 networkx（Breiger & Pattison 1986 版本），中心性由本網站以 networkx 計算",
+  "url": "https://doi.org/10.1086/230190",
+  "sample": "1400–1434 年佛羅倫斯 15 個菁英家族、20 條婚姻連結",
+  "year": 1993
+ },
+ "digitized": false,
+ "x": {
+  "label": "家族"
+ },
+ "y": {
+  "label": "介數中心性（標準化）"
+ },
+ "series": [
+  {
+   "name": "介數中心性",
+   "points": [
+    {
+     "x": "Medici",
+     "y": 0.522,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Guadagni",
+     "y": 0.255,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Albizzi",
+     "y": 0.212,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Salviati",
+     "y": 0.143,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Ridolfi",
+     "y": 0.114,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Bischeri",
+     "y": 0.104,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Strozzi",
+     "y": 0.103,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Barbadori",
+     "y": 0.093,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Tornabuoni",
+     "y": 0.092,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Castellani",
+     "y": 0.055,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Peruzzi",
+     "y": 0.022,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Acciaiuoli",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Pazzi",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Ginori",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    },
+    {
+     "x": "Lamberteschi",
+     "y": 0.0,
+     "source": "Padgett & Ansell 1993 婚姻網路（networkx florentine_families_graph）；中心性由 networkx 計算"
+    }
+   ]
+  }
+ ],
+ "network": {
+  "labels": [
+   "Acciaiuoli",
+   "Medici",
+   "Castellani",
+   "Peruzzi",
+   "Strozzi",
+   "Barbadori",
+   "Ridolfi",
+   "Tornabuoni",
+   "Albizzi",
+   "Salviati",
+   "Pazzi",
+   "Bischeri",
+   "Guadagni",
+   "Ginori",
+   "Lamberteschi"
+  ],
+  "edges": [
+   [
+    0,
+    1
+   ],
+   [
+    1,
+    5
+   ],
+   [
+    1,
+    6
+   ],
+   [
+    1,
+    7
+   ],
+   [
+    1,
+    8
+   ],
+   [
+    1,
+    9
+   ],
+   [
+    2,
+    3
+   ],
+   [
+    2,
+    4
+   ],
+   [
+    2,
+    5
+   ],
+   [
+    3,
+    4
+   ],
+   [
+    3,
+    11
+   ],
+   [
+    4,
+    6
+   ],
+   [
+    4,
+    11
+   ],
+   [
+    6,
+    7
+   ],
+   [
+    7,
+    12
+   ],
+   [
+    8,
+    12
+   ],
+   [
+    8,
+    13
+   ],
+   [
+    9,
+    10
+   ],
+   [
+    11,
+    12
+   ],
+   [
+    12,
+    14
+   ]
+  ],
+  "degree": [
+   1,
+   6,
+   3,
+   3,
+   4,
+   2,
+   3,
+   3,
+   3,
+   2,
+   1,
+   3,
+   4,
+   1,
+   1
+  ],
+  "closeness": [
+   0.3684,
+   0.56,
+   0.3889,
+   0.3684,
+   0.4375,
+   0.4375,
+   0.5,
+   0.4828,
+   0.4828,
+   0.3889,
+   0.2857,
+   0.4,
+   0.4667,
+   0.3333,
+   0.3256
+  ],
+  "betweenness": [
+   0.0,
+   0.522,
+   0.0549,
+   0.022,
+   0.1026,
+   0.0934,
+   0.1136,
+   0.0916,
+   0.2125,
+   0.1429,
+   0.0,
+   0.1044,
+   0.2546,
+   0.0,
+   0.0
+  ],
+  "eigenvector": [
+   0.1322,
+   0.4303,
+   0.259,
+   0.2757,
+   0.356,
+   0.2117,
+   0.3416,
+   0.3258,
+   0.244,
+   0.1459,
+   0.0448,
+   0.2828,
+   0.2891,
+   0.0749,
+   0.0888
+  ]
+ },
+ "facts": {
+  "medici_top_in": [
+   "度",
+   "接近",
+   "介數",
+   "特徵向量"
+  ],
+  "medici_degree": 6
+ }
+}

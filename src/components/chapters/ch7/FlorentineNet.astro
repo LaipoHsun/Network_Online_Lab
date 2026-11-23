@@ -1,0 +1,15 @@
+---
+// 佛羅倫斯婚姻網路的 Astro 外殼：建置時讀 data/build/07-centrality/florentine_centrality.json（有 source），
+// 並畫好每個家族的小人。
+import FlorentineNetIsland from './FlorentineNet.svelte';
+import data from '../../../../data/build/07-centrality/florentine_centrality.json';
+import { randomCrowd, renderCharacter } from '../../../lib/sprites/character';
+
+interface Props { predictId: string }
+const { predictId } = Astro.props;
+const d = data as any;
+if (!d.source?.text) throw new Error('florentine_centrality.json 缺少 source');
+const looks = randomCrowd(d.network.labels.length, 1434).map((l) => ({ ...l, year: 4 as const }));
+const sprites = looks.map((l) => renderCharacter(l, 'idle', { size: 36 }));
+---
+<FlorentineNetIsland client:visible net={d.network} {sprites} {predictId} source={d.source} />

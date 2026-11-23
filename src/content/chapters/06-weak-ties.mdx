@@ -2,7 +2,7 @@
 prereqTerms: ['clustering', 'small-world']
 draft: true
 ---
-{/* 第 6 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/06-weak-ties.md。
+{/* 第 6 章初稿（Claude 撰寫，待作者審定；已依作者意見改成七段：① 靜態場景卡、③ 只留一個場景、⑥ 加上小人圖、拿掉 ⑧）。規格：docs/chapters/06-weak-ties.md。
     研究數字只用 data/build/06-weak-ties/*.json 與規格中已查證的內容。 */}
 import Section from '../../components/chapter/Section.astro';
 import Step from '../../components/chapter/Step.astro';
@@ -14,16 +14,15 @@ import LogicChain from '../../components/ui/LogicChain.astro';
 import FormulaCard from '../../components/ui/FormulaCard.astro';
 import RevealChart from '../../components/ui/RevealChart.astro';
 import JobScene from '../../components/chapters/ch6/JobScene.svelte';
-import CutExperiment from '../../components/chapters/ch6/CutExperiment.svelte';
+import SceneCard from '../../components/chapter/SceneCard.astro';
+import PeopleUnits from '../../components/ui/PeopleUnits.astro';
 import ForbiddenTriad from '../../components/chapters/ch6/ForbiddenTriad.svelte';
 
 <Section n={1}>
 <Step>
-<div slot="visual"><JobScene client:visible mode="intro" /></div>
+<div slot="visual"><SceneCard chapter={6} quote="幫我找到實習的，竟然是只見過幾次面的學姊。" friends={6} highlight={[3]} links={[[0, 1], [1, 2], [0, 2], [4, 5]]} /></div>
 
 大三的小瑜在找暑期實習。她最好的朋友們和她修一樣的課、投一樣的公司，知道的職缺也都一樣。最後介紹她進公司的，是大一服務學習課上只見過幾次面的學姊筱涵。
-
-右邊是小瑜這一屆的 70 位同學。他們每天在系館、小福、社辦之間走動，同一個地方待久了就會認識，常一起出現的人關係越來越深。
 
 **為什麼幫上忙的，反而是不熟的人？**
 </Step>
@@ -48,7 +47,9 @@ import ForbiddenTriad from '../../components/chapters/ch6/ForbiddenTriad.svelte'
 <Step>
 <div slot="visual"><JobScene client:visible mode="job" /></div>
 
-### 場景 A：職缺怎麼傳到你手上
+### 職缺怎麼傳到你手上
+
+這是小瑜這一屆的 70 位同學。他們每天在系館、小福、社辦之間走動，同一個地方待久了就會認識，常一起出現的人關係越來越深。
 
 這是學期末的網路。線越粗，代表兩人累積相處的時間越長。同系同學每天在系館見面，連結很粗；服務學習課、社團一週只見一次，連結比較細。
 
@@ -57,17 +58,6 @@ import ForbiddenTriad from '../../components/chapters/ch6/ForbiddenTriad.svelte'
 強連結幾乎都在圈子裡面。圈子裡的人彼此認識，知道的事情也差不多；能把新消息帶進來的，是連到別的圈子的那幾條細線。
 </Step>
 
-<Step>
-<div slot="visual"><CutExperiment client:visible /></div>
-
-### 場景 B：剪斷實驗
-
-如果細線真的是圈子之間的橋，那把它們剪掉會怎樣？
-
-按「從最弱的開始剪」：一開始幾乎沒有變化，剪到一半左右，網路突然碎成一個個系所圈，<Term id="giant-component" first />一下子掉到只剩一個圈子的大小。改按「從最強的開始剪」：每個圈子變得鬆散，但整個網路一直連在一起，慢慢縮小。
-
-兩條曲線剪掉的連結**數量**完全一樣，差別只在剪掉**哪些**。這告訴我們：<Term id="tie-strength" first />和網路的結構不是各自獨立的。
-</Step>
 </Section>
 
 <Section n={4}>
@@ -85,22 +75,16 @@ import ForbiddenTriad from '../../components/chapters/ch6/ForbiddenTriad.svelte'
   ]}
   range="$O_{ij} = 0$：兩人沒有任何共同朋友，這條連結是局部橋。$O_{ij} = 1$：兩人的朋友圈完全重疊。$S(0) = 1$（網路一開始連成一塊），$S(1) = 1/N$（全部剪光，每個人自成一塊）。"
   related="連結越強，$O_{ij}$ 通常越高（第 ⑤ 段的預測 b）。$S(f)$ 突然掉到接近 0 的那個 $f_c$，就是滲流門檻。"
-  live={[
-    { key: 'f', label: 'f', digits: 2 },
-    { key: 'S', label: 'S(f)', digits: 2 },
-    { key: 'Ow', label: '\\bar O_{\\text{弱的一半}}', digits: 2 },
-    { key: 'Os', label: '\\bar O_{\\text{強的一半}}', digits: 2 },
-  ]}
 />
 </div>
 
-連結強度 <M t="w_{ij}" /> 可以用見面頻率、相處時間或通話時間來量。在我們的模擬裡，它是兩人累積待在同一個地方的時間。
+<Term id="tie-strength" first /> <M t="w_{ij}" /> 可以用見面頻率、相處時間或通話時間來量。在我們的模擬裡，它是兩人累積待在同一個地方的時間。
 
-要描述一條連結在網路裡的「位置」，最直接的量是<Term id="overlap" first /> <M t="O_{ij}" />：兩端的人有多少共同朋友。分子是共同朋友數，分母是兩人朋友圈的聯集（扣掉彼此）。滑過公式裡的 <M t="O_{ij}" />，上面場景 B 的網路會標出所有 <M t="O_{ij} = 0" /> 的連結。
+要描述一條連結在網路裡的「位置」，最直接的量是<Term id="overlap" first /> <M t="O_{ij}" />：兩端的人有多少共同朋友。分子是共同朋友數，分母是兩人朋友圈的聯集（扣掉彼此）。
 
 <Term id="bridge" first />是拿掉之後網路會分成兩塊的連結。真實網路裡這種「唯一的通道」很少見，比較常見的是<Term id="local-bridge" first />：兩端沒有共同朋友（<M t="O_{ij} = 0" />）。拿掉一座局部橋，兩人之間還是到得了，只是要繞遠路；繞路的長度叫做它的「跨度」。
 
-場景 B 的 <M t="S(f)" /> 曲線在先剪弱連結時，會在某個 <M t="f_c" /> 突然掉下去。物理系的讀者會認得這是一種相變，叫做<Term id="percolation" first />：一點一點拿掉連結，網路不是平滑地變小，而是在門檻附近一口氣碎掉。
+想像把連結一條一條剪掉，看<Term id="giant-component" />佔全體的比例 <M t="S(f)" />。如果細線真的是圈子之間的橋，先剪弱連結時，<M t="S(f)" /> 會在某個 <M t="f_c" /> 突然掉下去；先剪強連結，網路只會慢慢縮小（第 ⑥ 段用真實資料揭曉）。物理系的讀者會認得這是一種相變，叫做<Term id="percolation" first />：一點一點拿掉連結，網路不是平滑地變小，而是在門檻附近一口氣碎掉。
 </Step>
 </Section>
 
@@ -135,6 +119,8 @@ import ForbiddenTriad from '../../components/chapters/ch6/ForbiddenTriad.svelte'
   title="多數人的工作，是「偶爾見面」的人介紹的" />
 
 Granovetter 訪問了波士頓郊區最近換工作的專業、技術與管理職工作者。在 54 位透過人脈找到工作的人當中，介紹人是「常常見面」的只有 16.7%，「偶爾見面」的佔 55.6%，「很少見面」的佔 27.8%。比較你在第 ② 段的猜測：多數人會高估最熟的朋友。
+
+<PeopleUnits data="06-weak-ties/people_introducers" title="54 位受訪者裡，只有 9 位是被常常見面的人介紹的" />
 </Step>
 
 <Step full>
@@ -146,7 +132,7 @@ Granovetter 訪問了波士頓郊區最近換工作的專業、技術與管理�
 <RevealChart data="06-weak-ties/onnela_removal_overlap" markers={[{ axis: 'x', value: 0.62, label: 'f_c ≈ 0.62' }]}
   title="依鄰居重疊度剪，崩解來得更早、更陡" />
 
-Onnela 等人（2007）用某個國家約兩成人口 18 週的手機通話紀錄建了一張網路，連結強度是兩人的總通話時間。他們發現連結越強，兩端的共同朋友越多（預測 b）。剪斷實驗的結果和場景 B 一樣：先剪弱的，網路在一個臨界點後崩解；先剪強的，網路只是慢慢縮小，沒有相變（預測 c）。這兩張圖的點是從論文原圖讀出來的約略值。
+Onnela 等人（2007）用某個國家約兩成人口 18 週的手機通話紀錄建了一張網路，連結強度是兩人的總通話時間。他們發現連結越強，兩端的共同朋友越多（預測 b）。剪斷實驗的結果正是第 ⑤ 段的預測 (c)：先剪弱的，網路在一個臨界點後崩解；先剪強的，網路只是慢慢縮小，沒有相變（預測 c）。這兩張圖的點是從論文原圖讀出來的約略值。
 </Step>
 
 <Step full>
@@ -171,17 +157,9 @@ Onnela 等人（2007）用某個國家約兩成人口 18 週的手機通話紀�
 
 <Section n={7}>
 <Step full>
-**經濟學：資訊摩擦與不平等。** 勞動市場有資訊摩擦，網路是搜尋工作的管道。Calvó-Armengol 和 Jackson（2004，*AER*）證明：當工作資訊沿著網路流動時，朋友之間的就業狀態會正相關，一個起點比較差的群體會持續落後。這個結果和場景 A 是同一件事：資訊出不了圈子，圈子的起點就決定了圈子的未來。內推制度方便，卻也可能複製不平等。
+**經濟學：資訊摩擦與不平等。** 勞動市場有資訊摩擦，網路是搜尋工作的管道。Calvó-Armengol 和 Jackson（2004，*AER*）證明：當工作資訊沿著網路流動時，朋友之間的就業狀態會正相關，一個起點比較差的群體會持續落後。這個結果和第 ③ 段的職缺是同一件事：資訊出不了圈子，圈子的起點就決定了圈子的未來。內推制度方便，卻也可能複製不平等。
 
 **社會學：社會資本的兩種來源。** <Term id="social-capital" first />可以來自兩種結構。Burt 的<Term id="structural-hole" first />強調：站在兩群人之間的人，能接觸到兩邊的新資訊，這是弱連結和橋的力量。Coleman 的封閉性（第 3 章）強調：彼此都認識的緊密圈子帶來信任和互相監督，這是強連結的力量。LinkedIn 的倒 U 型結果說明兩者需要平衡：連結要弱到能帶來新消息，又要強到對方願意幫你。
-</Step>
-</Section>
-
-<Section n={8}>
-<Step full>
-- **「強度」怎麼量？** 互動頻率和共同朋友數是兩種不同的量尺，在 LinkedIn 研究中給出不同的答案。我們的模擬只用相處時間。
-- **文化與制度差異。** 弱連結的優勢依賴「資訊稀缺、影響力不重要」的環境。邊燕傑的天津研究提醒我們，這個前提不一定成立。
-- **禁止三角形只是近似。** 真實網路裡它常常被違反；拿掉它，「橋 = 弱連結」就沒有保證。
 
 <NextQuestion to={7}>如果橋這麼重要，站在橋上的人是不是很有權力？</NextQuestion>
 </Step>

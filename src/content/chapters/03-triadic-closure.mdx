@@ -2,7 +2,7 @@
 prereqTerms: ['degree', 'projection']
 draft: true
 ---
-{/* 第 3 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/03-triadic-closure.md。
+{/* 第 3 章初稿（Claude 撰寫，待作者審定；已依作者意見改成七段：① 靜態場景卡、③ 只留一個場景、⑥ 加上小人圖、拿掉 ⑧）。規格：docs/chapters/03-triadic-closure.md。
     研究數字只用 data/build/03-triadic-closure/*.json（Kossinets & Watts 2006、Pew 2012）。 */}
 import Section from '../../components/chapter/Section.astro';
 import Step from '../../components/chapter/Step.astro';
@@ -14,16 +14,16 @@ import LogicChain from '../../components/ui/LogicChain.astro';
 import FormulaCard from '../../components/ui/FormulaCard.astro';
 import RevealChart from '../../components/ui/RevealChart.astro';
 import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
+import SceneCard from '../../components/chapter/SceneCard.astro';
+import PeopleUnits from '../../components/ui/PeopleUnits.astro';
 
 <Section n={1}>
 <Step>
-<div slot="visual"><SnackScene client:visible mode="intro" /></div>
+<div slot="visual"><SceneCard chapter={3} quote="室友的高中同學，現在也是我的朋友了。" friends={6} highlight={[0, 1]} links={[[0, 1], [3, 4]]} /></div>
 
 物理系大一的承恩，開學第一週和室友去吃宵夜。室友順便約了自己的高中同學，一個經濟系的學生。
 
 那天晚上三個人聊到半夜。一個學期後，承恩和那位同學已經會自己約打球，不用再透過室友。
-
-這裡是承恩這一屆的 60 位新生。白天大家在系館上課、在小福吃午餐、在各處上通識；晚上偶爾有人揪宵夜。橘色圈的是承恩。
 
 **兩個有共同朋友的陌生人，變成朋友的機率有多高？共同朋友越多，機率會怎麼變？**
 </Step>
@@ -46,7 +46,9 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
 
 <Section n={3}>
 <Step full>
-### 場景 A：一個學期的宵夜
+### 一個學期的宵夜
+
+這裡是承恩這一屆的 60 位新生。白天大家在系館上課、在小福吃午餐、在各處上通識；晚上偶爾有人揪宵夜。橘色圈的是承恩。
 
 有共同朋友的兩個人變成朋友，就把三個人連成一個<Term id="triangle" first />。這個過程叫做<Term id="triadic-closure" first />：本來只有兩條邊（你和室友、室友和他的同學），現在補上了第三條。
 
@@ -59,15 +61,6 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
 <SnackScene client:visible mode="snack" />
 </Step>
 
-<Step full>
-### 場景 B：放大一個人
-
-這是「常常帶朋友」那個學期結束時的網路。點任何一位小人，旁邊只留下這個人和朋友。
-
-朋友之間已經是朋友的，用實線連起來；還不認識的，用虛線。實線的數量除以「實線 + 虛線」，就是這個人的聚集係數。下方的小圖把每個人的朋友數和聚集係數畫在一起，試試看朋友很多的人，聚集係數是高還是低。
-
-<SnackScene client:visible mode="ego" />
-</Step>
 </Section>
 
 <Section n={4}>
@@ -78,8 +71,8 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
   formula={'\\begin{gathered} \\htmlData{key=Ci}{C_i} = \\frac{2\\htmlData{key=Li}{L_i}}{\\htmlData{key=ki}{k_i}(k_i-1)} \\\\[6pt] \\htmlData{key=Ctri}{C_{\\triangle}} = \\frac{3 \\times \\text{三角形數}}{\\text{連通三元組數}} \\\\[6pt] \\htmlData{key=Crand}{C_{\\text{random}}} \\approx \\frac{\\langle k \\rangle}{N} \\end{gathered}'}
   symbols={[
     { key: 'ki', symbol: 'k_i', meaning: '$i$ 的朋友數（度）。' },
-    { key: 'Li', symbol: 'L_i', meaning: '$i$ 的朋友之間，實際有幾條連結（場景 B 的實線）。' },
-    { key: 'Ci', symbol: 'C_i', meaning: '$i$ 的局部聚集係數：實線數除以 $k_i(k_i-1)/2$（實線 + 虛線）。所有人的 $C_i$ 平均就是平均聚集係數 $\\bar C$。' },
+    { key: 'Li', symbol: 'L_i', meaning: '$i$ 的朋友之間，實際有幾條連結。' },
+    { key: 'Ci', symbol: 'C_i', meaning: '$i$ 的局部聚集係數：朋友之間實際的連結數 $L_i$，除以最多可能的 $k_i(k_i-1)/2$。所有人的 $C_i$ 平均就是平均聚集係數 $\\bar C$。' },
     { key: 'Ctri', symbol: 'C_{\\triangle}', meaning: '遷移性（全域聚集係數）：在全網路「一個人和他的兩位朋友」這種組合裡，三人兩兩都認識的比例。' },
     { key: 'Crand', symbol: 'C_{\\text{random}}', meaning: '同樣人數、同樣平均度的隨機網路的聚集係數，約等於密度 $\\langle k \\rangle / N$。' },
   ]}
@@ -96,11 +89,11 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
 
 <M t="C_i" /> 的分母是 <M t="i" /> 的朋友之間「最多可能」有幾條連結：<M t="k_i" /> 位朋友兩兩配對，共 <M t="k_i(k_i-1)/2" /> 對。分子 <M t="L_i" /> 是實際有幾對已經是朋友。所以 <M t="C_i" /> 一定介於 0 和 1 之間。
 
-整個網路的聚集係數有兩種常見的算法，讀論文時要特別注意是哪一種。<strong>平均聚集係數</strong> <M t="\bar C" /> 先算每個人的 <M t="C_i" /> 再平均，每個人的份量一樣。<Term id="transitivity" first /> <M t="C_{\triangle}" /> 則是直接數全網路：三角形數乘 3，除以<Term id="triad" first />數。朋友很多的人貢獻很多三元組，所以在朋友數很不平均的網路裡，<M t="C_{\triangle}" /> 會被這些人拉低，兩個數字可能差很多。公式卡裡的即時數字來自場景 A，你可以比比看兩者。
+整個網路的聚集係數有兩種常見的算法，讀論文時要特別注意是哪一種。<strong>平均聚集係數</strong> <M t="\bar C" /> 先算每個人的 <M t="C_i" /> 再平均，每個人的份量一樣。<Term id="transitivity" first /> <M t="C_{\triangle}" /> 則是直接數全網路：三角形數乘 3，除以<Term id="triad" first />數。朋友很多的人貢獻很多三元組，所以在朋友數很不平均的網路裡，<M t="C_{\triangle}" /> 會被這些人拉低，兩個數字可能差很多。公式卡裡的即時數字來自第 ③ 段，你可以比比看兩者。
 
 隨機網路裡，任兩個人是朋友的機率就是密度，約為 <M t="\langle k \rangle / N" />。你的兩位朋友彼此認識的機率也一樣，所以 <M t="C_{\text{random}} \approx \langle k \rangle / N" />。人數 <M t="N" /> 越大，這個數字越接近 0。社會網路的 <M t="C" /> 卻不會隨著人數變多而消失：你的朋友認不認識彼此，跟地球上有多少人沒什麼關係。<strong>「<M t="C" /> 不趨近 0」本身，就是社會網路不是隨機長出來的證據。</strong>
 
-最後，在場景 B 的小圖裡，朋友很多的人，聚集係數通常比較低。這在許多真實網路裡也看得到：朋友很多的人，認識的是來自不同圈子的人，那些人彼此比較不認識。
+最後，在許多真實網路裡，朋友很多的人，聚集係數通常比較低：朋友很多的人，認識的是來自不同圈子的人，那些人彼此比較不認識。
 </Step>
 </Section>
 
@@ -112,11 +105,11 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
   title="第 3 章邏輯鏈"
   steps={[
     { kind: 'assumption', critical: true, summary: '有共同朋友的兩個人：比較常碰面（機會）、比較信任彼此（信任）、不理對方會讓共同朋友尷尬（平衡）。', detail: '機會：共同朋友會把你們約到同一個場合，就像室友帶高中同學一起吃宵夜。信任：「是室友的朋友」讓你比較放心。平衡：如果你和室友很好、室友和他的同學也很好，你和那位同學處不來，三個人都會不自在。' },
-    { kind: 'derivation', summary: '共同朋友每多一位，相遇和變成朋友的機率就再增加一些。', detail: '每位共同朋友都是一次「被介紹」的機會，也多一份信任和壓力。場景 A 的宵夜正是這樣設計的：兩人在宵夜桌上變成朋友的機率，隨共同朋友數上升。' },
+    { kind: 'derivation', summary: '共同朋友每多一位，相遇和變成朋友的機率就再增加一些。', detail: '每位共同朋友都是一次「被介紹」的機會，也多一份信任和壓力。第 ③ 段的宵夜正是這樣設計的：兩人在宵夜桌上變成朋友的機率，隨共同朋友數上升。' },
     { kind: 'result', summary: '新連結偏好補成三角形；三角形越多，下一次閉合越容易，$C$ 維持在遠高於隨機網路的水準。', detail: '這是一個會自我強化的過程：閉合產生三角形，三角形讓更多配對有共同朋友，又帶來更多閉合。所以 $C$ 不會像隨機網路一樣隨人數變大而趨近 0。' },
     { kind: 'prediction', summary: '「變成朋友的機率」隨共同朋友數上升。', detail: '這可以用長期追蹤的資料檢驗：記錄每一對還不認識的人有幾位共同朋友，看他們之後有沒有開始聯絡。第 ⑥ 段揭曉。' },
   ]}
-  removal={{ step: 0, effect: '共同朋友不再增加相遇和成為朋友的機率，新連結就像隨機產生：三角形只會偶然出現，$C$ 掉到約 $\\langle k \\rangle / N$，也就是場景 A 的「隨機遇到」。' }}
+  removal={{ step: 0, effect: '共同朋友不再增加相遇和成為朋友的機率，新連結就像隨機產生：三角形只會偶然出現，$C$ 掉到約 $\\langle k \\rangle / N$，也就是第 ③ 段的「隨機遇到」。' }}
 />
 </Step>
 </Section>
@@ -127,6 +120,8 @@ import SnackScene from '../../components/chapters/ch3/SnackScene.svelte';
 
 <RevealChart data="03-triadic-closure/kossinets_closure_ratio" predictId="03-triadic-closure/mutual" predictLabel="你畫的曲線"
   title="只要有 1 位共同朋友，開始聯絡的機率就變成約 100 倍" />
+
+<PeopleUnits data="03-triadic-closure/people_pairs" title="同樣多的陌生配對：1 對 vs. 約 100 對" />
 
 Kossinets 和 Watts（2006）分析了美國一所大型大學 43,553 位學生和教職員一整個學年的 email 紀錄，共 14,584,423 封（只看內容以外的寄件人、收件人和時間）。他們把「過去 60 天內互相寄過信」當作兩人有連結，並且知道每個學生修了哪些課。
 
@@ -148,14 +143,6 @@ Pew 研究中心 2012 年的調查發現，Facebook 用戶好友圈的平均密�
 **社會學：封閉性帶來信任，也帶來同質。** Coleman 認為，三角形多的群體容易建立規範和信任，這叫做<Term id="closure" first />：你對一個人做了什麼，你們的共同朋友都看得到。這是<Term id="social-capital" />的一種來源。代價是資訊重複：大家認識同一群人，聽到同樣的消息，觀點也越來越像。這正是第 6 章弱連結的伏筆。
 
 **經濟學：共同朋友就是執行機制。** 借錢、互相幫忙、合作做一個計畫，很多時候沒有合約可以執行。Jackson、Rodriguez-Barraquer 和 Tan（2012，*American Economic Review*）證明：要讓這種互助在沒有合約的情況下穩定下去，每一段互助關係都必須是「被支持的」，也就是兩個人至少有一位共同朋友。你對一個人違約，失去的不只是這段關係，還有你們共同朋友的信任。他們在印度 75 個村莊的互助網路裡，發現這種有共同朋友支持的關係非常普遍。
-</Step>
-</Section>
-
-<Section n={8}>
-<Step full>
-- **email 不等於友誼。** 互寄 email 的人可能只是同一個研究計畫的夥伴。論文也提醒，個人寫信的習慣差很多，結論只適用在大量配對的平均。
-- **三元閉合、同質性和共同焦點很難分開。** 兩個人有共同朋友，常常也代表他們修同一門課、住同一棟宿舍、興趣相近。Kossinets 和 Watts 有修課資料可以分開「共同朋友」和「共同課程」，但還有很多沒觀察到的共同焦點（社團、宿舍、打工）。
-- **我們的模擬只有一種閉合機制（宵夜）。** 真實世界的閉合來自很多管道，強度也因人而異。
 
 <NextQuestion to={4}>如果大家都只在自己的小圈圈裡，為什麼世界還是很小？</NextQuestion>
 </Step>

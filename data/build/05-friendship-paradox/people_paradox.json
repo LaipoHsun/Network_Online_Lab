@@ -1,0 +1,32 @@
+{
+ "kind": "people",
+ "description": "如果 Pew 的樣本只有 100 位 Facebook 用戶",
+ "source": {
+  "text": "Pew Research Center 2012, Why Most Facebook Users Get More Than They Give, Part 3: The structure of friendship",
+  "url": "https://www.pewresearch.org/internet/2012/02/03/part-3-the-structure-of-friendship/",
+  "sample": "Pew 研究樣本中的 Facebook 用戶",
+  "year": 2012
+ },
+ "digitized": false,
+ "unit": "每個小人代表 1% 的用戶",
+ "rows": [
+  {
+   "label": "100 位用戶",
+   "groups": [
+    {
+     "label": "朋友比自己受歡迎",
+     "count": 84,
+     "tone": "sci",
+     "source": "05-friendship-paradox/pew_paradox_share.json（Pew 2012 原文 84%）"
+    },
+    {
+     "label": "不比自己受歡迎",
+     "count": 16,
+     "tone": "muted",
+     "source": "05-friendship-paradox/pew_paradox_share.json（Pew 2012 原文 84%）"
+    }
+   ]
+  }
+ ],
+ "note": "藍色的人：自己的朋友數，比「自己朋友的平均朋友數」少。"
+}

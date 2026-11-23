@@ -1,0 +1,26 @@
+---
+// 「用小人畫出真實資料」的 Astro 外殼：建置時從 data/build/<路徑>.json 讀資料（kind: 'people'，每組都有 source），
+// 並在建置時畫好小人（外觀用固定種子，每次一樣）。
+// MDX：<PeopleUnits data="05-friendship-paradox/people_paradox" title="一句結論" />
+import PeopleUnitsIsland from './PeopleUnits.svelte';
+import { randomCrowd, renderCharacter } from '../../lib/sprites/character';
+
+interface Props { data: string; title: string }
+const { data, title } = Astro.props;
+const files = import.meta.glob<{ default: any }>('../../../data/build/**/*.json', { eager: true });
+const file = files[`../../../data/build/${data}.json`]?.default;
+if (!file) throw new Error(`PeopleUnits：找不到 data/build/${data}.json`);
+if (file.kind !== 'people') throw new Error(`PeopleUnits：data/build/${data}.json 不是 kind: 'people'`);
+if (!file.source?.text) throw new Error(`PeopleUnits：data/build/${data}.json 缺少 source`);
+for (const r of file.rows) for (const g of r.groups) if (!g.source) throw new Error(`PeopleUnits：${data} 的「${g.label}」缺少 source`);
+
+let seed = 7;
+const rows = file.rows.map((r: any) => ({
+  label: r.label,
+  groups: r.groups.map((g: any) => {
+    const looks = randomCrowd(Math.max(0, g.count), seed++);
+    return { label: g.label, count: g.count, tone: g.tone, sprites: looks.map((l) => renderCharacter(l, 'idle', { size: 24 })) };
+  }),
+}));
+---
+<PeopleUnitsIsland client:visible {title} unit={file.unit} {rows} note={file.note} source={file.source} />

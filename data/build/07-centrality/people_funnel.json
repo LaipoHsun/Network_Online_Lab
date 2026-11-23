@@ -1,0 +1,43 @@
+{
+ "kind": "people",
+ "description": "Milgram 實驗中 64 條送到的鏈，最後一站是誰",
+ "source": {
+  "text": "Travers & Milgram 1969, An Experimental Study of the Small World Problem, Sociometry 32(4), p. 439–440",
+  "url": "https://doi.org/10.2307/2786545",
+  "year": 1969
+ },
+ "digitized": false,
+ "unit": "每個小人代表一條送到的鏈",
+ "rows": [
+  {
+   "label": "64 條鏈",
+   "groups": [
+    {
+     "label": "最後經過 G 先生",
+     "count": 16,
+     "tone": "signal",
+     "source": "07-centrality/milgram_funnel.json（Travers & Milgram 1969, p. 439–440 原文）"
+    },
+    {
+     "label": "最後經過商業夥伴甲",
+     "count": 10,
+     "tone": "ill",
+     "source": "07-centrality/milgram_funnel.json（Travers & Milgram 1969, p. 439–440 原文）"
+    },
+    {
+     "label": "最後經過商業夥伴乙",
+     "count": 5,
+     "tone": "sci",
+     "source": "07-centrality/milgram_funnel.json（Travers & Milgram 1969, p. 439–440 原文）"
+    },
+    {
+     "label": "其他人",
+     "count": 33,
+     "tone": "muted",
+     "source": "07-centrality/milgram_funnel.json（Travers & Milgram 1969, p. 439–440 原文）"
+    }
+   ]
+  }
+ ],
+ "note": "三個人承接了將近一半的鏈：他們站在通往目標的少數幾條路上。"
+}

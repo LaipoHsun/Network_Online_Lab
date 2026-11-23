@@ -2,7 +2,7 @@
 prereqTerms: ['degree-distribution']
 draft: true
 ---
-{/* 第 5 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/05-friendship-paradox.md。
+{/* 第 5 章初稿（Claude 撰寫，待作者審定；已依作者意見改成七段：① 靜態場景卡、③ 只留一個場景、⑥ 加上小人圖、拿掉 ⑧）。規格：docs/chapters/05-friendship-paradox.md。
     研究數字只用 data/build/05-friendship-paradox/*.json（Pew 2012、Christakis & Fowler 2010）。 */}
 import Section from '../../components/chapter/Section.astro';
 import Step from '../../components/chapter/Step.astro';
@@ -14,18 +14,16 @@ import LogicChain from '../../components/ui/LogicChain.astro';
 import FormulaCard from '../../components/ui/FormulaCard.astro';
 import RevealChart from '../../components/ui/RevealChart.astro';
 import ParadoxNet from '../../components/chapters/ch5/ParadoxNet.svelte';
-import Sampling from '../../components/chapters/ch5/Sampling.svelte';
-import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
+import SceneCard from '../../components/chapter/SceneCard.astro';
+import PeopleUnits from '../../components/ui/PeopleUnits.astro';
 
 <Section n={1}>
 <Step>
-<div slot="visual"><ParadoxNet client:visible mode="intro" /></div>
+<div slot="visual"><SceneCard chapter={5} quote="大家都在聚餐出遊，只有我在圖書館……" friends={7} highlight={[1, 4]} links={[[0, 1], [1, 2], [3, 4], [4, 5], [1, 4]]} /></div>
 
 期中考週，社工系大一的家瑄在圖書館滑 IG。每個朋友都在聚餐、出遊、參加活動，好像只有自己在讀書。
 
 她開始想：是不是大家都比我受歡迎？
-
-這是家瑄和 39 位同學的朋友網路（橘色圈是家瑄）。
 
 **她的朋友，真的平均比她受歡迎嗎？這對多少人來說成立？**
 </Step>
@@ -47,7 +45,9 @@ import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
 
 <Section n={3}>
 <Step full>
-### 場景 A：每個人頭上的兩個數字
+### 每個人頭上的兩個數字
+
+這是家瑄和 39 位同學的朋友網路（橘色圈是家瑄）。
 
 每個小人頭上有兩個數字：「我的朋友數 / 我朋友的平均朋友數」。前面比較小的人，代表朋友平均比自己受歡迎，會變成藍色。
 
@@ -58,31 +58,7 @@ import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
 <ParadoxNet client:visible mode="paradox" />
 </Step>
 
-<Step>
-<div slot="visual"><Sampling client:visible /></div>
 
-### 場景 B：兩種抽樣
-
-為什麼會這樣？比較兩種抽法。
-
-第一種：**隨機點一個人**，看這個人有幾位朋友。抽 200 次，平均大約就是全體的平均朋友數。
-
-第二種：**隨機點一條連結，取它的一端**。這等於「隨機挑某個人的一位朋友」。抽 200 次，平均高出一大截。
-
-差別在於：一位朋友很多的人，出現在很多人的朋友名單裡。有 10 位朋友的人，有 10 條連結可以被抽中；只有 1 位朋友的人，只有 1 條。所以你的朋友，系統性地偏向交際花。
-</Step>
-
-<Step>
-<div slot="visual"><Sentinel client:visible /></div>
-
-### 場景 C：期末流感哨兵
-
-這個偏差可以拿來用。在一個 600 人的網路裡，先隨機抽 60 人當「隨機組」，再請每個人提名一位朋友，組成「朋友組」。
-
-然後放一場流感。朋友組的人朋友比較多，離每個人都比較近，所以比較早被感染。如果學校只能觀察一小群人，觀察朋友組，就能比觀察隨機的人更早發現疫情。這樣的一群人叫做<Term id="sentinel" first />。
-
-第 9 章會再回來談傳染。
-</Step>
 </Section>
 
 <Section n={4}>
@@ -110,7 +86,7 @@ import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
 
 朋友數為 <M t="k" /> 的人佔全體的 <M t="p_k" />，被選到的比重就是 <M t="k \, p_k" />。用這個比重算平均，就得到 <M t="\langle k^2 \rangle / \langle k \rangle" />。再用<Term id="variance" first /> <M t="\sigma_k^2 = \langle k^2 \rangle - \langle k \rangle^2" /> 改寫，就是 <M t="\langle k \rangle + \sigma_k^2 / \langle k \rangle" />。
 
-因為變異數不會是負的，朋友的平均朋友數**一定**不小於全體的平均。等號只在變異數為 0，也就是每個人朋友數完全一樣時成立。公式卡裡的即時數字來自場景 A，調高社交性差異，看 <M t="\sigma_k^2" /> 怎麼把兩者拉開。
+因為變異數不會是負的，朋友的平均朋友數**一定**不小於全體的平均。等號只在變異數為 0，也就是每個人朋友數完全一樣時成立。公式卡裡的即時數字來自第 ③ 段，調高社交性差異，看 <M t="\sigma_k^2" /> 怎麼把兩者拉開。
 
 **要小心的是：** 上面的式子是「全體平均」的版本，說的是「隨機一位朋友」比「隨機一個人」受歡迎。「**多數人**的朋友平均比自己受歡迎」是另一個比較弱的說法，不是這條式子直接推得出來的，它還需要額外的條件。
 
@@ -119,7 +95,7 @@ import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
 
 把每個人「朋友的平均朋友數」記作 <M t="m_i" />。上面的式子說的是：把所有連結的端點平均起來，<M t="\langle k^2\rangle/\langle k\rangle \ge \langle k \rangle" />。但「<M t="k_i < m_i" /> 的人超過一半」是在問每個人自己的比較結果，是另一回事。
 
-舉例來說，如果朋友多的人只和朋友多的人做朋友、朋友少的人只和朋友少的人做朋友（度相關性很強），那每個人的朋友都和自己差不多，<M t="k_i < m_i" /> 的人可能不到一半，即使變異數很大。真實的社會網路裡，朋友多的人常常連到朋友少的人，所以「多數人」的版本在資料裡也看得到：場景 A 和第 ⑥ 段的 Pew 調查都是這種情形。
+舉例來說，如果朋友多的人只和朋友多的人做朋友、朋友少的人只和朋友少的人做朋友（度相關性很強），那每個人的朋友都和自己差不多，<M t="k_i < m_i" /> 的人可能不到一半，即使變異數很大。真實的社會網路裡，朋友多的人常常連到朋友少的人，所以「多數人」的版本在資料裡也看得到：第 ③ 段和第 ⑥ 段的 Pew 調查都是這種情形。
 </details>
 </Step>
 </Section>
@@ -134,7 +110,7 @@ import Sentinel from '../../components/chapters/ch5/Sentinel.svelte';
     { kind: 'result', summary: '大多數人的朋友都比自己受歡迎。不是你太孤僻，是抽樣方式。', detail: '嚴格來說，數學保證的是「隨機一位朋友比隨機一個人受歡迎」；「多數人」的版本在一般的社會網路裡也成立（第 ④ 段的展開說明）。' },
     { kind: 'prediction', summary: '「朋友」比隨機的人更靠近網路中心，所以在傳染病中會比較早被感染。', detail: '朋友多的人有更多條路徑通到他，病毒從任何地方出發都比較容易先碰到他。這可以用真實的流感資料檢驗：第 ⑥ 段揭曉。' },
   ]}
-  removal={{ step: 0, effect: '如果每個人的朋友數都一樣（$\\sigma_k^2 = 0$），朋友的平均朋友數就等於全體平均，悖論完全消失：場景 A 的「沒有差異」。' }}
+  removal={{ step: 0, effect: '如果每個人的朋友數都一樣（$\\sigma_k^2 = 0$），朋友的平均朋友數就等於全體平均，悖論完全消失：第 ③ 段的「沒有差異」。' }}
 />
 </Step>
 </Section>
@@ -151,6 +127,8 @@ Pew 研究中心 2012 年的調查發現，樣本中 84% 的 Facebook 用戶，�
 <RevealChart data="05-friendship-paradox/pew_friend_counts"
   title="一般用戶有 245 位朋友，他們的朋友平均有 359 位" />
 
+<PeopleUnits data="05-friendship-paradox/people_paradox" title="100 位用戶裡，84 位的朋友比自己受歡迎" />
+
 ### 2009 年哈佛的流感
 
 <RevealChart data="05-friendship-paradox/christakis_flu"
@@ -158,7 +136,7 @@ Pew 研究中心 2012 年的調查發現，樣本中 84% 的 Facebook 用戶，�
 
 Christakis 和 Fowler（2010）在 2009 年哈佛大學的流感季，從大學部隨機選出 319 位學生，再請他們提名朋友，得到 425 位「朋友組」，總共追蹤 744 位學生。依醫護人員的診斷，朋友組的疫情進展比隨機組早了 13.9 天（95% 信賴區間 9.9–16.6 天）。早在疫情開始後第 16 天，兩組的差距就已經顯著，比全校每日新增病例的高峰早了整整 46 天。
 
-上圖是論文圖中兩組的累積發病比例（從原圖讀出來的約略值）。和場景 C 的模擬比一比：模擬的形狀很像，朋友組的曲線一路走在前面。
+上圖是論文圖中兩組的累積發病比例（從原圖讀出來的約略值）：朋友組的曲線一路走在前面。朋友組的人朋友比較多、離每個人都比較近，所以比較早被感染。如果學校只能觀察一小群人，觀察「被提名的朋友」就能比觀察隨機的人更早發現疫情；這樣的一群人叫做<Term id="sentinel" first />。第 9 章會再回來談傳染。
 </Step>
 </Section>
 
@@ -167,14 +145,6 @@ Christakis 和 Fowler（2010）在 2009 年哈佛大學的流感季，從大學�
 **社會學：「大家都過得比我好」有一部分是結構性的。** 你在社群媒體上看到的，主要是朋友多、活動多的人的生活，因為他們出現在很多人的動態裡。同樣的抽樣偏差還有很多版本：你的朋友平均比你更活躍、你修的課平均比全校的課更擁擠（因為擁擠的課有很多學生，每個人都「看到」它）。
 
 **經濟學與政策：只靠局部資訊就能找到中心人物。** 疫苗不夠時，不用畫出整張社會網路，也能優先保護朋友多的人：隨機選一些人，請他們各指定一位朋友去打疫苗。這叫做<Term id="acquaintance-immunization" first />，由 Cohen、Havlin 和 ben-Avraham（2003，*Physical Review Letters*）提出。反過來，調查設計也要小心：用「滾雪球」的方式找受訪者（請受訪者介紹朋友），會系統性地高估社交程度。
-</Step>
-</Section>
-
-<Section n={8}>
-<Step full>
-- **個人層級的悖論不一定對每個人成立。** 數學保證的是平均的版本；你個人的朋友是否比你受歡迎，要看你實際的朋友。朋友數在前段的人，悖論通常不成立。
-- **線上「看到的」朋友還受推薦演算法影響。** 你看到誰的動態，不只取決於誰是你的朋友，也取決於平台決定讓你看什麼。
-- **我們的模擬把朋友數當成固定的。** 真實世界裡，受歡迎的人也可能因為受歡迎而更受歡迎，第二季的偏好依附會談到。
 
 <NextQuestion to={6}>哪些朋友對你最有用？</NextQuestion>
 </Step>

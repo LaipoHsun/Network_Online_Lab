@@ -1,0 +1,155 @@
+---
+prereqTerms: ['distance', 'bridge']
+draft: true
+---
+{/* 第 7 章初稿（Claude 撰寫，待作者審定）。規格：docs/chapters/07-centrality.md。
+    研究數字只用 data/build/07-centrality/*.json。依作者決定：① 用靜態場景卡、③ 只留一個場景、⑥ 用小人畫資料、沒有 ⑧。 */}
+import Section from '../../components/chapter/Section.astro';
+import Step from '../../components/chapter/Step.astro';
+import Term from '../../components/chapter/Term.astro';
+import M from '../../components/chapter/M.astro';
+import NextQuestion from '../../components/chapter/NextQuestion.astro';
+import SceneCard from '../../components/chapter/SceneCard.astro';
+import Predict from '../../components/ui/Predict.svelte';
+import LogicChain from '../../components/ui/LogicChain.astro';
+import FormulaCard from '../../components/ui/FormulaCard.astro';
+import RevealChart from '../../components/ui/RevealChart.astro';
+import PeopleUnits from '../../components/ui/PeopleUnits.astro';
+import Lenses from '../../components/chapters/ch7/Lenses.svelte';
+import FlorentineNet from '../../components/chapters/ch7/FlorentineNet.astro';
+import { NET_EDGES, NET_LABELS } from '../../components/chapters/ch7/model';
+import flo from '../../../data/build/07-centrality/florentine_centrality.json';
+
+<Section n={1}>
+<Step>
+<div slot="visual"><SceneCard chapter={7} quote="為什麼什麼消息都是從他那裡傳出來的？" friends={7} highlight={[2]} links={[[0, 1], [4, 5]]} /></div>
+
+政治系大二的子軒發現，系上什麼八卦都是從同一位學長那裡傳出來的。
+
+奇怪的是，這位學長的朋友並不是最多的。籃球隊長認識的人比他多得多。但學長同時在系學會、籃球隊和吉他社都有朋友。
+
+**朋友最多的人，就是最有影響力的人嗎？**
+</Step>
+</Section>
+
+<Section n={2}>
+<Step>
+<div slot="visual">
+<Predict client:visible id="07-centrality/important" kind="node"
+  question="這是子軒身邊 40 位同學的朋友網路。點一位你覺得「最重要」的人。"
+  hint="不用想太多，憑直覺選。"
+  n={40} edges={NET_EDGES} labels={NET_LABELS} />
+</div>
+
+「重要」可以有很多意思：朋友最多、消息最快傳到、別人的消息都要經過、或是認識的人都很重要。
+
+先憑直覺點一個人。第 ③ 段會用四種不同的「眼鏡」看同一張網路，看你選的人在每一種眼鏡下排第幾。
+</Step>
+</Section>
+
+<Section n={3}>
+<Step full>
+### 四種眼鏡
+
+同一張網路，有四種常見的方式來衡量「誰最重要」，叫做<Term id="centrality" first />。切換旁邊的按鈕，小人的大小會跟著變，畫面上也會出現那種重要性所對應的「流動」：
+
+- **度**：朋友越多越重要。看從他身上冒出多少對話。
+- **接近**：到所有人的平均距離越短越重要。看從他發出的漣漪多快蓋滿全部的人。
+- **介數**：越多人之間的最短路徑經過他，越重要。看那些信件都從誰身上穿過。
+- **特徵向量**：認識重要的人，你就重要。看消息一再轉傳之後，熱度累積在誰身上。
+
+用「度」和「特徵向量」看，第一名是籃球隊長：他認識全隊，隊友們也彼此熟。用「接近」和「介數」看，第一名換成了那位學長：他的朋友不是最多，卻是系學會、籃球隊、吉他社之間的通道。表格裡也列出你在第 ② 段選的人。
+
+<Lenses client:visible predictId="07-centrality/important" />
+</Step>
+</Section>
+
+<Section n={4}>
+<Step>
+<div slot="visual">
+<FormulaCard
+  title="三種中心性的定義"
+  formula={'\\begin{gathered} \\htmlData{key=CB}{C_B(i)} = \\sum_{s \\ne i \\ne t} \\frac{\\sigma_{st}(i)}{\\sigma_{st}} \\\\[6pt] \\htmlData{key=CC}{C_C(i)} = \\frac{N-1}{\\sum_j d_{ij}} \\\\[6pt] A\\,\\htmlData{key=x}{\\mathbf{x}} = \\lambda_1 \\mathbf{x} \\end{gathered}'}
+  symbols={[
+    { key: 'CB', symbol: 'C_B(i)', meaning: '介數中心性：$\\sigma_{st}$ 是 $s$ 到 $t$ 的最短路徑數，$\\sigma_{st}(i)$ 是其中經過 $i$ 的數量。加總所有配對 $(s, t)$。' },
+    { key: 'CC', symbol: 'C_C(i)', meaning: '接近中心性：$i$ 到其他所有人的平均距離的倒數。' },
+    { key: 'x', symbol: '\\mathbf{x}', meaning: '特徵向量中心性：鄰接矩陣 $A$ 最大特徵值 $\\lambda_1$ 的特徵向量。$x_i$ 正比於朋友們的 $x_j$ 加總。' },
+  ]}
+  range="$C_B(i) = 0$：沒有任何最短路徑需要經過 $i$（例如只有一位朋友的人）。$C_C(i) = 1$：$i$ 和每個人都直接認識。"
+  related="度中心性就是第 1 章的度 $k_i$。介數高、度不高的人，通常就是第 6 章的橋。"
+  live={[
+    { key: 'k', label: 'k_i', digits: 0 },
+    { key: 'CB', label: 'C_B', digits: 3 },
+    { key: 'CC', label: 'C_C', digits: 3 },
+    { key: 'x', label: 'x_i', digits: 3 },
+  ]}
+/>
+</div>
+
+<Term id="betweenness" first /> <M t="C_B(i)" /> 問的是：在所有配對之間的最短路徑裡，有多少經過 <M t="i" />？如果 <M t="s" /> 到 <M t="t" /> 有好幾條一樣短的路，就按比例算。它量的是「多少人之間的消息要靠你傳」。
+
+<Term id="closeness" first /> <M t="C_C(i)" /> 是平均距離的倒數：離每個人都近的人，消息從他出發，最快傳遍全體。
+
+<Term id="eigenvector-centrality" first />是一個「自我參照」的定義：你的重要性，正比於你朋友的重要性總和。寫成式子就是 <M t="A\mathbf{x} = \lambda_1 \mathbf{x}" />，解是鄰接矩陣最大特徵值對應的特徵向量。Perron–Frobenius 定理保證，連通網路的這個特徵向量每一項都是正的，所以「重要性」一定有意義。場景裡的熱度動畫，就是從「每個人一樣重要」開始，一再套用這個規則，最後停下來的結果。
+
+公式卡裡的即時數字，是你在場景裡點的人（沒點就看那副眼鏡的第一名）。
+
+在很多網路裡，四種中心性高度相關：朋友多的人，通常也離大家近。最有趣的是例外：**度不高、介數很高**的人。他們就是橋和<Term id="broker" first />，站在彼此不往來的群體之間。
+</Step>
+</Section>
+
+<Section n={5}>
+<Step full>
+<LogicChain
+  title="第 7 章邏輯鏈"
+  steps={[
+    { kind: 'assumption', critical: true, summary: '資訊（或資源、權力）沿著最短路徑流動。', detail: '消息從 $s$ 傳到 $t$ 時，走的是最短的那幾條路。這是介數中心性背後的假設。' },
+    { kind: 'derivation', summary: '位於很多最短路徑上的人，能看到、延遲、甚至改寫流過的東西。', detail: '如果系學會和吉他社之間只有學長一條通道，兩邊的消息都要經過他：他可以決定什麼時候說、怎麼說。' },
+    { kind: 'result', summary: '介數中心性是一種「結構性權力」，不一定來自朋友多。', detail: '場景裡的學長朋友不是最多，但介數最高。他的權力來自位置，而不是人緣。' },
+    { kind: 'prediction', summary: '連接兩個彼此不往來的群體的人，能獲得不成比例的影響力。', detail: '這可以用歷史資料檢驗：在一個分裂的菁英網路裡，誰站在裂縫上？第 ⑥ 段揭曉。' },
+  ]}
+  removal={{ step: 0, effect: '如果資訊不是走最短路徑，而是隨機地一傳再傳（像八卦一樣），介數中心性就不是對的量尺，要改用特徵向量或 Katz 中心性：重要的是「被反覆傳到」，而不是「站在捷徑上」。' }}
+/>
+</Step>
+</Section>
+
+<Section n={6}>
+<Step>
+<div slot="visual">
+<Predict client:visible id="07-centrality/medici" kind="node"
+  question="這是 15 世紀佛羅倫斯 15 個菁英家族的婚姻網路。哪一個是後來統治佛羅倫斯的梅迪奇家族？"
+  hint="名字先藏起來。點一個你覺得是梅迪奇的家族。"
+  n={flo.network.labels.length} edges={flo.network.edges} labels={flo.network.labels.map((_, i) => `家族 ${String.fromCharCode(65 + i)}`)} />
+</div>
+
+### 梅迪奇家族
+
+Padgett 和 Ansell（1993）研究了 1400 到 1434 年佛羅倫斯菁英家族之間的婚姻和商業關係。當時的菁英網路分裂成好幾群彼此不往來的家族，而梅迪奇是唯一同時和各群聯姻、做生意的家族。他們認為，梅迪奇的權力正是來自站在這些裂縫上。
+
+先猜猜看，哪一個是梅迪奇？
+</Step>
+
+<Step full>
+<FlorentineNet predictId="07-centrality/medici" />
+
+用這份公開的婚姻網路計算四種中心性，梅迪奇在度、接近、介數、特徵向量四種眼鏡下都是第一名。但最懸殊的是介數：梅迪奇的介數是第二名的兩倍以上。很多家族之間的婚姻路徑，都要經過梅迪奇。
+
+<RevealChart data="07-centrality/florentine_centrality" title="梅迪奇的介數是第二名（Guadagni）的兩倍以上" />
+
+### 再回到 Milgram
+
+<PeopleUnits data="07-centrality/people_funnel" title="64 條送到的鏈，有 16 條的最後一站是同一個人" />
+
+第 4 章的 Milgram 實驗裡，64 條送到目標的鏈中，有 16 條的最後一站都是同一位「G 先生」：住在目標家鄉的一位服飾商。另外兩位目標的商業夥伴各承接了 10 條和 5 條。這三個人合計承接了將近一半的鏈：他們的介數極高，站在通往目標的少數幾條路上。
+</Step>
+</Section>
+
+<Section n={7}>
+<Step full>
+**社會學：結構洞的權力。** Burt 的<Term id="structural-hole" />理論認為，位於兩個群體之間的人，能獲得兩種優勢：資訊優勢（兩邊的消息都先聽到）和控制優勢（可以決定兩邊怎麼互動）。Padgett 和 Ansell 把梅迪奇的做法稱為「穩健行動」：因為只有梅迪奇和各方都有關係，別的家族很難看清他們真正的意圖，也很難聯合起來對抗他們。
+
+**經濟學：關鍵人物。** Ballester、Calvó-Armengol 和 Zenou（2006，*Econometrica*）證明：在「朋友越努力、你也越努力」的同儕賽局裡，每個人的均衡努力正比於他的 Katz–Bonacich 中心性。政策上，最值得介入的<Term id="key-player" first />，是拿掉之後總活動量下降最多的人，而他不一定是中心性最高的那位。Banerjee、Chandrasekhar、Duflo 和 Jackson（2013，*Science*）在印度南部 43 個村莊發現：微型貸款一開始先告訴的那幾位村民，中心性越高，最後參加的人越多。
+
+<NextQuestion to={8}>如果網路自己分成了好幾群，演算法看得出來嗎？</NextQuestion>
+</Step>
+</Section>

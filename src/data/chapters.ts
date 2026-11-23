@@ -25,7 +25,7 @@ export const CHAPTERS: Chapter[] = [
     hero: { name: '家瑄', dept: '社工一', look: { skin: 3, hair: 'curly', hairColor: 0, college: 'socsci', accessory: 'backpack', year: 1 } } },
   { n: 6, slug: '06-weak-ties', title: '暑期實習，是誰介紹的？', concept: '弱連結的力量（strength of weak ties）', prereq: ['聚集係數', '小世界'], minutes: 30, status: 'in-progress',
     hero: { name: '小瑜', dept: '經濟三', look: { skin: 2, hair: 'short', hairColor: 1, college: 'socsci', accessory: 'backpack', year: 3 } } },
-  { n: 7, slug: '07-centrality', title: '系學會的消息，為什麼都經過他？', concept: '中心性（centrality）', prereq: ['距離', '橋'], minutes: 25, status: 'planned',
+  { n: 7, slug: '07-centrality', title: '系學會的消息，為什麼都經過他？', concept: '中心性（centrality）', prereq: ['距離', '橋'], minutes: 25, status: 'in-progress',
     hero: { name: '子軒', dept: '政治二', look: { skin: 1, hair: 'buzz', hairColor: 0, college: 'socsci', accessory: 'cap', year: 2 } } },
   { n: 8, slug: '08-communities', title: '社團吵架分成兩派：演算法猜得到誰站哪邊嗎？', concept: '社群偵測與模組度（modularity）', prereq: ['度', '聚集係數', '介數中心性'], minutes: 25, status: 'planned',
     hero: { name: '定遠', dept: '歷史三', look: { skin: 0, hair: 'curly', hairColor: 1, college: 'lib', accessory: 'glasses', year: 3 } } },

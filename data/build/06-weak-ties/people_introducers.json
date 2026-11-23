@@ -1,0 +1,38 @@
+{
+ "kind": "people",
+ "description": "Granovetter 訪問的 54 位透過人脈找到工作的人，介紹人多常見面",
+ "source": {
+  "text": "Granovetter 1973, The Strength of Weak Ties, American Journal of Sociology 78(6), 頁 1371",
+  "url": "https://doi.org/10.1086/225469",
+  "sample": "波士頓郊區專業、技術與管理職換工作者中，透過人脈找到工作的 54 人（N = 54）",
+  "year": 1973
+ },
+ "digitized": false,
+ "unit": "每個小人代表一位受訪者",
+ "rows": [
+  {
+   "label": "54 位受訪者",
+   "groups": [
+    {
+     "label": "常常見面",
+     "count": 9,
+     "tone": "muted",
+     "source": "06-weak-ties/granovetter_contact_frequency.json（Granovetter 1973 原文比例 × 54 人）"
+    },
+    {
+     "label": "偶爾見面",
+     "count": 30,
+     "tone": "accent",
+     "source": "06-weak-ties/granovetter_contact_frequency.json（Granovetter 1973 原文比例 × 54 人）"
+    },
+    {
+     "label": "很少見面",
+     "count": 15,
+     "tone": "signal",
+     "source": "06-weak-ties/granovetter_contact_frequency.json（Granovetter 1973 原文比例 × 54 人）"
+    }
+   ]
+  }
+ ],
+ "note": "只有 9 位的介紹人是常常見面的人；其他 45 位是被偶爾或很少見面的人介紹的。"
+}

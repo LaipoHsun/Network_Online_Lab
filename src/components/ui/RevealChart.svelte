@@ -48,7 +48,7 @@
   let showTable = $state(false);
   let root: HTMLElement;
   const height = $derived(Math.max(220, Math.min(380, width * 0.6)));
-  const M = $derived({ l: width < 420 ? 44 : 56, r: 16, t: 16, b: 48 });
+  const M = $derived({ l: width < 420 ? 44 : 56, r: 16, t: 16, b: (kind === 'bar' || kind === 'distribution') && new Set(series.flatMap((s) => s.points.map((p) => String(p.x)))).size > 8 ? 92 : 48 });
 
   onMount(() => {
     if (predictId && !demoPrediction) prediction = loadPrediction(predictId);
@@ -131,7 +131,12 @@
       <text x={M.l - 8} y={yScale(t) + 4} text-anchor="end" class="tick">{fmt(t)}</text>
     {/each}
     {#each xTicks as t}
-      <text x={xOf(t)} y={height - M.b + 16} text-anchor="middle" class="tick">{categorical ? wrapLabel(String(t)) : fmt(+t)}</text>
+      {#if categorical && xBand.domain().length > 8}
+        <!-- 類別很多時斜著寫，避免標籤互相疊在一起 -->
+        <text x={xOf(t)} y={height - M.b + 10} text-anchor="end" class="tick" transform="rotate(-35 {xOf(t)} {height - M.b + 10})">{String(t)}</text>
+      {:else}
+        <text x={xOf(t)} y={height - M.b + 16} text-anchor="middle" class="tick">{categorical ? wrapLabel(String(t)) : fmt(+t)}</text>
+      {/if}
     {/each}
     <line x1={M.l} x2={width - M.r} y1={height - M.b} y2={height - M.b} class="axis" />
     <text x={(M.l + width - M.r) / 2} y={height - 8} text-anchor="middle" class="axis-label">{xLabel}{logX ? '（對數尺度）' : ''}</text>

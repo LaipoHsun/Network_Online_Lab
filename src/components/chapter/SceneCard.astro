@@ -1,0 +1,63 @@
+---
+// 第 ① 段的靜態場景卡（作者決定：場景提問不放會走動的小人）。
+// 主角在中間、身邊一圈朋友，加一句主角心裡的話。建置時畫好，沒有任何動畫或 JavaScript。
+// MDX：<SceneCard chapter={1} quote="我是不是太安靜了？" friends={6} links={[[0, 1], [2, 3]]} highlight={[0]} />
+import { CHAPTERS } from '../../data/chapters';
+import { randomCrowd, renderCharacter } from '../../lib/sprites/character';
+
+interface Props {
+  chapter: number;
+  /** 主角心裡的一句話 */
+  quote: string;
+  /** 身邊畫幾位朋友（3–10） */
+  friends?: number;
+  /** 朋友之間的連結（朋友的編號，0 起算） */
+  links?: [number, number][];
+  /** 要特別標出的朋友（例如學長、室友） */
+  highlight?: number[];
+  /** 給螢幕閱讀器的說明 */
+  alt?: string;
+}
+const { chapter, quote, friends = 6, links = [], highlight = [], alt } = Astro.props;
+const c = CHAPTERS.find((x) => x.n === chapter)!;
+const W = 360, H = 300, cx = W / 2, cy = 172, R = 104;
+const crowd = randomCrowd(friends, 100 + chapter);
+const pos = crowd.map((_, i) => {
+  const a = -Math.PI / 2 + (2 * Math.PI * (i + 0.5)) / friends;
+  return { x: cx + R * Math.cos(a), y: cy + R * 0.82 * Math.sin(a) };
+});
+const hero = renderCharacter(c.hero.look, 'idle', { size: 92, title: `${c.hero.name}（${c.hero.dept}）` });
+const sprites = crowd.map((look) => renderCharacter(look, 'idle', { size: 42 }));
+---
+<figure class="scene-card" aria-label={alt ?? `${c.hero.name}（${c.hero.dept}）和身邊的朋友`}>
+  <svg viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
+    {pos.map((p) => <line x1={cx} y1={cy} x2={p.x} y2={p.y} class="spoke" />)}
+    {links.map(([a, b]) => <line x1={pos[a].x} y1={pos[a].y} x2={pos[b].x} y2={pos[b].y} class="link" />)}
+    {pos.map((p, i) => (
+      <g transform={`translate(${p.x - 21} ${p.y - 26})`}>
+        <circle cx="21" cy="26" r="25" class:list={['halo', { hl: highlight.includes(i) }]} />
+        <g set:html={sprites[i]} />
+      </g>
+    ))}
+    <circle cx={cx} cy={cy} r="54" class="hero-halo" />
+    <g transform={`translate(${cx - 46} ${cy - 58})`} set:html={hero} />
+  </svg>
+  <figcaption>
+    <span class="bubble">{quote}</span>
+    <span class="who">{c.hero.name}・{c.hero.dept}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .scene-card { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); align-items: center; }
+  svg { display: block; width: 100%; max-width: 400px; height: auto; }
+  .spoke { stroke: var(--line); stroke-width: 2; }
+  .link { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .halo { fill: var(--bg); stroke: var(--line); }
+  .halo.hl { fill: var(--signal-soft); stroke: var(--signal); stroke-width: 2; }
+  .hero-halo { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+  figcaption { display: flex; flex-direction: column; align-items: center; gap: var(--space-1); }
+  .bubble { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; padding: var(--space-2) var(--space-4); font-family: var(--font-display); font-size: 17px; text-align: center; }
+  .bubble::before { content: ''; position: absolute; top: -7px; left: 50%; width: 12px; height: 12px; background: var(--bg); border-left: 1px solid var(--line); border-top: 1px solid var(--line); transform: translateX(-50%) rotate(45deg); }
+  .who { font-size: 13px; color: var(--muted); }
+</style>

@@ -1,0 +1,50 @@
+{
+ "kind": "people",
+ "description": "如果 Facebook 只有 100 個人：每個人有幾位朋友",
+ "source": {
+  "text": "Ugander, Karrer, Backstrom & Marlow 2011, The Anatomy of the Facebook Social Graph, arXiv:1111.4503, Fig. 1(b)（由圖讀取）",
+  "url": "https://arxiv.org/abs/1111.4503",
+  "sample": "2011 年 5 月全球 7.21 億位活躍 Facebook 用戶、687 億條好友關係",
+  "year": 2011
+ },
+ "digitized": true,
+ "unit": "每個小人代表 1% 的用戶，依朋友數由少到多排好",
+ "rows": [
+  {
+   "label": "100 位用戶",
+   "groups": [
+    {
+     "label": "少於 10 位",
+     "count": 9,
+     "tone": "muted",
+     "source": "由 01-degree/ugander_cdf.json（Ugander 等人 2011 Fig. 1(b)，由圖讀取）的累積比例相減換算"
+    },
+    {
+     "label": "10–24 位",
+     "count": 10,
+     "tone": "muted",
+     "source": "由 01-degree/ugander_cdf.json（Ugander 等人 2011 Fig. 1(b)，由圖讀取）的累積比例相減換算"
+    },
+    {
+     "label": "25–99 位",
+     "count": 31,
+     "tone": "muted",
+     "source": "由 01-degree/ugander_cdf.json（Ugander 等人 2011 Fig. 1(b)，由圖讀取）的累積比例相減換算"
+    },
+    {
+     "label": "100–199 位",
+     "count": 20,
+     "tone": "accent",
+     "source": "由 01-degree/ugander_cdf.json（Ugander 等人 2011 Fig. 1(b)，由圖讀取）的累積比例相減換算"
+    },
+    {
+     "label": "200 位以上",
+     "count": 30,
+     "tone": "signal",
+     "source": "由 01-degree/ugander_cdf.json（Ugander 等人 2011 Fig. 1(b)，由圖讀取）的累積比例相減換算"
+    }
+   ]
+  }
+ ],
+ "note": "正中間（第 50、51 位）的人約有 99 位朋友，這是中位數；平均數 190 位，只有最右邊約 30 個人的朋友比平均多。"
+}

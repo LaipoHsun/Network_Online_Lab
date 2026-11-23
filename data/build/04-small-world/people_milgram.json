@@ -1,0 +1,37 @@
+{
+ "kind": "people",
+ "description": "Milgram 的 296 位起點者，信後來怎麼了",
+ "source": {
+  "text": "Travers & Milgram 1969, An Experimental Study of the Small World Problem, Sociometry 32(4)",
+  "url": "https://doi.org/10.2307/2786545",
+  "year": 1969
+ },
+ "digitized": false,
+ "unit": "每個小人代表 4 位起點者",
+ "rows": [
+  {
+   "label": "296 位起點者",
+   "groups": [
+    {
+     "label": "信送到了（64 人）",
+     "count": 16,
+     "tone": "accent",
+     "source": "04-small-world/small_world_distances.json 的 facts（Travers & Milgram 1969 原文），每 4 人畫成 1 個小人"
+    },
+    {
+     "label": "寄出了但中途斷掉（153 人）",
+     "count": 38,
+     "tone": "muted",
+     "source": "04-small-world/small_world_distances.json 的 facts（Travers & Milgram 1969 原文），每 4 人畫成 1 個小人"
+    },
+    {
+     "label": "根本沒寄出（79 人）",
+     "count": 20,
+     "tone": "line",
+     "source": "04-small-world/small_world_distances.json 的 facts（Travers & Milgram 1969 原文），每 4 人畫成 1 個小人"
+    }
+   ]
+  }
+ ],
+ "note": "「六度分隔」的 5.2 位中間人，只算了最前面那一小群送到的信。"
+}
